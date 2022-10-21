@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Tutorial />}/>
           <Route path="/visualize" element={<Visualize />}/>
           <Route path="/patternmatch" element={<PatternMatch />}/>
-          <Route path="/WheelerProperty" element={<WheelerProperty />}/>
+          <Route path="/wheelerProperty" element={<WheelerProperty />}/>
         </Routes>
       </div>
     </>
