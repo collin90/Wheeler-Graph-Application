@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -9,7 +9,7 @@ import 'reactflow/dist/style.css';
 
 function Graph (props) {
 
-  const { nodes: initialNodes, edges: initialEdges } = props;
+  const {nodes : initialNodes, edges: initialEdges} = props;
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect = useCallback((params) => setEdges((els) => addEdge(params, els)), []);
@@ -26,6 +26,11 @@ function Graph (props) {
       });
     });
   }, []);
+
+  useEffect(()=> {
+    setNodes(props.nodes)
+    setEdges(props.edges)
+  },[props])
 
 
   return (
