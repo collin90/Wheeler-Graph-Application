@@ -22,7 +22,7 @@ function Tutorial () {
         {id: 'node7', style: {width: 30, height: 30, fontsize: 10}, data: {label: '7'}, position: {x:600, y:300}},
         {id: 'node8', style: {width: 30, height: 30, fontsize: 10}, data: {label: '8'}, position: {x:700, y:350}}
     ]
-
+''
     const edges = [
         {id: 'edge1', animated:true, source:'node1', target:'node2', label:'a', markerEnd: {type: MarkerType.ArrowClosed,width: 8,height: 8,color: '#ADD8E6',},style: {strokeWidth: 1,stroke: '#ADD8E6',}},
         {id: 'edge2', animated:true, source:'node1', target:'node3', label:'a',  markerEnd: {type: MarkerType.ArrowClosed,width: 8,height: 8,color: '#ADD8E6',},style: {strokeWidth: 1,stroke: '#ADD8E6',}},
