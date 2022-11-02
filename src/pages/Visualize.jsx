@@ -94,19 +94,20 @@ function Visualize () {
         setText(e.target.value);
     }
 
-    const makeTextFile = () => {
-        var data = new Blob([JSON.stringify({nodes: nodes.map(node => ({id: node.id, order: node.data.label})), edges: edges.map(edge => ({id: edge.id, source: edge.source, target: edge.target, label: edge.label}))})], {type: 'text/json'});
 
-        if (textFile !== null) {
-          window.URL.revokeObjectURL(textFile);
-        }
+    const createWheelerGraphFile = () => {   
+        const makeTextFile = () => {
+            var data = new Blob([JSON.stringify({nodes: nodes.map(node => ({id: node.id, order: node.data.label})), edges: edges.map(edge => ({id: edge.id, source: edge.source, target: edge.target, label: edge.label}))})], {type: 'text/json'});
     
-        textFile = window.URL.createObjectURL(data);
+            if (textFile !== null) {
+              window.URL.revokeObjectURL(textFile);
+            }
+        
+            textFile = window.URL.createObjectURL(data);
+        
+            return textFile;
+          };
     
-        return textFile;
-      };
-
-    const createWheelerGraphFile = () => {
         var link = ref.current;
         link.href = makeTextFile();
     }
