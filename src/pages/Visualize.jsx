@@ -7,10 +7,9 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import TextBox from '../components/TextBox';
 
 
 
@@ -18,8 +17,8 @@ function Visualize () {
     
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
-    const [text, setText] = useState('');
-    const [fileContent, setFileContent] = useState('');
+    const [texts, setTexts] = useState([{id: uuidv4(),text: ""}]);
+    const [fileContent, setFileContent] = useState([]);
     const ref=useRef(null);
     let textFile = null;
 
@@ -55,7 +54,10 @@ function Visualize () {
 
     const handleOnTextSubmit = () => {
         const path = 'http://127.0.0.1:5000/visualize';
-        axios.post(path, {str: text}).then(
+        const textArr = [];
+        texts.forEach(text => textArr.push(text.text));
+        console.log(textArr);
+        axios.post(path, {str: textArr}).then(
             (response) => {
                 var result = response.data;
                 formGraph(result.result.nodes, result.result.edges);
@@ -80,20 +82,21 @@ function Visualize () {
     }
 
     const handleFileInput = (e) => {
-        const file = e.target.files[0];
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            const fileContent = e.target.result;
-            setFileContent(fileContent);
+        const files = e.target.files;
+        console.log(files);
+        let fileContents = [];
+        for (let i = 0; i < files.length; i++){
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                const fileContent = e.target.result;
+                fileContents.push(fileContent)
+            }
+            reader.onerror = (e) => alert(e.target.error.name);
+            reader.readAsText(files[i]);
         }
-        reader.onerror = (e) => alert(e.target.error.name);
-        reader.readAsText(file);
+        console.log(fileContents);
+        setFileContent(fileContents);
     }
-
-    const handleTextInput = (e) => {
-        setText(e.target.value);
-    }
-
 
     const createWheelerGraphFile = () => {   
         const makeTextFile = () => {
@@ -112,6 +115,32 @@ function Visualize () {
         link.href = makeTextFile();
     }
 
+    const addTextField = () => {
+        const textbox = {
+          id: uuidv4(),
+          text: "",
+        };
+        setTexts((texts) => [...texts, textbox]);
+    };
+
+    const handleEdit = (id, newText) => {
+        //we need to edit the text section of the texts array for the box we are edititng now.
+        setTexts((texts) =>
+        texts.map((text) => {
+          if (text.id !== id) {
+            return text;
+          } else {
+            return { 'id': id, 'text': newText };
+          }
+        })
+      );
+    }
+
+    const handleRemove = (id) => {
+        //we need to remove the text box we clicked 'delete' on from the texts array.
+        setTexts((texts) => texts.filter((text) => text.id !== id));
+    }
+
 
 
     return (
@@ -120,21 +149,26 @@ function Visualize () {
                 <Typography variant="h4">Visualize Your Text as a Wheeler Graph</Typography>
             </Box>
             <Stack spacing={4}>
-                <Typography variant="p">Input your own string or choose a .txt file containing a string of text to index</Typography>
+                <Typography variant="p">Input your own strings or choose .txt files containing strings of text to index</Typography>
                 <Grid container direction='row'>
-                    <Grid item xs={4} md={4}>
-                        <TextField id="outlined-basic" label="Text" variant="outlined" onChange={handleTextInput} multiline/>
+                    <Grid item xs={3}>
+                        {texts.map(textbox => (
+                            <TextBox editTextBox={handleEdit} removeTextBox={handleRemove} id={textbox.id}/>
+                        ))}
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button onClick={addTextField} variant='contained'>+</Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button onClick={handleOnTextSubmit} variant='outlined'>Generate Graph From Text</Button>
+                        <Button onClick={handleOnTextSubmit} variant='outlined'>Generate Graph From Texts</Button>
                     </Grid>
                 </Grid>
                 <Grid container direction="row">
                     <Grid item xs={4}>
-                        <Input type="file" onChange={handleFileInput} />
+                        <input type="file" accept='.txt' multiple onChange={handleFileInput} />
                     </Grid>
                     <Grid item xs={4}>
-                        <Button onClick={handleOnFileSubmit} variant='outlined'>Generate Graph From File</Button>
+                        <Button onClick={handleOnFileSubmit} variant='outlined'>Generate Graph From Files</Button>
                     </Grid>
                 </Grid>
             </Stack>
@@ -146,7 +180,7 @@ function Visualize () {
             </Box>
             <Grid container direction = "row" mb={4}>
                 <Grid item xs={4}>
-                    <Button onClick={createWheelerGraphFile} variant='outlined'>Create Wheeler Graph File</Button>
+                    <Button onClick={createWheelerGraphFile} variant='outlined'>Create Wheeler Graph JSON</Button>
                 </Grid>
                 <Grid item xs={1}>
                     <Box sx={{ border: 1}}>
