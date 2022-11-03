@@ -3,7 +3,7 @@ import { IconTrashX } from "@tabler/icons";
 import Grid from '@mui/material/Grid';
 
 function TextBox (props) {
-    const {editTextBox, removeTextBox, id} = props;
+    const {editTextBox, removeTextBox, id, value} = props;
 
     const handleOnRemove = () => {
         removeTextBox(id);
@@ -15,7 +15,7 @@ function TextBox (props) {
     
     return (
         <Grid container mb={1}>
-            <TextField label="Text" variant="outlined" onChange={handleOnEdit} multiline></TextField>
+            <TextField label="Text" variant="outlined" onChange={handleOnEdit} value={value} multiline></TextField>
             <button onClick={handleOnRemove}>
                 <IconTrashX size={16} />
             </button>

@@ -11,17 +11,17 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import TextBox from '../components/TextBox';
 
-
-
 function Visualize () {
     
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
     const [texts, setTexts] = useState([{id: uuidv4(),text: ""}]);
     const [fileContent, setFileContent] = useState([]);
-    const ref=useRef(null);
-    let textFile = null;
-
+    const [loading, setLoading] = useState(false);
+    const refJSONDownload=useRef(null);
+    const refCompressedDownload=useRef(null);
+    let textFileJSON = null;
+    let textFileCompressed = null;
 
     const formGraph = (nodes, edges) => {
         //create the colors list
@@ -88,7 +88,7 @@ function Visualize () {
         for (let i = 0; i < files.length; i++){
             let reader = new FileReader();
             reader.onload = (e) => {
-                const fileContent = e.target.result;
+                const fileContent = e.target.result.replace(/[\r\n]/gm, '');
                 fileContents.push(fileContent)
             }
             reader.onerror = (e) => alert(e.target.error.name);
@@ -101,18 +101,43 @@ function Visualize () {
     const createWheelerGraphFile = () => {   
         const makeTextFile = () => {
             var data = new Blob([JSON.stringify({nodes: nodes.map(node => ({id: node.id, order: node.data.label})), edges: edges.map(edge => ({id: edge.id, source: edge.source, target: edge.target, label: edge.label}))})], {type: 'text/json'});
-    
-            if (textFile !== null) {
+            if (textFileJSON !== null) {
               window.URL.revokeObjectURL(textFile);
             }
-        
-            textFile = window.URL.createObjectURL(data);
-        
-            return textFile;
+            textFileJSON = window.URL.createObjectURL(data);
+            return textFileJSON;
           };
     
-        var link = ref.current;
+        var link = refJSONDownload.current;
         link.href = makeTextFile();
+        link.style.display = 'block';
+    }
+
+    const createWheelerGraphCompressedFile = () => {
+        const path = 'http://127.0.0.1:5000/compressed';
+        setLoading(true);
+        console.log('making request');
+        axios.post(path, {str: fileContent}).then(
+            (response) => {
+                function makeTextFile (oil) {
+                    var data = new Blob([JSON.stringify(oil)], {type: 'text/json'});
+                    if (textFileCompressed !== null) {
+                        window.URL.revokeObjectURL(textFile);
+                    }
+                    textFileCompressed = window.URL.createObjectURL(data);
+                    return textFileCompressed;
+                }   
+                var result = response.data;
+                const oil = {O: result.O, I: result.I, L: result.L, C:result.C}
+                var link = refCompressedDownload.current;
+                link.href = makeTextFile(oil);
+                link.style.display = 'block';
+                setLoading(false);
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }
 
     const addTextField = () => {
@@ -138,10 +163,8 @@ function Visualize () {
 
     const handleRemove = (id) => {
         //we need to remove the text box we clicked 'delete' on from the texts array.
-        setTexts((texts) => texts.filter((text) => text.id !== id));
+        setTexts((texts) => texts.filter(text => text.id !== id));
     }
-
-
 
     return (
         <Container>
@@ -153,7 +176,7 @@ function Visualize () {
                 <Grid container direction='row'>
                     <Grid item xs={3}>
                         {texts.map(textbox => (
-                            <TextBox editTextBox={handleEdit} removeTextBox={handleRemove} id={textbox.id}/>
+                            <TextBox editTextBox={handleEdit} removeTextBox={handleRemove} id={textbox.id} value={textbox.text}/>
                         ))}
                     </Grid>
                     <Grid item xs={1}>
@@ -175,19 +198,30 @@ function Visualize () {
             <br></br>
             <Box py={2} sx={{ border: 3}} mb={3}>
                 <div style={{width:'auto', height:window.innerHeight/1.5}}>
-                    <Graph nodes={nodes} edges={edges}/>
+                    {nodes.length < 200 ? <Graph nodes={nodes} edges={edges}/> : <Graph ndoes={[]} edges={[]} /> }
                 </div>
             </Box>
-            <Grid container direction = "row" mb={4}>
-                <Grid item xs={4}>
-                    <Button onClick={createWheelerGraphFile} variant='outlined'>Create Wheeler Graph JSON</Button>
+            <Stack spacing={.125} mb={3}>
+                <Grid container direction = "row" mb={4}>
+                    <Grid item xs={4}>
+                        <Button onClick={createWheelerGraphFile} variant='outlined'>Create Wheeler Graph JSON</Button>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <a download="wheelergraphJSON.txt" ref={refJSONDownload} style={{'display':'none'}}>Download JSON Object</a>
+                    </Grid>
                 </Grid>
-                <Grid item xs={1}>
-                    <Box sx={{ border: 1}}>
-                        <a download="wheelergraph.txt" ref={ref}>Download</a>
-                    </Box>
+                <Grid container direction = "row" mb={4}>
+                    <Grid item xs={4}>
+                        <Button onClick={createWheelerGraphCompressedFile} variant='outlined'>Create Compressed Index (files only)</Button>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <a download="wheelergraphCompressed.txt" ref={refCompressedDownload} style={{'display':'none'}}>Download Compressed Index</a>
+                    </Grid>
+                    <Grid item xs={4}>
+                        {loading ? <div><b>Please Wait, this takes a while for large texts...</b></div> : <></>}
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Stack>
         </Container>
     );
 
