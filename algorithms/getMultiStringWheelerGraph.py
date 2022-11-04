@@ -37,12 +37,13 @@ def getMultiStringWheelerGraph (inputArr):
     for node in nodes:
             ids.append(node['id'][::-1])
     ids.sort()
+    ids_dict = {}
+    for index, id in enumerate(ids):
+        ids_dict[id[::-1]] = index
+                
     for node in nodes:
-            target_id = node['id']
-            for index, rev_id in enumerate(ids):
-                    id = rev_id[::-1]
-                    if (id == target_id):
-                            node['order'] = index
+        target_id = node['id']
+        node['order'] = ids_dict[target_id]
 
     
     return {'nodes': nodes, 'edges': edges}
