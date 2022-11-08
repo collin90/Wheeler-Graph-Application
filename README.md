@@ -6,7 +6,13 @@ TEAM MEMBERS: Brandon Stride, Collin Hughes, Joanna Bi, Julia Ross
 
 Current Goals: 
     1. Build Tutorial Page
-    2. Build Visualization Page
+        a. Build interactive graph component (with react flow) so it can be nested into the tutorial page easily
+    2. Finalize visualize page
+        a. Build algorithm that compresses multi-string wheeler graphs (per section 4.4 of the paper: https://www.sciencedirect.com/science/article/pii/S0304397517305285)
+    3. Refactor / Integrate wheeler graph detection algorithms.
+        a. Start stylizing the "Wheeler Property" page.
+    4. Deploy both server and client apps for the presentation on wednesday (11/16/2022). 
+
 
 
 HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!
@@ -22,13 +28,6 @@ HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!
 
        6.  yarn install
        7.  yarn dev
-
-    B) Open up the app and navigate to the "VISUALIZE tab"
-
-    C) click the 'run python' button and verify that the screen looks like this:
-
-        nodes: 123
-        edges: xyz
 
     
 

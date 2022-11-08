@@ -1,5 +1,3 @@
-from bitstring import BitArray
-
 def getOILC (nodes, edges): 
     if(len(nodes) == 0): return {'O': [], 'I': [], 'L': [], 'C': []}
 
