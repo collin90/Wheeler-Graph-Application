@@ -1,8 +1,6 @@
-import sys
-import json
 import numpy as np
 import itertools as it
-
+from is_wheeler import is_wheeler
 from collections import defaultdict
 
 def dmin(l, default):
@@ -37,7 +35,7 @@ def dmin(l, default):
 def invert_dict(d):
     """Inverts a dictionary by mapping v to the list of all k in d such that d[k] = v."""
     d_inv = defaultdict(list) # lists will be empty by default for every key
-    {d_inv[v].append(k) for k, v in d.items()}
+    { d_inv[v].append(k) for k, v in d.items() }
     return d_inv
 
 def flatten_tuples(l):
@@ -115,7 +113,7 @@ def find_ordering(G):
 
     # Now must try every permutation of nodes with same edge label.
     perm_counts = [ fac(len(l)) for l in list(label_to_nodes.values()) ]
-    N = np.product(perm_counts)
+    N = np.product(perm_counts) # TODO: fix failure with int overload
     V = len(G[0])
     E = len(G[1])
     if N * (E * E + V) > 10**5: # small graphs reach 10**3 easily, but this is VERY fast.
@@ -125,54 +123,3 @@ def find_ordering(G):
     for o in os:
         if is_wheeler(G, o): return o
     return "Is not Wheeler because tried all possible orderings"
-
-def is_wheeler(G, order = None):
-    """A graph is Wheeler if the nodes can be ordered such that
-    1) 0 in-degree nodes come before others
-    And for all e0 = (u0, v0, a0) and e1 = (u1, v1, a1)  with in =: u, out =: v, label =: a,
-    2) a0 < a1 => v0 < v1 <=> not (a0 < a1 and v0 >= v1)
-    3) (a0 = a1) and (u0 < u1) => v0 <= v1 <=> not (a0 = a1 and u0 < u1 and v0 > v1)
-    
-    O(E^2 + V)
-    """
-    vertices, edges = G
-
-    # If no order is given, assume the nodes are labeled with their ordering
-    if order != None:
-        # map vertices to their order instead of their label
-        vertices = [ order[v] for v in vertices ]
-        edges = [ [order[e[1]], order[e[1]], e[2]] for e in edges ]
-
-    e_in = [ e[1] for e in edges ]
-    no_in = np.setdiff1d(vertices, e_in)
-
-    if dmin(e_in, 0) <= dmin(no_in, 0): return False # some node with an in edge precedes a no-in-degree node
-
-    for e0 in edges:
-        for e1 in edges:
-            if (e0[2] < e1[2] and e0[1] >= e1[1] or e0[2] == e1[2] and e0[0] < e1[0] and e0[1] > e1[1]):
-                return False
-    return True
-
-def main():
-    infile = open(sys.argv[1], 'r')
-    # edges are a list of ordered triples (out_node, in_node, edge_label). However, json
-    # format doesn't allow tuples, so really it is a 2D array.
-    # infile is formatted as pairs of lines, one with node labels and one with edges.
-
-    outfile = open(sys.argv[2], 'w')
-
-    n, e = infile.readline(), infile.readline()
-    while (n != '' and e != ''):
-        nodes = json.loads(n.removesuffix('\n'))
-        edges = json.loads(e.removesuffix('\n'))
-        G = (nodes, edges)
-        # outfile.write(str(is_wheeler(G)) + '\n')
-        # outfile.write(str(get_ranges(G)) + '\n')
-        print(find_ordering(G))
-        n, e = infile.readline(), infile.readline()
-
-    infile.close()
-    outfile.close()
-
-main()
