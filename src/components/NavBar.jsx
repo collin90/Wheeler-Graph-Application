@@ -7,6 +7,9 @@ function NavBar () {
             <Link to="/" className="site-title">Wheeler Graphs</Link>
             <ul>
                 <li>
+                    <Link to="/tutorial">Tutorial</Link>
+                </li>
+                <li>
                     <Link to="/visualize">Visualize</Link>
                 </li>
                 <li>
