@@ -88,17 +88,17 @@ const AddNodeOnEdgeDrop = () => {
 
   const getColor = (label) => {
     if(label == 'a') return '#ADD8E6';
-    else if (label == 'c') return '#90EE90';
-    else if (label == 'g') return '#ff7f50';
-    else if (label == 't') return '#CBC3E3';
+    else if (label == 'b') return '#90EE90';
+    else if (label == 'c') return '#ff7f50';
+    else if (label == 'd') return '#CBC3E3';
     else return 'black';
   }
 
   const handleEdgeClick = (event, edge) => {
     let newLabel;
-    if(edge.label == 'a') newLabel = 'c';
-    else if (edge.label == 'c') newLabel = 'g';
-    else if (edge.label == 'g') newLabel = 't';
+    if(edge.label == 'a') newLabel = 'b';
+    else if (edge.label == 'b') newLabel = 'c';
+    else if (edge.label == 'c') newLabel = 'd';
     else newLabel = 'a';
     const newEdges = edges.map(e => {
       if(e.id == edge.id){
