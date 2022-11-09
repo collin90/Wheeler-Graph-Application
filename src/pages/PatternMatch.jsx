@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import InteractiveGraph from "../components/InteractiveGraph";
 import Box from "@mui/material/Box";
 
@@ -11,13 +10,4 @@ function PatternMatch () {
         </Box>
     );
 
-=======
-function PatternMatch () {
-    return (
-        <div>
-            This is the pattern matching page
-        </div>
-    );
-
->>>>>>> 48ad773a8c8d76c89873aa0526e8d625118aa5b1
 } export default PatternMatch;
