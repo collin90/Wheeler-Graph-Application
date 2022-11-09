@@ -14,7 +14,6 @@ import axios from 'axios';
 const initialNodes = [
   {
     id: '0',
-    type: 'input',
     data: { label: 0 },
     position: { x: 0, y: 50 },
   },
