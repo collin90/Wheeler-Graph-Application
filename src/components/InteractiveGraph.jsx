@@ -99,14 +99,15 @@ const AddNodeOnEdgeDrop = () => {
     if(edge.label == 'a') newLabel = 'b';
     else if (edge.label == 'b') newLabel = 'c';
     else if (edge.label == 'c') newLabel = 'd';
-    else newLabel = 'a';
+    else newLabel = 'x';
     const newEdges = edges.map(e => {
       if(e.id == edge.id){
         return {id: e.id, label: newLabel, source: e.source, target: e.target, style: {stroke: getColor(newLabel)}}
       }
       else return e;
     });
-    setEdges(newEdges);
+    const filteredNewEdges = newEdges.filter(e => e.label != 'x')
+    setEdges(filteredNewEdges);
     const c = change + 1;
     setChange(c);
   }
