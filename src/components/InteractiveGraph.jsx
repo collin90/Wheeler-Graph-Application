@@ -21,14 +21,14 @@ const initialNodes = [
 
 let id = 1;
 const getId = () => `${id++}`;
+const decrementId = () => {id--};
 
 const edgeOptions = {
   animated: true,
   label: 'a',
   style: {stroke: '#ADD8E6'}
-};
+}
 const connectionLineStyle = { stroke: 'black' };
-
 
 const fitViewOptions = {
   padding: 3,
@@ -45,8 +45,6 @@ const AddNodeOnEdgeDrop = () => {
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   useEffect(() => {
-    console.log(nodes);
-    console.log(edges);
     const path = 'http://127.0.0.1:5000/checkWheeler';
         axios.post(path, {nodes: nodes, edges: edges}).then(
             (response) => {
@@ -112,10 +110,35 @@ const AddNodeOnEdgeDrop = () => {
   }
 
   const handleNodeClick = (event, node) => {
+    const id_dropped = node.id;
+    decrementId();
     const newEdges = edges.filter(e => {return (e.source != node.id && e.target != node.id)});
     const newNodes = nodes.filter(n => {return n.id != node.id});
-    setNodes(newNodes);
-    setEdges(newEdges);
+    const updatedNewNodes = newNodes.map(n => {
+      if(n.id > id_dropped){
+        const newId = (parseInt(n.id) - 1).toString();
+        return {id: newId, position: n.position, data: {label: newId}}
+      }
+      else return n;
+    })
+    const updatedNewEdges = newEdges.map(e => {
+      if(e.source > id_dropped && e.target > id_dropped){
+        const newSource = (parseInt(e.source) - 1).toString();
+        const newTarget = (parseInt(e.target) - 1).toString();
+        return {id: e.id, target: newTarget, source: newSource, label: e.label}
+      }
+      else if(e.source > id_dropped){
+        const newSource = (parseInt(e.source) - 1).toString();
+        return {id: e.id, target: e.target, source: newSource, label: e.label}
+      }
+      else if(e.target > id_dropped){
+        const newTarget = (parseInt(e.target) - 1).toString();
+        return {id: e.id, target: newTarget, source: e.source, label: e.label}
+      }
+      else return e;
+    })
+    setNodes(updatedNewNodes);
+    setEdges(updatedNewEdges);
   }
 
   return (
