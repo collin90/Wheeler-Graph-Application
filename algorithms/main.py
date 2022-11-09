@@ -4,6 +4,7 @@ from flask_cors import CORS
 from getSingleStringWheelerGraph import getSingleStringWheelerGraph 
 from getMultiStringWheelerGraph import getMultiStringWheelerGraph
 from getOILC import getOILC
+from ordered_wheeler_property import check_for_wheeler_property
 
 app = Flask(__name__)
 CORS(app)
@@ -29,6 +30,14 @@ def compressed():
     else : graph = {'nodes': [], 'edges': []}
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)
+
+@app.route('/checkWheeler', methods = ['POST'])
+def checkWheeler():
+    nodes = request.json['nodes']
+    edges = request.json['edges']
+    isWheeler = {'result' : check_for_wheeler_property(nodes, edges)}
+    return jsonify(isWheeler)
+
 
 if __name__ == '__main__':
 	app.run(debug = True)
