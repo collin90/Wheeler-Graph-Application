@@ -404,6 +404,16 @@ function Tutorial() {
                             </div>
                         </Typography>
 
+                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Pattern Matching Inquiry </Typography>
+                    <Typography variant="body1">
+                        <br></br>
+                    A second motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
+                    the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
+                    is possible because of the graph's path coherence property.This makes the matching process easier in a pattern matching problem. 
+                    We can perform a relatively quick binary search on the compressed Graph.
+
+                    </Typography>
+
                         <Typography>
                         <br></br>
                         <br></br>
