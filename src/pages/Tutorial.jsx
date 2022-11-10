@@ -111,7 +111,7 @@ function Tutorial() {
                     </ol>
                 </Box>
                 <Box pt={3}>
-                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Wheeler Property </Typography>
+                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Path Coherence </Typography>
                     <Typography variant="body1">
                         Wheeler graphs have a property called <b>path coherence.</b>
                     </Typography>
