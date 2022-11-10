@@ -112,8 +112,8 @@ function Tutorial() {
                     </Typography>
                     <Typography variant="body1">
                         This means that when matching a string, you can start from the shortest suffix and all edges that match that character 
-                        reach nodes with consecutive labels. Then, going from those nodes along the edge with the next character, you will reach
-                        at nodes that are also consecutive. 
+                        reach nodes with consecutive labels. Then, going from those nodes along the edge with the next character, you will reach 
+                        nodes that are also consecutive. 
                         <br></br><br></br>
                         Because of this property, the Wheeler graph can be stored compactly and process strings quickly
                     </Typography>
