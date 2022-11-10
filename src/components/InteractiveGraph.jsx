@@ -154,6 +154,18 @@ const AddNodeOnEdgeDrop = () => {
     setEdges(newEdges);
   }
 
+  const addNode = () => {
+    const newNodes = nodes;
+    const id = getId();
+    const newNode = {
+      id: id,
+      position: {x: 0, y: 0},
+      data: { label: `${id}` },
+    };
+    newNodes.push(newNode);
+    setNodes(newNodes);
+  }
+
   return (
     <>
     <div className="wrapper" ref={reactFlowWrapper}>
@@ -177,8 +189,11 @@ const AddNodeOnEdgeDrop = () => {
       <Grid item xs={4} >
         {wheeler ? <h2>This is a Wheeler Graph!</h2> : <h2>Not A Wheeler Graph!</h2>}
       </Grid>
-      <Grid item xs={4} mt={3}>
+      <Grid item xs={3} mt={3}>
         <Button onClick={resetGraph} variant='outlined'>Reset Graph</Button>
+      </Grid>
+      <Grid item xs={3} mt={3}>
+        <Button onClick={addNode} variant='outlined'>Add Node</Button>
       </Grid>
     </Grid>
     </>
