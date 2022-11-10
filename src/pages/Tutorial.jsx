@@ -65,8 +65,8 @@ function Tutorial() {
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Why Wheeler? </Typography>
                     <Typography variant="body1" ml={4}>
                         The Burrows-Wheeler Transform is an algorithm that compresses a string. Due to properties like reversibility, it is very useful for many applications.
-                        It originally only compresses a single string, but there now there are variations for other data structures like sets of strings and de Bruijn graphs. 
-                        The Wheeler graph is a framework that includes these variations. 
+                        It originally only compresses a single string, but there now there are variations for other data structures like sets of strings and de Bruijn graphs.
+                        The Wheeler graph is a framework that includes these variations.
                     </Typography>
                 </Box>
                 <Box pt={3}>
@@ -90,10 +90,10 @@ function Tutorial() {
                             <Typography variant="body1" ml={4}>If an edge labeled a is alphabetically less than an edge labeled a', then that the lesser edge's destination should be less than the greater edge's destination. </Typography>
                             <Typography variant="body1" ml={6}>This also creates the corollary that all edges entering the same node have the same label since a node cannot have two incoming edges with different labels </Typography>
                         </li>
-                        <Typography variant="body1" ml={6}> 
-                            <br></br> A &lt; B and 30 &lt; 40 =&gt; property holds 
+                        <Typography variant="body1" ml={6}>
+                            <br></br> A &lt; B and 30 &lt; 40 =&gt; property holds
                             <br></br> A &lt; B and 10 &#x226E; 10 =&gt; property does not hold
-                          </Typography>
+                        </Typography>
                         <div style={{ width: 500, height: 300 }}>
                             <Graph nodes={nodes2} edges={edges2} fitView={true} />
                         </div>
@@ -101,30 +101,14 @@ function Tutorial() {
                             <MathJax.Node inline formula={`(a = a') \\land (u < u') \\Longrightarrow v \\leq v'`} />
                             <Typography variant="body1" ml={4}>If an edge labeled a is alphabetically equal to an edge labeled a' and the source of a is less than the source of a', then the destination of a must be less than or equal to the destination of a'. </Typography>
                         </li>
-                        <Typography variant="body1" ml={6}> 
-                            <br></br> A = A, 10 &lt; 30, and 20 &#8804; 40 =&gt; property holds 
+                        <Typography variant="body1" ml={6}>
+                            <br></br> A = A, 10 &lt; 30, and 20 &#8804; 40 =&gt; property holds
                             <br></br> A = A, 10 &lt; 30, and 40 &#8804; 40 =&gt; property holds
-                          </Typography>
+                        </Typography>
                         <div style={{ width: 500, height: 300 }}>
                             <Graph nodes={nodes3} edges={edges3} fitView={true} />
                         </div>
                     </ol>
-                </Box>
-                <Box pt={3}>
-                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Path Coherence </Typography>
-                    <Typography variant="body1">
-                        Wheeler graphs have a property called <b>path coherence.</b>
-                    </Typography>
-                    <Typography variant="body1" ml={4} py={2}>
-                        "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α, the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated, themselves form a consecutive range" (Gagie 2017)
-                    </Typography>
-                    <Typography variant="body1">
-                        This means that when matching a string, you can start from the shortest suffix and all edges that match that character 
-                        reach nodes with consecutive labels. Then, going from those nodes along the edge with the next character, you will reach 
-                        nodes that are also consecutive. 
-                        <br></br><br></br>
-                        Because of this property, the Wheeler graph can be stored compactly and process strings quickly
-                    </Typography>
                 </Box>
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Try for Yourself! </Typography>
@@ -139,6 +123,28 @@ function Tutorial() {
                     <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
                         <InteractiveGraph />
                     </div>
+                </Box>
+                <Box pt={3}>
+                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Path Coherence </Typography>
+                    <Typography variant="body1">
+                        Wheeler graphs have a property called <b>path coherence.</b>
+                    </Typography>
+                    <Typography variant="body1" ml={4} py={2}>
+                        "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α, the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated, themselves form a consecutive range" (Gagie 2017)
+                    </Typography>
+                    <Typography variant="body1">
+                        This means that when matching a string, you can start from the shortest suffix and all edges that match that character
+                        reach nodes with consecutive labels. Then, going from those nodes along the edge with the next character, you will reach
+                        nodes that are also consecutive.
+                        <br></br><br></br>
+                        Because of this property, the Wheeler graph can be stored compactly and process strings quickly
+                    </Typography>
+                </Box>
+                <Box pt={3}>
+                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Storage </Typography>
+                    <Typography variant="body1">
+                        storage stuff
+                    </Typography>
                 </Box>
             </MathJax.Provider>
         </Container>
