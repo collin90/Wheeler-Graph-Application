@@ -11,9 +11,9 @@ const nodes2 = [
     { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, position: { x: 175, y: 50 } },
     { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 100, y: 200 } },
     { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 175, y: 200 } },
-    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, position: { x: 350, y: 50 } },
-    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, position: { x: 425, y: 50 } },
-    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 350, y: 200 } },
+    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, position: { x: 300, y: 50 } },
+    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, position: { x: 375, y: 50 } },
+    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 300, y: 200 } },
 ]
 
 const edges2 = [
@@ -28,13 +28,13 @@ const nodes3 = [
     { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 175, y: 50 } },
     { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '20' }, position: { x: 100, y: 200 } },
     { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 175, y: 200 } },
-    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 350, y: 50 } },
-    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 425, y: 50 } },
-    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 350, y: 200 } },
-    { id: 'node8', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 600, y: 50 } },
-    { id: 'node9', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 675, y: 50 } },
-    { id: 'node10', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 600, y: 200 } },
-    { id: 'node11', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '20' }, position: { x: 675, y: 200 } },
+    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 300, y: 50 } },
+    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 375, y: 50 } },
+    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 300, y: 200 } },
+    { id: 'node8', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 500, y: 50 } },
+    { id: 'node9', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 575, y: 50 } },
+    { id: 'node10', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 500, y: 200 } },
+    { id: 'node11', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '20' }, position: { x: 575, y: 200 } },
     
 ]
 
@@ -84,7 +84,7 @@ function Tutorial() {
                             <br></br> A &lt; B and 30 &lt; 40 =&gt; property holds
                             <br></br> A &lt; B and 10 &#x226E; 10 =&gt; property does not hold
                         </Typography>
-                        <div style={{ width: 500, height: 300 }}>
+                        <div style={{ width: 450, height: 300 }}>
                             <Graph nodes={nodes2} edges={edges2} fitView={true} />
                         </div>
                         <li>
@@ -94,9 +94,9 @@ function Tutorial() {
                         <Typography variant="body1" ml={6}>
                             <br></br> A = A, 10 &lt; 30, and 20 &#8804; 40 =&gt; property holds
                             <br></br> A = A, 10 &lt; 30, and 40 &#8804; 40 =&gt; property holds
-                            <br></br> A = A, 10 &lt; 30, and 40 &gt; 20 =&gt; property does not hold
+                            <br></br> A = A, 10 &lt; 30, and 40 &#8816; 20 =&gt; property does not hold
                         </Typography>
-                        <div style={{ width: 750, height: 300 }}>
+                        <div style={{ width: 650, height: 300 }}>
                             <Graph nodes={nodes3} edges={edges3} fitView={true} />
                         </div>
                     </ol>
@@ -122,7 +122,9 @@ function Tutorial() {
                         we will explore below, and is thus a major motivation to use Wheeler Graphs.
                     </Typography>
                     <Typography variant="body1" ml={4} py={2}>
-                        "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α, the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated, themselves form a consecutive range" (Gagie 2017)
+                        "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α, 
+                        the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated, 
+                        themselves form a consecutive range" (Gagie 2017)
                     </Typography>
                     <Typography variant="body1">
                         This means that when matching a string, you can start from the shortest suffix and all edges that match that character
