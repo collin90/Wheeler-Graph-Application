@@ -31,6 +31,11 @@ const nodes3 = [
     { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 350, y: 50 } },
     { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 425, y: 50 } },
     { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 350, y: 200 } },
+    { id: 'node8', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '10' }, position: { x: 600, y: 50 } },
+    { id: 'node9', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 675, y: 50 } },
+    { id: 'node10', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 600, y: 200 } },
+    { id: 'node11', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '20' }, position: { x: 675, y: 200 } },
+    
 ]
 
 const edges3 = [
@@ -38,23 +43,8 @@ const edges3 = [
     { id: 'edge2', animated: true, source: 'node2', target: 'node4', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
     { id: 'edge3', animated: true, source: 'node5', target: 'node7', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
     { id: 'edge4', animated: true, source: 'node6', target: 'node7', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-]
-
-const nodesProp = [
-    { id: 'node1', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '1' }, position: { x: 100, y: 50 } },
-    { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '2' }, position: { x: 175, y: 50 } },
-    { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '3' }, position: { x: 100, y: 200 } },
-    { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '4' }, position: { x: 175, y: 200 } },
-    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '5' }, position: { x: 350, y: 50 } },
-    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '6' }, position: { x: 425, y: 50 } },
-    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '7' }, position: { x: 350, y: 200 } },
-]
-
-const edgesProp = [
-    { id: 'edge1', animated: true, source: 'node1', target: 'node3', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge2', animated: true, source: 'node2', target: 'node4', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge3', animated: true, source: 'node5', target: 'node7', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge4', animated: true, source: 'node6', target: 'node7', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
+    { id: 'edge5', animated: true, source: 'node8', target: 'node10', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#FF0000', }, style: { strokeWidth: 2, stroke: '#FF0000', } },
+    { id: 'edge6', animated: true, source: 'node9', target: 'node11', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#FF0000', }, style: { strokeWidth: 2, stroke: '#FF0000', } },
 ]
 
 function Tutorial() {
@@ -104,8 +94,9 @@ function Tutorial() {
                         <Typography variant="body1" ml={6}>
                             <br></br> A = A, 10 &lt; 30, and 20 &#8804; 40 =&gt; property holds
                             <br></br> A = A, 10 &lt; 30, and 40 &#8804; 40 =&gt; property holds
+                            <br></br> A = A, 10 &lt; 30, and 40 &gt; 20 =&gt; property does not hold
                         </Typography>
-                        <div style={{ width: 500, height: 300 }}>
+                        <div style={{ width: 750, height: 300 }}>
                             <Graph nodes={nodes3} edges={edges3} fitView={true} />
                         </div>
                     </ol>
