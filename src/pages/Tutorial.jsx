@@ -73,7 +73,7 @@ function Tutorial() {
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Wheeler Graph Definition </Typography>
                 </Box>
                 <Box>
-                    <Typography variant="body1"> A <b>Wheeler Graph</b> is a directed edge-labeled graph, where each label is from a totally-ordered alphabet and following are true. </Typography>
+                    <Typography variant="body1"> A <b>Wheeler Graph</b> is a directed edge-labeled graph, where each label is from a totally-ordered alphabet and the following are true. </Typography>
                     <Typography variant="body1"> The nodes can be ordered such that, </Typography>
                     <ol>
                         <li>Nodes with in-degree 0 come before nodes with positive in-degree</li>
