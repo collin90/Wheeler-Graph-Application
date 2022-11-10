@@ -60,6 +60,10 @@ const AddNodeOnEdgeDrop = () => {
         );
   }, [change, nodes.length, edges.length]);
 
+  useEffect(() => {
+    resetGraph();
+  },[])
+
   const onConnectStart = useCallback((_, { nodeId }) => {
     connectingNodeId.current = nodeId;
   }, []);
