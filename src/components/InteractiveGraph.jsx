@@ -6,6 +6,8 @@ import ReactFlow, {
   useReactFlow,
   ReactFlowProvider,
 } from 'reactflow';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import 'reactflow/dist/style.css';
 import { v4 as uuidv4 } from 'uuid';
 import './css/index.css';
@@ -22,6 +24,7 @@ const initialNodes = [
 let id = 1;
 const getId = () => `${id++}`;
 const decrementId = () => {id--};
+const resetId = () => {id = 1};
 
 const edgeOptions = {
   animated: true,
@@ -110,35 +113,57 @@ const AddNodeOnEdgeDrop = () => {
   }
 
   const handleNodeClick = (event, node) => {
-    const id_dropped = node.id;
-    decrementId();
-    const newEdges = edges.filter(e => {return (e.source != node.id && e.target != node.id)});
-    const newNodes = nodes.filter(n => {return n.id != node.id});
-    const updatedNewNodes = newNodes.map(n => {
-      if(n.id > id_dropped){
-        const newId = (parseInt(n.id) - 1).toString();
-        return {id: newId, position: n.position, data: {label: newId}}
-      }
-      else return n;
-    })
-    const updatedNewEdges = newEdges.map(e => {
-      if(e.source > id_dropped && e.target > id_dropped){
-        const newSource = (parseInt(e.source) - 1).toString();
-        const newTarget = (parseInt(e.target) - 1).toString();
-        return {id: e.id, target: newTarget, source: newSource, label: e.label}
-      }
-      else if(e.source > id_dropped){
-        const newSource = (parseInt(e.source) - 1).toString();
-        return {id: e.id, target: e.target, source: newSource, label: e.label}
-      }
-      else if(e.target > id_dropped){
-        const newTarget = (parseInt(e.target) - 1).toString();
-        return {id: e.id, target: newTarget, source: e.source, label: e.label}
-      }
-      else return e;
-    })
-    setNodes(updatedNewNodes);
-    setEdges(updatedNewEdges);
+    if(nodes.length > 1) {
+      const id_dropped = node.id;
+      decrementId();
+      const newEdges = edges.filter(e => {return (e.source != node.id && e.target != node.id)});
+      const newNodes = nodes.filter(n => {return n.id != node.id});
+      const updatedNewNodes = newNodes.map(n => {
+        if(n.id > id_dropped){
+          const newId = (parseInt(n.id) - 1).toString();
+          return {id: newId, position: n.position, data: {label: newId}}
+        }
+        else return n;
+      })
+      const updatedNewEdges = newEdges.map(e => {
+        if(e.source > id_dropped && e.target > id_dropped){
+          const newSource = (parseInt(e.source) - 1).toString();
+          const newTarget = (parseInt(e.target) - 1).toString();
+          return {id: e.id, target: newTarget, source: newSource, label: e.label}
+        }
+        else if(e.source > id_dropped){
+          const newSource = (parseInt(e.source) - 1).toString();
+          return {id: e.id, target: e.target, source: newSource, label: e.label}
+        }
+        else if(e.target > id_dropped){
+          const newTarget = (parseInt(e.target) - 1).toString();
+          return {id: e.id, target: newTarget, source: e.source, label: e.label}
+        }
+        else return e;
+      })
+      setNodes(updatedNewNodes);
+      setEdges(updatedNewEdges);
+    }
+  }
+
+  const resetGraph = () => {
+    resetId();
+    const newNodes = initialNodes;
+    const newEdges = [];
+    setNodes(newNodes);
+    setEdges(newEdges);
+  }
+
+  const addNode = () => {
+    const newNodes = nodes;
+    const id = getId();
+    const newNode = {
+      id: id,
+      position: {x: 0, y: 0},
+      data: { label: `${id}` },
+    };
+    newNodes.push(newNode);
+    setNodes(newNodes);
   }
 
   return (
@@ -160,9 +185,17 @@ const AddNodeOnEdgeDrop = () => {
         fitViewOptions={fitViewOptions}
       />
     </div>
-    <div>
-      {wheeler ? <h2>This is a Wheeler Graph!</h2> : <h2>Not A Wheeler Graph!</h2>}
-    </div>
+    <Grid container direction="row" mb={4}>
+      <Grid item xs={4} >
+        {wheeler ? <h2>This is a Wheeler Graph!</h2> : <h2>Not A Wheeler Graph!</h2>}
+      </Grid>
+      <Grid item xs={3} mt={3}>
+        <Button onClick={resetGraph} variant='outlined'>Reset Graph</Button>
+      </Grid>
+      <Grid item xs={3} mt={3}>
+        <Button onClick={addNode} variant='outlined'>Add Node</Button>
+      </Grid>
+    </Grid>
     </>
   );
 };
