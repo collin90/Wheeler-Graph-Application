@@ -125,9 +125,10 @@ function Tutorial() {
                     </div>
                 </Box>
                 <Box pt={3}>
-                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Path Coherence </Typography>
+                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Wheeler Graph Motivation </Typography>
                     <Typography variant="body1">
-                        Wheeler graphs have a property called <b>path coherence.</b>
+                        Wheeler graphs have a property called <b>path coherence.</b> This property is useful for reasons
+                        we will explore below, and is thus a major motivation to use Wheeler Graphs.
                     </Typography>
                     <Typography variant="body1" ml={4} py={2}>
                         "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α, the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated, themselves form a consecutive range" (Gagie 2017)
@@ -137,13 +138,41 @@ function Tutorial() {
                         reach nodes with consecutive labels. Then, going from those nodes along the edge with the next character, you will reach
                         nodes that are also consecutive.
                         <br></br><br></br>
-                        Because of this property, the Wheeler graph can be stored compactly and process strings quickly
+                        
                     </Typography>
                 </Box>
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Storage </Typography>
                     <Typography variant="body1">
-                        storage stuff
+                        Because of the path property, the Wheeler graph can be stored compactly and process strings quickly. We can be specific about the compression:
+                        <br></br> 
+                        <br></br> 
+                        Given a graph G = (V,E), where V = set of vertices and E = set of edges,
+                        and σ is the size of the alphabet. 
+                        <br></br> 
+                        |V| = n, |E| = e. Then, the graph may be
+                        stored in 2(e + n) + e log σ + σ log e + o(n + e log σ) bits.
+                        Path coherence is a valuable property, paritcularly because it allows us to
+                        store the graph using bitvectors. To understand how to store a Wheeler graph in bitvectors,
+                        we first need to understand unary encodings, in-degree bitvectors, and out-degree bitvectors
+                    </Typography>
+                    <Typography variant="body2">
+                    <b>Unary Encoding</b>
+                    <br></br> 
+                    One way to store a Wheeler Graph is by using unary encodings
+                    to storing the in- and out-degree nodes in bitvectors. We may also wish to store
+                    the edge labels.
+                    To encode a given number, n, in Unary, we simple write n 0s, followed by a
+                    singular 1.
+                    For example,
+                    0 is encoded with 1
+                    7 is encoded with 00000001
+                    See here for more information on unary encoding:
+                    </Typography>
+                    <a href ="https://en.wikipedia.org/wiki/Unary_coding">Here</a>
+                    <Typography variant="body2">
+                    <b>In-degree vector</b>
+
                     </Typography>
                 </Box>
             </MathJax.Provider>
