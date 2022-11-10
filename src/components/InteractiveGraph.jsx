@@ -162,8 +162,7 @@ const AddNodeOnEdgeDrop = () => {
       position: {x: 0, y: 0},
       data: { label: `${id}` },
     };
-    newNodes.push(newNode);
-    setNodes(newNodes);
+    setNodes((nds) => nds.concat(newNode));
   }
 
   return (
