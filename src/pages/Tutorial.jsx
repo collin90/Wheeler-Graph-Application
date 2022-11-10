@@ -129,7 +129,7 @@ function Tutorial() {
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Try for Yourself! </Typography>
                     <Typography variant="body1" ml={4}>
-                        1. Create a new node by dragging an edge from any existing node <br></br>
+                        1. Create a new node by dragging an edge from any existing node or clicking Add Node <br></br>
                         2. Change the label of an edge by clicking on it <br></br>
                         3. Remove a node and its neighboring edges by clicking on it <br></br>
                         4. Remove an edge by clicking it when it is already labeled 'd' <br></br>
