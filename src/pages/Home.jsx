@@ -44,11 +44,6 @@ function Home () {
             <div>This is a tutorial on Wheeler graphs. Here is an example of a wheeler graph</div>
             <Graph nodes={nodes} edges={edges}/>
         </div>
-        
-        <div style={{ height: 500 }}>
-        <iframe src="./teaching_guide.pdf" height="100%" width="100%"></iframe>
-        </div>
-
     </div>
 
     )
