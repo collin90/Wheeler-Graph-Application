@@ -1,11 +1,7 @@
 import numpy as np
 import itertools as it
-from is_wheeler import is_wheeler
+from is_wheeler import *
 from collections import defaultdict
-
-def dmin(l, default):
-    """Gets minimum in the array. If array is empty, returns the default value."""
-    return default if len(l) == 0 else np.min(l)
 
 # def get_ranges(G):
 #     """
@@ -32,12 +28,6 @@ def dmin(l, default):
 
 #     return d
 
-def invert_dict(d):
-    """Inverts a dictionary by mapping v to the list of all k in d such that d[k] = v."""
-    d_inv = defaultdict(list) # lists will be empty by default for every key
-    { d_inv[v].append(k) for k, v in d.items() }
-    return d_inv
-
 def flatten_tuples(l):
     """Flattens a list of tuples into a list"""
     acc = []
@@ -55,7 +45,7 @@ def combos(l):
                         [(1, 0), (2), (3, 4)],
                         [(1, 0), (2), (4, 3)]]
 
-    Implementation is tail recursive.
+    Implementation is not tail recursive.
     """
     n = len(l)
     if n == 0: return []
@@ -69,6 +59,7 @@ def combos(l):
         accum.extend(with_t)
     return accum
 
+# TODO: consider yielding so that the graphs are not all stored in memory waiting to be tried
 def order(G, label_to_nodes):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
@@ -86,40 +77,59 @@ def order(G, label_to_nodes):
         for i in r:
             d[c[i]] = i # the i'th node label in the combo has order i
 
-    return orders
+    return orders # change this return type to be a graph
 
 def has_good_labels(incoming):
-    label_sets = [ set([ e[2] for e in edges ]) for edges in incoming.values() ]
-    return np.all(np.vectorize(len)(label_sets) <= 1) # ensure not more than two distinct labels on incoming edges
+    """True iff every node has exactly 1 or 0 unique incoming edges labels.
+    
+    Parameters
+    ----------
+    incoming: dictionary mapping id to list of edges. Nodes with no incoming edges need not exist in this dictionary.
+    """
+    for edges in incoming.values():
+        if len(set(q(edges, 'label'))) > 1: return False
+    return True
 
-# TODO: test with more complex graphs. Seems to work on small graphs.
-def find_ordering(G):
-    incoming = dict() # O(VE) to construct. Could be more efficient
-    for v in G[0]:
-        incoming[v] = [ e for e in G[1] if e[1] == v ]
+def find_ordering(G, MAX_ITERATIONS=2**20):
+    """Given a graph G, finds an ordering on the graph is possible. Will not try if the number of iterators over
+    graph elements is greater than MAX_ITERATIONS.
+    
+    Parameters
+    ----------
+    G : { 'nodes': node list, 'edges': edge list }
+    MAX_ITERATIONS: int = 2^20
+
+    Returns
+    -------
+    dict = { 'ordering': graph or None, 'message': string }
+    """
+    nodes, edges = G['nodes'], G['edges']
+
+    # Get all edges the are incoming to each node
+    incoming = defaultdict(list) 
+    { incoming[e['target']].append(e) for e in edges }
 
     if not has_good_labels(incoming):
-        return "Cannot be Wheeler because a node has two incoming edges with different labels"
+        return dict({'ordering':None, 'message':'Graph cannot be Wheeler because a node has incoming edges with two different labels'})
 
-    # should try creating label_to_nodes directly instead of this way and then inverting.
-    in_labels = dict()
-    for v in G[0]:
-        I = incoming[v]
-        in_labels[v] = None if len(I) == 0 else I[0][2] # get the only incoming label
-    
-    label_to_nodes = invert_dict(in_labels)
+    # Partition the nodes by the incoming label
+    label_set = defaultdict(set)
+    { label_set[e['label']].add(e['id']) for e in edges }
 
     fac = lambda x : x * fac(x - 1) if x > 1 else 1 # factorial
 
     # Now must try every permutation of nodes with same edge label.
-    perm_counts = [ fac(len(l)) for l in list(label_to_nodes.values()) ]
-    N = np.product(perm_counts) # TODO: fix failure with int overload
-    V = len(G[0])
-    E = len(G[1])
-    if N * (E * E + V) > 10**5: # small graphs reach 10**3 easily, but this is VERY fast.
-        return f"Too large. {N} possible orderings => {N * (E * E + V)} iterations over graph elements."
+    N = 1 # I wish we could use np.product() for this, but it overflows at 2^32
+    for p in [ fac(len(l)) for l in list(label_set.values()) ]:
+        N *= p
+    V = len(nodes)
+    E = len(edges)
+    # Assume that for every permutation, we must check if the whole graph is wheeler. It is wheeler in O(E^2 + V) for V the size of the vertices=nodes.
+    if N * (E * E + V) > MAX_ITERATIONS:
+        return dict({'ordering':None, 'message':f'Too many possibilities to try. There are {N} possible orderings => {N * (E * E + V)} iterations over graph elements required.'})
 
-    os = order(G, label_to_nodes) # Complexity of order is exactly N
+    os = order(G, label_set)
     for o in os:
-        if is_wheeler(G, o): return o
-    return "Is not Wheeler because tried all possible orderings"
+        if is_wheeler(o): return {'ordering':o, 'message':'Graph is Wheeler.'}
+
+    return dict({'ordering':None, 'message':'Graph is not Wheeler because all possible orderings were tried.'})

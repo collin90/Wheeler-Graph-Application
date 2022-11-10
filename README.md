@@ -20,7 +20,7 @@ HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!
     A) Run these commands in your terminal
        1.  pip install virtualenv
        2.  virtualenv env
-       3.  source env/Scripts/activate     ** it might be env/bin/activate if you get an error. You should see (env) as the output on your terminal **
+       3.  source env/Scripts/activate     ** it might be env/bin/activate if you get an error. You should see (env) as the output on your terminal; it might also be ```./env/Scripts/activate.ps1```, and this could require that you run ```Set-ExecutionPolicy RemoteSigned``` **
        4.  pip install flask flask_cors
        5.  python algorithms/main.py    **this should launch a dev server for the python file (which doesn't do much yet, but it will!) If you go to this localhost url, it will show a 404 error. That's because the page does nothing by itself, it only has a callable method.**
 
