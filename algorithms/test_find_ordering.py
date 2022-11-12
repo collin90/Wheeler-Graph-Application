@@ -31,6 +31,7 @@ class TestFindOrdering(unittest.TestCase):
         self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable2.txt')) # no edges. Creates all permutations and succeeds on the first one.
         self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable3.txt')) # has 12 nodes, 13 edges => worst case is 12!*(13^2 + 12) ~= 86 billion
         self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable4.txt', 2**23)) # 12n, 14e => 99.6 billion
+        self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable5.txt', 2**23)) # Created from multistring. 14 nodes?
         self.assertEqual(DIFF_LABELS_MESSAGE, get_message('complex_false1.txt')) # has 6 nodes
         self.assertEqual(CYCLE_MESSAGE, get_message('complex_unorderable1.txt', 2**23)) # 12n, 15e => 113 billion worst case. Is detected by finding a cycle
         self.assertEqual(ALL_ORDERS_MESSAGE, get_message('complex_unorderable2.txt', 2**23)) # 12n, 15e => 113 billion worst case.

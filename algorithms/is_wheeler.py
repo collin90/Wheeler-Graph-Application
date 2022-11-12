@@ -1,21 +1,6 @@
 import numpy as np
+from graph_utils import *
 from collections import defaultdict
-
-def q(ls, k):
-    """Queries a list of dictionaries ls for the key k and returns a new list"""
-    return [ d[k] for d in ls ]
-
-def make_node_map(nodes):
-    d = dict()
-    for id, n in zip(q(nodes, 'id'), nodes):
-        d[id] = n
-    return d
-
-def get_in_degrees(edges):
-    d = defaultdict(int)
-    for id in q(edges, 'target'):
-        d[id] += 1
-    return d
 
 def zero_in_degree_are_first(nodes, in_degree):
     m = np.inf # minimum order of a node with nonzero in-degree

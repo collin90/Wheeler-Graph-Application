@@ -21,6 +21,10 @@ class TestHasCycle(unittest.TestCase):
 
         self.assertTrue(run_file('simple_self_loop.txt', has_cycle))
         self.assertTrue(run_file('complex_self_loop.txt', has_cycle))
+
+        self.assertTrue(run_file('disconnected_cycle1.txt', has_cycle))
+        self.assertTrue(run_file('disconnected_cycle2.txt', has_cycle))
+        self.assertFalse(run_file('disconnected_no_cycle1.txt', has_cycle))
     
     def test_label_cycle(self):
         self.assertTrue(run_file('simple_cycle1.txt', has_label_cycle))

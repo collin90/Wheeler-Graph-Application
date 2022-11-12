@@ -1,7 +1,8 @@
 import numpy as np
 import itertools as it
 from is_wheeler import *
-from has_cycle import *
+from has_cycle import has_label_cycle
+from graph_utils import *
 from collections import defaultdict
 from copy import deepcopy
 
@@ -42,6 +43,26 @@ def combos(l):
         accum.extend(with_t)
     return accum
 
+def remove_failing_perms(perms, G):
+    """For each tuple of ids in perms, keeps the tuple iff the subgraph is Wheeler.
+    
+    perms looks like [[(), ..., ()], ..., [(), ..., ()]] i.e. it is a list of lists of tuples.
+
+    Keeps the "chunking"/structure as given in perms; simply removes bad tuples.
+    """
+    # This is copied from get_all_orderings. Consider extracting this.
+    def get_ordered_graph(G, perm):
+        nodes = deepcopy(G['nodes'])
+        node_map = make_node_map(nodes) # maps id to node
+        for id, ord in zip(perm, np.arange(0, len(G['nodes']))):
+            node_map[id]['order'] = ord
+        return {'nodes':nodes, 'edges':G['edges']}
+
+    def keep(perm_set):
+        return [ id_tuple for id_tuple in perm_set if is_wheeler(get_ordered_graph(get_sub_graph_ids(G, id_tuple))) ]
+
+    return [ keep(perm_set) for perm_set in perms ]
+
 def get_all_orderings(G, label_set):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
@@ -50,6 +71,7 @@ def get_all_orderings(G, label_set):
     """
     vals = [ label_set[k] for k in sorted(label_set.keys()) ] # get label sets sorted by edge labels
     perms = [ list(it.permutations(ids)) for ids in vals ] # try every permutation of the nodes within an equivalence class defined by incoming edge label
+    # perms = remove_failing_perms(perms, G)
     all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of permutations from the line above
     r = np.arange(0, len(G['nodes'])) # [0..number of vertices]
 
