@@ -8,6 +8,7 @@ def getOILC (nodes, edges):
     O = ''
     I = ''
     L = ''
+    X = ''
     node_order_dict = {}
     edge_source_dict = {}
     edge_target_dict = {}
@@ -17,9 +18,9 @@ def getOILC (nodes, edges):
 
     for e in edges:
         if e['source'] not in edge_source_dict: 
-            edge_source_dict[e['source']] = [{'label': e['label']}]
+            edge_source_dict[e['source']] = [{'label': e['label'], 'strings': e['strings']}]
         else : 
-            edge_source_dict[e['source']].append({'label': e['label']})
+            edge_source_dict[e['source']].append({'label': e['label'], 'strings': e['strings']})
         
         if e['target'] not in edge_target_dict: 
             edge_target_dict[e['target']] = 1
@@ -35,38 +36,39 @@ def getOILC (nodes, edges):
         I += '0' * num_in_edges + '1'
         for o_e in out_edges:
             L += o_e['label']
+            X += ':'.join([str(item) for item in o_e['strings']]) + ','
 
 
     #now that we have O, I, and L, we'll just compress them down a little to make the overall download file very small.
-    O_compressed = ''
-    i = 0
-    while (i < len(O)):
-        if(i <= len(O)-8): current_bitstr = O[i:i+8]
-        else: current_bitstr = O[i:len(O)]
-        O_compressed += str(current_bitstr) + 'x'
-        count = 1
-        while (True): 
-            i += 8
-            if(i <= len(O)-8 and O[i:i+8] == current_bitstr):
-                count += 1
-            else :
-                O_compressed += str(count) + ','
-                break
+    #O_compressed = ''
+    #i = 0
+    #while (i < len(O)):
+    #    if(i <= len(O)-8): current_bitstr = O[i:i+8]
+    #    else: current_bitstr = O[i:len(O)]
+    #    O_compressed += str(current_bitstr) + 'x'
+    #    count = 1
+    #    while (True): 
+    #        i += 8
+    #        if(i <= len(O)-8 and O[i:i+8] == current_bitstr):
+    #            count += 1
+    #        else :
+    #            O_compressed += str(count) + ','
+    #            break
 
-    I_compressed = ''
-    i = 0
-    while (i < len(I)):
-        if(i <= len(I)-8): current_bitstr = I[i:i+8]
-        else: current_bitstr = I[i:len(I)]
-        I_compressed += str(current_bitstr) + 'x'
-        count = 1
-        while (True): 
-            i += 8
-            if(i <= len(I)-8 and I[i:i+8] == current_bitstr):
-                count += 1
-            else :
-                I_compressed += str(count) + ','
-                break
+    #I_compressed = ''
+    #i = 0
+    #while (i < len(I)):
+    #    if(i <= len(I)-8): current_bitstr = I[i:i+8]
+    #    else: current_bitstr = I[i:len(I)]
+    #    I_compressed += str(current_bitstr) + 'x'
+    #   count = 1
+    #    while (True): 
+    #        i += 8
+    #        if(i <= len(I)-8 and I[i:i+8] == current_bitstr):
+    #            count += 1
+    #        else :
+    #            I_compressed += str(count) + ','
+    #            break
 
     
     L_compressed = ''
@@ -83,7 +85,19 @@ def getOILC (nodes, edges):
                 L_compressed += str(count)
                 break
 
-
+    X_arr = X.split(',')
+    X_compressed = ''
+    i = 0
+    while (i < len(X_arr)):
+        cur = X_arr[i]
+        count = 1
+        while(True):
+            i += 1
+            if(i< len(X_arr) and X_arr[i] == cur):
+                count += 1
+            else :
+                X_compressed += (str(cur) + 'x' + str(count) + ',')
+                break
 
     # C   (array containing |A| elements, where each element i is the number of edges with label <= A[i])
     # example: if edges are labeled with: a,a,a,a,b,b,b,c,c,d
@@ -100,4 +114,4 @@ def getOILC (nodes, edges):
             if(edge['label'] <= a): C[i] += 1
 
             
-    return {'O': O_compressed, 'I': I_compressed, 'L': L_compressed, 'C': C}
+    return {'O': O, 'I': I, 'L': L_compressed, 'X':X_compressed, 'C': C}

@@ -27,7 +27,7 @@ def compressed():
     if (len(request.json['str']) == 1) :
         graph = getSingleStringWheelerGraph(request.json['str'][0])
     elif(len(request.json['str']) > 0):
-        graph = getMultiStringWheelerGraph(request.json['str'])
+        graph = enhancedMultiStringWheelerGraph(request.json['str'])
     else : graph = {'nodes': [], 'edges': []}
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)

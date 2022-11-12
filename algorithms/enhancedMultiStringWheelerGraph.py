@@ -17,8 +17,8 @@ def enhancedMultiStringWheelerGraph (inputArr) :
     for i in range(len(inputArr)):
         s = '$' +  inputArr[i]
         new_input_array.append(s)
-        if(len(new_input_array) > max_len):
-            max_len = len(new_input_array[i])
+        if(len(s) > max_len):
+            max_len = len(s)
 
     #Step 1: we need to loop over all indexes of the strings, and make a node / nodes for each index.
     for i in range(max_len):
@@ -71,23 +71,3 @@ def enhancedMultiStringWheelerGraph (inputArr) :
 
 
     return {'nodes': nodes, 'edges': edges}
-
-
-
-
-
-            
-
-
-
-                    
-
-
-
-
-
-
-
-
-
-    return 0
