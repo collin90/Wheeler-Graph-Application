@@ -1,6 +1,7 @@
 import numpy as np
 import itertools as it
 from is_wheeler import *
+from has_cycle import *
 from collections import defaultdict
 from copy import deepcopy
 
@@ -11,6 +12,7 @@ from copy import deepcopy
 GOOD_MESSAGE = 'Graph is Wheeler.'
 DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with two different labels.'
 ALL_ORDERS_MESSAGE = 'Graph is not Wheeler because all possible orderings were tried.'
+CYCLE_MESSAGE = 'Graph is not Wheeler because there is a cycle using edges with one unique edge label.'
 
 def flatten_tuples(l):
     """Flattens a list of tuples into a list"""
@@ -48,7 +50,7 @@ def order(G, label_set):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
     
-    label_set is a map from the incoming edge label to set of all node ids with that incoming edge label.
+    label_set is a map from an edge label to set of all node ids with that incoming edge label.
     """
     vals = [ label_set[k] for k in sorted(label_set.keys()) ] # get label sets sorted by edge labels
     perms = [ list(it.permutations(ids)) for ids in vals ] # try every permutation of the nodes within an equivalence class defined by incoming edge label
@@ -80,16 +82,17 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
     nodes, edges = G['nodes'], G['edges']
 
     # Get all edge labels the are incoming to each node
-    incoming = defaultdict(set) 
+    incoming = defaultdict(set)
     { incoming[e['target']].add(e['label']) for e in edges }
 
     for labels in incoming.values(): # Check if any node has more than one label going into it.
         if len(labels) > 1: return dict({'ordering':None, 'message':DIFF_LABELS_MESSAGE})
 
+    # If there is a cycle using only edges of some label, then the graph cannot be wheeler.
+    if has_label_cycle(G): return dict({'ordering':None, 'message':CYCLE_MESSAGE})
+
     # Partition the nodes by the incoming label. This is sort of the inverse of incoming.
-    label_set = defaultdict(set)
-    { label_set[e['label']].add(e['target']) for e in edges }
-    { label_set[''].add(n['id']) for n in nodes if n['id'] not in incoming.keys() } # zero-in-degree nodes have an empty label
+    label_set = get_label_set(G)
 
     fac = lambda x : x * fac(x - 1) if x > 1 else 1 # factorial
 
