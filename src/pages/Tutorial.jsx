@@ -35,7 +35,7 @@ const nodes3 = [
     { id: 'node9', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '30' }, position: { x: 575, y: 50 } },
     { id: 'node10', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '40' }, position: { x: 500, y: 200 } },
     { id: 'node11', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '20' }, position: { x: 575, y: 200 } },
-    
+
 ]
 
 const edges3 = [
@@ -48,23 +48,23 @@ const edges3 = [
 ]
 
 const nodes4 = [
-    { id: 'node1', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '0' }, position: { x: 100, y: 50 } },
-    { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '1' }, position: { x: 175, y: 50 } },
-    { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '2' }, position: { x: 100, y: 200 } },
-    { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '3' }, position: { x: 175, y: 200 } },
-    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '4' }, position: { x: 300, y: 50 } },
-    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '5' }, position: { x: 375, y: 50 } },
-    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '6' }, position: { x: 375, y: 50 } },
-    
+    { id: 'node1', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '0' }, position: { x: 50, y: 150 } },
+    { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '1' }, position: { x: 450, y: 75 } },
+    { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '2' }, position: { x: 150, y: 150 } },
+    { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '3' }, position: { x: 350, y: 75 } },
+    { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '4' }, position: { x: 350, y: 225 } },
+    { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '5' }, position: { x: 250, y: 150 } },
+    { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '6' }, position: { x: 450, y: 225 } },
+
 ]
 
 const edges4 = [
-    { id: 'edge1', animated: true, source: 'node1', target: 'node3', label: 'T', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge2', animated: true, source: 'node3', target: 'node6', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge3', animated: true, source: 'node6', target: 'node4', label: 'C', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge4', animated: true, source: 'node6', target: 'node5', label: 'G', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#00FF00', }, style: { strokeWidth: 2, stroke: '#00FF00', } },
-    { id: 'edge5', animated: true, source: 'node4', target: 'node2', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#FF0000', }, style: { strokeWidth: 2, stroke: '#FF0000', } },
-    { id: 'edge6', animated: true, source: 'node5', target: 'node7', label: 'G', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#FF0000', }, style: { strokeWidth: 2, stroke: '#FF0000', } },
+    { id: 'edge1', animated: true, source: 'node1', target: 'node3', label: 'T', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#7393B3', }, style: { strokeWidth: 2, stroke: '#7393B3', } },
+    { id: 'edge2', animated: true, source: 'node3', target: 'node6', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#7393B3', }, style: { strokeWidth: 2, stroke: '#7393B3', } },
+    { id: 'edge3', animated: true, source: 'node6', target: 'node4', label: 'C', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#7393B3', }, style: { strokeWidth: 2, stroke: '#7393B3', } },
+    { id: 'edge4', animated: true, source: 'node6', target: 'node5', label: 'G', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#7393B3', }, style: { strokeWidth: 2, stroke: '#7393B3', } },
+    { id: 'edge5', animated: true, source: 'node4', target: 'node2', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#7393B3', }, style: { strokeWidth: 2, stroke: '#7393B3', } },
+    { id: 'edge6', animated: true, source: 'node5', target: 'node7', label: 'G', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#7393B3', }, style: { strokeWidth: 2, stroke: '#7393B3', } },
 ]
 
 function Tutorial() {
@@ -105,7 +105,7 @@ function Tutorial() {
                             <br></br> A &lt; B and 10 &#x226E; 10 =&gt; property does not hold
                         </Typography>
                         <div style={{ width: 450, height: 300 }}>
-                            <Graph nodes={nodes2} edges={edges2} fitView={true} />
+                            <Graph nodes={nodes2} edges={edges2} />
                         </div>
                         <li>
                             <MathJax.Node inline formula={`(a = a') \\land (u < u') \\Longrightarrow v \\leq v'`} />
@@ -117,7 +117,7 @@ function Tutorial() {
                             <br></br> A = A, 10 &lt; 30, and 40 &#8816; 20 =&gt; property does not hold
                         </Typography>
                         <div style={{ width: 650, height: 300 }}>
-                            <Graph nodes={nodes3} edges={edges3} fitView={true} />
+                            <Graph nodes={nodes3} edges={edges3} />
                         </div>
                     </ol>
                 </Box>
@@ -135,15 +135,16 @@ function Tutorial() {
                         <InteractiveGraph />
                     </div>
                 </Box>
-                <Box pt={3}>
+                <Box pt={10}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Wheeler Graph Motivation </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Path Coherence </Typography>
                     <Typography variant="body1">
                         Wheeler graphs have a property called <b>path coherence.</b> This property is useful for reasons
                         we will explore below, and is thus a major motivation to use Wheeler Graphs.
                     </Typography>
                     <Typography variant="body1" ml={4} py={2}>
-                        "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α, 
-                        the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated, 
+                        "G is path coherent if there is a total order of the nodes such that for any consecutive range [<i>i, j</i>] of nodes and string α,
+                        the nodes reachable from those in [<i>i, j</i>] in |α| steps by following edges whose labels for α when concatenated,
                         themselves form a consecutive range" (Gagie 2017)
                     </Typography>
                     <Typography variant="body1">
@@ -151,279 +152,250 @@ function Tutorial() {
                         reach nodes with consecutive labels. Then, going from those nodes along the edge with the next character, you will reach
                         nodes that are also consecutive.
                         <br></br><br></br>
-                        
+
                     </Typography>
                 </Box>
-                <Box pt={3}>
-                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Storage </Typography>
+                <Box pt={3} ml={4}>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Storage </Typography>
                     <Typography variant="body1">
                         Because of the path property, the Wheeler graph can be stored compactly and process strings quickly. We can be specific about the compression:
-                        <br></br> 
-                        <br></br> 
+                        <br></br>
+                        <br></br>
                         Given a graph G = (V,E), where V = set of vertices and E = set of edges,
-                        and σ is the size of the alphabet. 
-                        <br></br> 
+                        and σ is the size of the alphabet.
+                        <br></br>
                         |V| = n, |E| = e. Then, the graph may be
                         stored in 2(e + n) + e log σ + σ log e + o(n + e log σ) bits.
-                        Path coherence is a valuable property, paritcularly because it allows us to
+                        Path coherence is a valuable property, particularly because it allows us to
                         store the graph using bitvectors. To understand how to store a Wheeler graph in bitvectors,
-                        we first need to understand unary encodings, in-degree bitvectors, and out-degree bitvectors
+                        we first need to understand unary encodings, in-degree bitvectors, out-degree bitvectors, and edge vectors.
                     </Typography>
-                    <Typography variant="body2">
-                        <br></br>
-                    <b>Unary Encoding</b>
-                    <br></br> 
-                    One way to store a Wheeler Graph is by using unary encodings
-                    to storing the in- and out-degree nodes in bitvectors. We may also wish to store
-                    the edge labels.
-                    To encode a given number, n, in Unary, we simple write n 0s, followed by a
-                    singular 1.
-                    For example,
-                    0 is encoded with 1
-                    7 is encoded with 00000001
-                    See here for more information on unary encoding:
-                    </Typography>
-                    <a href ="https://en.wikipedia.org/wiki/Unary_coding"style={{ fontSize:12 }}>Here</a>
-                    <Typography variant="body2">
-                        <br></br>
-                    <b>In-degree vector</b>
-                    <br></br>
-                    From left to right, we create a unary encoding for the number of in-degree nodes for the 0th to nth node in a Wheeler Graph with n nodes. Below, the variable name of this bitvector is I.
-                    <br></br>
-                    </Typography>
-                    <div style={{ width: 650, height: 300 }}>
-                            <Graph nodes={nodes4} edges={edges4} fitView={true} />
-                        </div>
-                    <Typography variant="h5" align="center">
-                        <div style={{ padding: 0 }}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontFamily: "Verdana"}}>
-                                <li>I:</li>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li >Node:  </li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                                <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>1</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>0</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>1</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>2</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>3</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>4</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>5</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>6</li>
-                            </ul></li>
-                            </ul>
-                            </div>
-                    </Typography>
-                        
-                    <Typography variant="body2">
-                            <br></br>
-                            <b>Out-degree vector</b>
-                            <br></br>
-                            From left to right, we create a unary encoding for the number of out-degree nodes for the 0th to nth node in a Wheeler Graph with n nodes. Below, the variable name of this bitvector is O.
-                            <br></br>
-                    </Typography>
-                    
-                    <div style={{ width: 650, height: 300 }}>
-                            <Graph nodes={nodes4} edges={edges4} fitView={true} />
-                        </div>
-
-                    <Typography variant="h5" align="center">
-                        <div style={{ padding: 0 }}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontFamily: "Verdana"}}>
-                                <li>O:</li>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li >Node:  </li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                                <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>0</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>1</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>1</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>2</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>3</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>4</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>001</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>5</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>1</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>6</li>
-                            </ul></li>
-                            </ul>
-                            </div>
-                        </Typography>
-
-                        <Typography variant="body2">
-                            <br></br>
-                            <b>Edge vector</b>
-                            <br></br>
-                            Observe that the number of 0s in the in or out-degree bitvector is the same as the number of edges. 
-                            Observe that the number of 1s in the in- or out- degree bitvector is the same as the number of nodes. 
-                            We map the 0s to edges from the out-degree bitvector. 
-                            We can see that this makes sense, because each edge can only be outgoing from one node.
-                            It is important to be consistent with the ordering of edges that coordinate with the same node. 
-                            Below, the variable name of this vector is L.
-                            <br></br>
-                    </Typography>
-
-                    <div style={{ width: 650, height: 300 }}>
-                            <Graph nodes={nodes4} edges={edges4} fitView={true} />
-                    </div>
-
-                    <Typography variant="h5" align="center">
-                        <div style={{ padding: 0 }}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0, fontFamily: "Verdana"}}>
-                                <li>L:</li>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li>O:</li>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li >Node:  </li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                                <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>T</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>0</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li>1</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>1</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>A</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>2</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>A</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>3</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>G</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>01</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>4</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li>C   G</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>001</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>5</li>
-                            </ul></li>
-                            <li style={{ display: "inline-block", margin: 9}}>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0}}>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li style={{ color:"white"}}>N/A  </li>
-                                <li>1</li>
-                                <li><MathJax.Node inline formula={`\\uparrow`}/></li>
-                                <li>6</li>
-                            </ul></li>
-                            </ul>
-                            </div>
-                        </Typography>
-
-                    <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Pattern Matching Inquiry </Typography>
                     <Typography variant="body1">
                         <br></br>
-                    A second motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
-                    the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
-                    is possible because of the graph's path coherence property.This makes the matching process easier in a pattern matching problem. 
-                    We can perform a relatively quick binary search on the compressed Graph.
-
+                        <b>Unary Encoding</b>
+                        <br></br>
+                        One way to store a Wheeler Graph is by using unary encodings
+                        to storing the in- and out-degree nodes in bitvectors. We may also wish to store
+                        the edge labels.
+                        To encode a given number, n, in Unary, we simple write n 0s, followed by a
+                        singular 1.
+                        For example,
+                        0 is encoded with 1
+                        7 is encoded with 00000001
+                        See <a href="https://en.wikipedia.org/wiki/Unary_coding"> here</a> for more information on unary encoding.
+                    </Typography>
+                    <Box py={3}>
+                        <div style={{ width: 500, height: 300 }}>
+                            <Graph nodes={nodes4} edges={edges4} />
+                        </div>
+                    </Box>
+                    <Typography variant="body1" py={3}>
+                        <b>In-degree Bitvector</b>
+                        <br></br>
+                        From left to right, we create a unary encoding for the number of in-degree nodes for the 0th to nth node in a Wheeler Graph with n nodes. Below, the variable name of this bitvector is I.
+                    </Typography>
+                    <Typography variant="h5" align="center">
+                        <div style={{ padding: 0 }}>
+                            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0, fontFamily: "Verdana" }}>
+                                        <li>I:</li>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li >Node:  </li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>1</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>0</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>1</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>2</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>3</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>4</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>5</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>6</li>
+                                    </ul></li>
+                            </ul>
+                        </div>
+                    </Typography>
+                    <Typography variant="body1" py={3}>
+                        <b>Out-degree Bitvector</b>
+                        <br></br>
+                        From left to right, we create a unary encoding for the number of out-degree nodes for the 0th to nth node in a Wheeler Graph with n nodes. Below, the variable name of this bitvector is O.
+                    </Typography>
+                    <Typography variant="h5" align="center">
+                        <div style={{ padding: 0 }}>
+                            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0, fontFamily: "Verdana" }}>
+                                        <li>O:</li>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li >Node:  </li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>0</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>1</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>1</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>2</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>3</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>4</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>001</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>5</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>1</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>6</li>
+                                    </ul></li>
+                            </ul>
+                        </div>
                     </Typography>
 
-                        <Typography>
+                    <Typography variant="body1" py={3}>
+                        <b>Edge Vector</b>
                         <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        <br></br>
-                        </Typography>
+                        Observe that the number of 0s in the in or out-degree bitvector is the same as the number of edges.
+                        Observe that the number of 1s in the in- or out- degree bitvector is the same as the number of nodes.
+                        We map the 0s to edges from the out-degree bitvector.
+                        We can see that this makes sense, because each edge can only be outgoing from one node.
+                        It is important to be consistent with the ordering of edges that coordinate with the same node.
+                        Below, the variable name of this vector is L.
+                    </Typography>
+                    <Typography variant="h5" align="center">
+                        <div style={{ padding: 0 }}>
+                            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0, fontFamily: "Verdana" }}>
+                                        <li>L:</li>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li>O:</li>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li >Node:  </li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>T</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>0</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li>1</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>1</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>A</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>2</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>A</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>3</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>G</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>01</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>4</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li>C   G</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>001</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>5</li>
+                                    </ul></li>
+                                <li style={{ display: "inline-block", margin: 9 }}>
+                                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li style={{ color: "white" }}>N/A  </li>
+                                        <li>1</li>
+                                        <li><MathJax.Node inline formula={`\\uparrow`} /></li>
+                                        <li>6</li>
+                                    </ul></li>
+                            </ul>
+                        </div>
+                    </Typography>
+
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Pattern Matching Inquiry </Typography>
+                    <Typography variant="body1" pb={15} pt={3}>
+                        A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
+                        the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
+                        is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
+                        We can perform a relatively quick binary search on the compressed Graph.
+                    </Typography>
                 </Box>
             </MathJax.Provider>
         </Container>

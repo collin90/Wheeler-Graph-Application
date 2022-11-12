@@ -52,7 +52,7 @@ function Home() {
             </Box>
             <Box py={2} sx={{ border: 3 }} mb={3} style={{ width: 850, height: 450 }}>
                 <div style={{ width: 850, height: 450 }} >
-                    <Graph nodes={nodes} edges={edges} fitView={true} />
+                    <Graph nodes={nodes} edges={edges} />
                 </div>
             </Box>
             <Box pt={3}>
@@ -64,7 +64,7 @@ function Home() {
                     4. <Link to={"/wheelerproperty"}>Wheeler Property</Link>: Put in an unordered graph and determine if its a Wheeler graph or not <br></br>
                 </Typography>
             </Box>
-            <Box pt={3}>
+            <Box pt={3} py={10}>
                 <Typography variant="h4" sx={{ fontWeight: 'medium' }}> References </Typography>
                 <Typography variant="body1">
                     Created by Joanna Bi, Collin Hughes, Julia Ross, and Brandon Stride as part of the Fall 2022 Computational Genomics: Sequences course by Benjamin Langmead, Johns Hopkins University.
