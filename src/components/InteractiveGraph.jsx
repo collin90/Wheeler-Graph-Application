@@ -12,6 +12,7 @@ import 'reactflow/dist/style.css';
 import { v4 as uuidv4 } from 'uuid';
 import './css/index.css';
 import axios from 'axios';
+import { MarkerType } from 'reactflow';
 
 const initialNodes = [
   {
@@ -29,7 +30,8 @@ const resetId = () => {id = 1};
 const edgeOptions = {
   animated: true,
   label: 'a',
-  style: {stroke: '#ADD8E6'}
+  style: {stroke: '#ADD8E6'},
+  markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: '#ADD8E6', }
 }
 const connectionLineStyle = { stroke: 'black' };
 
@@ -106,7 +108,7 @@ const AddNodeOnEdgeDrop = () => {
     else newLabel = 'x';
     const newEdges = edges.map(e => {
       if(e.id == edge.id){
-        return {id: e.id, label: newLabel, source: e.source, target: e.target, style: {stroke: getColor(newLabel)}}
+        return {id: e.id, label: newLabel, source: e.source, target: e.target, style: {stroke: getColor(newLabel)},  markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor(newLabel) }}
       }
       else return e;
     });
