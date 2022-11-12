@@ -390,11 +390,12 @@ function Tutorial() {
                     </Typography>
 
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Pattern Matching Inquiry </Typography>
-                    <Typography variant="body1" pb={15} pt={3}>
-                        A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
+                    <Typography variant="body1" pb={15}>
+                        tbd
+                        {/* A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
                         the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
                         is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
-                        We can perform a relatively quick binary search on the compressed Graph.
+                        We can perform a relatively quick binary search on the compressed Graph. */}
                     </Typography>
                 </Box>
             </MathJax.Provider>
