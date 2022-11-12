@@ -50,9 +50,9 @@ function Home() {
                     This site will introduce you to Wheeler graphs. Here is an example of a Wheeler graph.
                 </Typography>
             </Box>
-            <Box py={2} sx={{ border: 3 }} mb={3} style={{ width: 850, height: 450}}>
-                <div style={{ width: 850, height: 450}} >
-                    <Graph nodes={nodes} edges={edges} fitView={true}/>
+            <Box py={2} sx={{ border: 3 }} mb={3} style={{ width: 850, height: 450 }}>
+                <div style={{ width: 850, height: 450 }} >
+                    <Graph nodes={nodes} edges={edges} fitView={true} />
                 </div>
             </Box>
             <Box pt={3}>
@@ -70,7 +70,17 @@ function Home() {
                     Created by Joanna Bi, Collin Hughes, Julia Ross, and Brandon Stride as part of the Fall 2022 Computational Genomics: Sequences course by Benjamin Langmead, Johns Hopkins University.
                 </Typography>
                 <Typography variant="body1" pt={3}>
-
+                    <p class="apa-reference">
+                        Gagie, T., Manzini, G., &amp; Sirén, J. (2017). Wheeler graphs: A framework for BWT-based data structures. Theoretical Computer Science, 698, 67–78. https://doi.org/10.1016/j.tcs.2017.06.016
+                    </p>
+                    <p class="apa-reference">
+                        Gibney, D., &amp; Thankachan, S. V. (2022). On the complexity of recognizing Wheeler graphs. Algorithmica, 84, 784–814. https://doi.org/10.1007/s00453-021-00917-5                     </p>
+                    <p class="apa-reference">
+                        Langmead, B. (2020). Wheeler graphs, part 1 [PDF]. Langmead Lab @ JHU. https://www.cs.jhu.edu/~langmea/resources/lecture_notes/255_wheeler_graph1_pub.pdf
+                    </p>
+                    <p class="apa-reference">
+                        Langmead, B. (2020). Wheeler graphs, part 2 [PDF]. Langmead Lab @ JHU. https://www.cs.jhu.edu/~langmea/resources/lecture_notes/255_wheeler_graph1_pub.pdf
+                    </p>
                 </Typography>
             </Box>
         </Container >
