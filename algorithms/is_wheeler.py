@@ -19,11 +19,11 @@ def get_in_degrees(edges):
 
 def zero_in_degree_are_first(nodes, in_degree):
     m = np.inf # minimum order of a node with nonzero in-degree
-    M = 0 # maximum order of a node with zero in-degree
+    M = -1 # maximum order of a node with zero in-degree
     for n in nodes:
         if in_degree[n['id']] == 0 and n['order'] > M: M = n['order']
         elif in_degree[n['id']] > 0 and n['order'] < m: m = n['order']
-    return M <= m # assume ordering is unique, so the '=' handles empty cases
+    return M < m
 
 def is_wheeler(G):
     """A graph is Wheeler if the nodes can be ordered such that

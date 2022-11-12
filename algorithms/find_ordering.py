@@ -2,31 +2,15 @@ import numpy as np
 import itertools as it
 from is_wheeler import *
 from collections import defaultdict
+from copy import deepcopy
 
-# def get_ranges(G):
-#     """
-#     Returns a dictionary that maps edge label c to [a, b) where the range (exclusive of b)
-#     are the possible values in the ordering for which any node with incoming edge labeled
-#     c can possibly take.
+# TODO: consider ruling out some of the tuples in `combos` that fail themselves i.e. there is some intersection among their own edges.
+# ^ This can be done by extracting the subgraph for only those edges and checking if it is wheeler.
+# TODO: find cycles of edges with the same label. These graphs cannot be wheeler (but I need to prove this). Use DFS and only follow edges of each label.
 
-#     E.g. if 'R' -> (3, 7), then any vertex with incoming edge label 'R' must take one of
-#     {3, 4, 5, 6} in the ordering.
-#     """
-#     vertices, edges = G
-#     alphabet = set([ e[2] for e in edges ]) # not necessarily a character. Could be a string I guess
-
-#     no_in = np.setdiff1d(vertices, [ e[1] for e in edges ]) # zero in-degree nodes
-
-#     d = dict()
-#     j = len(no_in)
-#     d[None] = (0, j) # other keys will be characters, but with no incoming edges, say label is None.
-#     for c in sorted(alphabet):
-#         # inefficient, but not bad if we assume the alphabet and graph size are both small
-#         n = len(list(set([ e[1] for e in edges if e[2] == c ])))
-#         d[c] = (j, j + n)
-#         j += n
-
-#     return d
+GOOD_MESSAGE = 'Graph is Wheeler.'
+DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with two different labels.'
+ALL_ORDERS_MESSAGE = 'Graph is not Wheeler because all possible orderings were tried.'
 
 def flatten_tuples(l):
     """Flattens a list of tuples into a list"""
@@ -37,13 +21,14 @@ def flatten_tuples(l):
 def combos(l):
     """
     l looks like [[(), ..., ()], ..., [(), ..., ()]] i.e. it is a list of lists of tuples.
+    The tuples are some permutation of the node ids.
     Goal: Find all combinations of tuples such that each is taken from a distinct list. Preserve order.
     
-    e.g. if l = [[(0, 1), (1, 0)], [(2)], [(3, 4), (4, 3)]],
-    then combos(l) = [[(0, 1), (2), (3, 4)],
-                        [(0, 1), (2), (4, 3)],
-                        [(1, 0), (2), (3, 4)],
-                        [(1, 0), (2), (4, 3)]]
+    e.g. if l = [[(a, b), (b, a)], [(c)], [(d, e), (e, d)]],
+    then combos(l) = [[(a, b), (c), (d, e)],
+                        [(a, b), (c), (e, d)],
+                        [(b, a), (c), (d, e)],
+                        [(b, a), (c), (e, d)]]
 
     Implementation is not tail recursive.
     """
@@ -59,39 +44,28 @@ def combos(l):
         accum.extend(with_t)
     return accum
 
-# TODO: consider yielding so that the graphs are not all stored in memory waiting to be tried
-def order(G, label_to_nodes):
+def order(G, label_set):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
     
-    label_to_nodes is a map from the incoming edge label to list of all nodes with that incoming edge label.
+    label_set is a map from the incoming edge label to set of all node ids with that incoming edge label.
     """
-    perms = [ list(it.permutations(ns)) for ns in label_to_nodes.values() ]
-    all_combos = [ flatten_tuples(ts) for ts in combos(perms) ]
-    r = np.arange(0, len(G[0])) # [0..number of vertices]
+    vals = [ label_set[k] for k in sorted(label_set.keys()) ] # get label sets sorted by edge labels
+    perms = [ list(it.permutations(ids)) for ids in vals ] # try every permutation of the nodes within an equivalence class defined by incoming edge label
+    all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of permutations from the line above
+    r = np.arange(0, len(G['nodes'])) # [0..number of vertices]
 
-    orders = []
-    for c in all_combos:
-        d = dict()
-        orders.append(d) # every order will be a dict from the node label to some int in the ordering
-        for i in r:
-            d[c[i]] = i # the i'th node label in the combo has order i
+    def get_ordered_graph(G, perm):
+        nodes = deepcopy(G['nodes'])
+        node_map = make_node_map(nodes) # maps id to node
+        for id, ord in zip(perm, r):
+            node_map[id]['order'] = ord
+        return {'nodes':nodes, 'edges':G['edges']}
 
-    return orders # change this return type to be a graph
-
-def has_good_labels(incoming):
-    """True iff every node has exactly 1 or 0 unique incoming edges labels.
-    
-    Parameters
-    ----------
-    incoming: dictionary mapping id to list of edges. Nodes with no incoming edges need not exist in this dictionary.
-    """
-    for edges in incoming.values():
-        if len(set(q(edges, 'label'))) > 1: return False
-    return True
+    return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
 def find_ordering(G, MAX_ITERATIONS=2**20):
-    """Given a graph G, finds an ordering on the graph is possible. Will not try if the number of iterators over
+    """Given a graph G, finds an ordering on the graph is possible. Will not try if the number of iterations over
     graph elements is greater than MAX_ITERATIONS.
     
     Parameters
@@ -105,16 +79,17 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
     """
     nodes, edges = G['nodes'], G['edges']
 
-    # Get all edges the are incoming to each node
-    incoming = defaultdict(list) 
-    { incoming[e['target']].append(e) for e in edges }
+    # Get all edge labels the are incoming to each node
+    incoming = defaultdict(set) 
+    { incoming[e['target']].add(e['label']) for e in edges }
 
-    if not has_good_labels(incoming):
-        return dict({'ordering':None, 'message':'Graph cannot be Wheeler because a node has incoming edges with two different labels'})
+    for labels in incoming.values(): # Check if any node has more than one label going into it.
+        if len(labels) > 1: return dict({'ordering':None, 'message':DIFF_LABELS_MESSAGE})
 
-    # Partition the nodes by the incoming label
+    # Partition the nodes by the incoming label. This is sort of the inverse of incoming.
     label_set = defaultdict(set)
-    { label_set[e['label']].add(e['id']) for e in edges }
+    { label_set[e['label']].add(e['target']) for e in edges }
+    { label_set[''].add(n['id']) for n in nodes if n['id'] not in incoming.keys() } # zero-in-degree nodes have an empty label
 
     fac = lambda x : x * fac(x - 1) if x > 1 else 1 # factorial
 
@@ -130,6 +105,6 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
 
     os = order(G, label_set)
     for o in os:
-        if is_wheeler(o): return {'ordering':o, 'message':'Graph is Wheeler.'}
+        if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
 
-    return dict({'ordering':None, 'message':'Graph is not Wheeler because all possible orderings were tried.'})
+    return dict({'ordering':None, 'message':ALL_ORDERS_MESSAGE})
