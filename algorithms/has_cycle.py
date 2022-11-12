@@ -34,6 +34,10 @@ def get_neighbors(G):
     { neighbors[e['source']].add(e['target']) for e in G['edges'] }
     return neighbors
 
+# TODO: Handle disconnected graph case.
+# ^ In this case, can just do DFS on each node and return true if we ever make it back to specifically that node.
+# ^ This is much worse in terms of time complexity, but it is miniscule compared to finding an ordering.
+# ^ When we consider the expected size of the input, this is VERY fast.
 def has_cycle(G):
     """True if G has a cycle. Used algorithm from https://algotree.org/algorithms/tree_graph_traversal/depth_first_search/cycle_detection_in_directed_graphs/#:~:text=Detecting%20cycle%20in%20directed%20graphs%20using%20Depth-First-Search%20%28DFS%29,7%207.%20Detect_Cycle%20%28%20adjacent_node%20%29%20More%20items
     """
@@ -61,7 +65,7 @@ def has_cycle(G):
     return cycle_exists
 
 def has_label_cycle(G):
-    """True if G has a cycle made of edges with one unique label."""
+    """True if G has a cycle made of edges with one unique label. Self-loops do not count."""
     labels = set([ e['label'] for e in G['edges'] ])
     for label in labels:
         sub_G = get_sub_graph(G, label)

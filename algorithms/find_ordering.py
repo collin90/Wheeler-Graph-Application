@@ -5,12 +5,8 @@ from has_cycle import *
 from collections import defaultdict
 from copy import deepcopy
 
-# TODO: consider ruling out some of the tuples in `combos` that fail themselves i.e. there is some intersection among their own edges.
-# ^ This can be done by extracting the subgraph for only those edges and checking if it is wheeler.
-# TODO: find cycles of edges with the same label. These graphs cannot be wheeler (but I need to prove this). Use DFS and only follow edges of each label.
-
 GOOD_MESSAGE = 'Graph is Wheeler.'
-DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with two different labels.'
+DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with different labels.'
 ALL_ORDERS_MESSAGE = 'Graph is not Wheeler because all possible orderings were tried.'
 CYCLE_MESSAGE = 'Graph is not Wheeler because there is a cycle using edges with one unique edge label.'
 
@@ -46,7 +42,7 @@ def combos(l):
         accum.extend(with_t)
     return accum
 
-def order(G, label_set):
+def get_all_orderings(G, label_set):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
     
@@ -106,7 +102,7 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
     if N * (E * E + V) > MAX_ITERATIONS:
         return dict({'ordering':None, 'message':f'Too many possibilities to try. There are {N} possible orderings => {N * (E * E + V)} iterations over graph elements required.'})
 
-    os = order(G, label_set)
+    os = get_all_orderings(G, label_set)
     for o in os:
         if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
 
