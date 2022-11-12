@@ -36,13 +36,14 @@ def getOILC (nodes, edges):
         for o_e in out_edges:
             L += o_e['label']
 
+
     #now that we have O, I, and L, we'll just compress them down a little to make the overall download file very small.
     O_compressed = ''
     i = 0
     while (i < len(O)):
         if(i <= len(O)-8): current_bitstr = O[i:i+8]
         else: current_bitstr = O[i:len(O)]
-        O_compressed += str(int(current_bitstr,2)) + 'x'
+        O_compressed += str(current_bitstr) + 'x'
         count = 1
         while (True): 
             i += 8
@@ -57,7 +58,7 @@ def getOILC (nodes, edges):
     while (i < len(I)):
         if(i <= len(I)-8): current_bitstr = I[i:i+8]
         else: current_bitstr = I[i:len(I)]
-        I_compressed += str(int(current_bitstr,2)) + 'x'
+        I_compressed += str(current_bitstr) + 'x'
         count = 1
         while (True): 
             i += 8

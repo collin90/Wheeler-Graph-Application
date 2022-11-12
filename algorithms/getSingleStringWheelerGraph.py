@@ -15,7 +15,9 @@ def getSingleStringWheelerGraph(inputStr):
                 if(index < len(inputStr)):
                         edge = {'label': character,
                                 'source': nodes[index]['id'],
-                                'target': nodes[index+1]['id']}
+                                'target': nodes[index+1]['id'],
+                                'strings': [],
+                                }
                         edges.append(edge)
         
         #step 3, ordering the nodes

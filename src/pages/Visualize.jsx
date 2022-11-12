@@ -15,6 +15,8 @@ function Visualize () {
     
     const [nodes, setNodes] = useState([]);
     const [edges, setEdges] = useState([]);
+    const [rawNodes, setRawNodes] = useState([]);
+    const [rawEdges, setRawEdges] = useState([]);
     const [texts, setTexts] = useState([{id: uuidv4(),text: ""}]);
     const [fileContent, setFileContent] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -60,6 +62,8 @@ function Visualize () {
         axios.post(path, {str: textArr}).then(
             (response) => {
                 var result = response.data;
+                setRawNodes(result.result.nodes);
+                setRawEdges(result.result.edges);
                 formGraph(result.result.nodes, result.result.edges);
             },
             (error) => {
@@ -73,6 +77,8 @@ function Visualize () {
         axios.post(path, {str: fileContent}).then(
             (response) => {
                 var result = response.data;
+                setRawNodes(result.result.nodes);
+                setRawEdges(result.result.edges);
                 formGraph(result.result.nodes, result.result.edges);
             },
             (error) => {
@@ -100,7 +106,9 @@ function Visualize () {
 
     const createWheelerGraphFile = () => {   
         const makeTextFile = () => {
-            var data = new Blob([JSON.stringify({nodes: nodes.map(node => ({id: node.id, order: node.data.label})), edges: edges.map(edge => ({id: edge.id, source: edge.source, target: edge.target, label: edge.label}))})], {type: 'text/json'});
+            console.log(rawNodes);
+            console.log(rawEdges);
+            var data = new Blob([JSON.stringify({nodes: rawNodes.map(node => ({id: node.id, order: node.order})), edges: rawEdges.map(edge => ({id: uuidv4(), source: edge.source, target: edge.target, label: edge.label, strings: edge.strings}))})], {type: 'text/json'});
             if (textFileJSON !== null) {
               window.URL.revokeObjectURL(textFile);
             }
@@ -128,7 +136,7 @@ function Visualize () {
                     return textFileCompressed;
                 }   
                 var result = response.data;
-                const oil = {O: result.O, I: result.I, L: result.L, C:result.C}
+                const oil = {O: result.O, I: result.I, L: result.L, C: result.C}
                 var link = refCompressedDownload.current;
                 link.href = makeTextFile(oil);
                 link.style.display = 'block';

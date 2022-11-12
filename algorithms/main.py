@@ -5,6 +5,7 @@ from getSingleStringWheelerGraph import getSingleStringWheelerGraph
 from getMultiStringWheelerGraph import getMultiStringWheelerGraph
 from getOILC import getOILC
 from ordered_wheeler_property import check_for_wheeler_property
+from enhancedMultiStringWheelerGraph import enhancedMultiStringWheelerGraph
 
 app = Flask(__name__)
 CORS(app)
@@ -15,7 +16,7 @@ def visualize():
         graph = getSingleStringWheelerGraph(request.json['str'][0])
         return jsonify({"result": graph})
     elif(len(request.json['str']) > 0):
-        graph = getMultiStringWheelerGraph(request.json['str'])
+        graph = enhancedMultiStringWheelerGraph(request.json['str'])
         return jsonify({"result": graph})
     else:
         return jsonify({"result": {"nodes": [], "edges": []}})
