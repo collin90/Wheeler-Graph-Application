@@ -44,3 +44,8 @@ body {
 .nav li:hover {
     background-color: #777;
 }
+
+.apa-reference {
+    padding-left: 36px;
+    text-indent: -36px;
+}
