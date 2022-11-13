@@ -4,7 +4,7 @@ from is_wheeler import *
 from has_cycle import *
 from collections import defaultdict
 from copy import deepcopy
-from sspipe import p, px
+from sspipe import p
 
 GOOD_MESSAGE = 'Graph is Wheeler.'
 DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with different labels.'

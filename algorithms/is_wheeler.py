@@ -17,7 +17,9 @@ def _is_wheeler(G, test_in_degree=True):
 
     if test_in_degree:
         in_degree = get_in_degrees(edges) # Maps id to degree of node
-
+        for n in G['nodes']:
+            print(type(n['order']))
+            print(n)
         if not zero_in_degree_are_first(nodes, in_degree): return False
 
     # Now compare all edges for cases 2 and 3
