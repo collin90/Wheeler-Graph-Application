@@ -24,6 +24,7 @@ function Visualize () {
     const refCompressedDownload=useRef(null);
     let textFileJSON = null;
     let textFileCompressed = null;
+    const URL = `https://python-wheeler-algorithms.ue.r.appspot.com/`
 
     const formGraph = (nodes, edges) => {
         //create the colors list
@@ -55,10 +56,9 @@ function Visualize () {
     }
 
     const handleOnTextSubmit = () => {
-        const path = 'http://127.0.0.1:5000/visualize';
+        const path = URL + 'visualize';
         const textArr = [];
         texts.forEach(text => textArr.push(text.text));
-        console.log(textArr);
         axios.post(path, {str: textArr}).then(
             (response) => {
                 var result = response.data;
@@ -73,7 +73,7 @@ function Visualize () {
     }
 
     const handleOnFileSubmit = () => {
-        const path = 'http://127.0.0.1:5000/visualize';
+        const path = URL + 'visualize';
         axios.post(path, {str: fileContent}).then(
             (response) => {
                 var result = response.data;
@@ -100,14 +100,11 @@ function Visualize () {
             reader.onerror = (e) => alert(e.target.error.name);
             reader.readAsText(files[i]);
         }
-        console.log(fileContents);
         setFileContent(fileContents);
     }
 
     const createWheelerGraphFile = () => {   
         const makeTextFile = () => {
-            console.log(rawNodes);
-            console.log(rawEdges);
             var data = new Blob([JSON.stringify({nodes: rawNodes.map(node => ({id: node.id, order: node.order})), edges: rawEdges.map(edge => ({id: uuidv4(), source: edge.source, target: edge.target, label: edge.label, strings: edge.strings}))})], {type: 'text/json'});
             if (textFileJSON !== null) {
               window.URL.revokeObjectURL(textFile);
@@ -122,9 +119,8 @@ function Visualize () {
     }
 
     const createWheelerGraphCompressedFile = () => {
-        const path = 'http://127.0.0.1:5000/compressed';
+        const path = URL + 'compressed';
         setLoading(true);
-        console.log('making request');
         axios.post(path, {str: fileContent}).then(
             (response) => {
                 function makeTextFile (oil) {

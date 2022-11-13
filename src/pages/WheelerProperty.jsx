@@ -18,6 +18,7 @@ function WheelerProperty () {
     const [graphableNodes, setGraphableNodes] = useState([]);
     const [graphableEdges, setGraphableEdges] = useState([]);
     const [message, setMessage] = useState('');
+    const URL = `https://python-wheeler-algorithms.ue.r.appspot.com/`;
 
     
     const formGraph = (nodes, edges) => {
@@ -67,7 +68,7 @@ function WheelerProperty () {
 
     const handleFileSubmit = () => {
         setMessage("Trying to find an ordering with the wheeler property...")
-        const path = 'http://127.0.0.1:5000/findOrdering';
+        const path = URL + 'findOrdering';
         axios.post(path, {nodes: nodes, edges: edges}).then(
             (response) => {
                 const result = response.data;

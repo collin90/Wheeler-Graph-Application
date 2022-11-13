@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import './css/index.css';
 import axios from 'axios';
 import { MarkerType } from 'reactflow';
+//https://python-wheeler-algorithms.ue.r.appspot.com/   URL
 
 const initialNodes = [
   {
@@ -21,6 +22,8 @@ const initialNodes = [
     position: { x: 0, y: 50 },
   },
 ];
+
+const URL = `https://python-wheeler-algorithms.ue.r.appspot.com/checkWheeler`;
 
 let id = 1;
 const getId = () => `${id++}`;
@@ -53,7 +56,7 @@ const AddNodeOnEdgeDrop = () => {
 
 
   useEffect(() => {
-    const path = 'http://127.0.0.1:5000/checkWheeler';
+    const path = URL;
         axios.post(path, {nodes: nodes, edges: edges}).then(
             (response) => {
                 var result = response.data;
