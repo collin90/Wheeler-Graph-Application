@@ -42,12 +42,15 @@ const fitViewOptions = {
 const AddNodeOnEdgeDrop = () => {
   const reactFlowWrapper = useRef(null);
   const connectingNodeId = useRef(null);
+  const refJSONDownload=useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [change, setChange] = useState(0);
   const [wheeler, setWheeler] = useState(1);
   const { project } = useReactFlow();
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  let textFileJSON = null;
+
 
   useEffect(() => {
     const path = 'http://127.0.0.1:5000/checkWheeler';
@@ -171,6 +174,21 @@ const AddNodeOnEdgeDrop = () => {
     setNodes((nds) => nds.concat(newNode));
   }
 
+  const getDownload = () => {
+      const makeTextFile = () => {
+          var data = new Blob([JSON.stringify({nodes: nodes.map(node => ({id: node.id, order: node.data.label})), edges: edges.map(edge => ({id: uuidv4(), source: edge.source, target: edge.target, label: edge.label}))})], {type: 'text/json'});
+          if (textFileJSON !== null) {
+            window.URL.revokeObjectURL(textFile);
+          }
+          textFileJSON = window.URL.createObjectURL(data);
+          return textFileJSON;
+        };
+  
+      var link = refJSONDownload.current;
+      link.href = makeTextFile();
+      link.style.display = 'block';
+  }
+
   return (
     <>
     <div className="wrapper" ref={reactFlowWrapper}>
@@ -191,7 +209,7 @@ const AddNodeOnEdgeDrop = () => {
       />
     </div>
     <Grid container direction="row" mb={4}>
-      <Grid item xs={4} >
+      <Grid item xs={3} >
         {wheeler ? <h2>This is a Wheeler Graph!</h2> : <h2>Not A Wheeler Graph!</h2>}
       </Grid>
       <Grid item xs={3} mt={3}>
@@ -199,6 +217,12 @@ const AddNodeOnEdgeDrop = () => {
       </Grid>
       <Grid item xs={3} mt={3}>
         <Button onClick={addNode} variant='outlined'>Add Node</Button>
+      </Grid>
+      <Grid item xs={3} mt={3}>
+        <Button onClick={getDownload} variant='outlined'>Create Graph JSON</Button>
+      </Grid>
+      <Grid item xs={3}>
+        <a download="graphJSON.txt" ref={refJSONDownload} style={{'display':'none'}}>Download JSON Object</a>
       </Grid>
     </Grid>
     </>
