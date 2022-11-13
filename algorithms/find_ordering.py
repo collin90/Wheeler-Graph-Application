@@ -42,6 +42,25 @@ def combos(l):
         accum.extend(with_t)
     return accum
 
+<<<<<<< HEAD
+def get_ordered_graph(G, perm):
+    """Orders the graph according to the given permutation of ids. Does not modify original graph.
+    
+    e.g. if perm=(d, c, b, a), then the order is d:0, c:1, b:2, a:3.
+    """
+    nodes = deepcopy(G['nodes'])
+    node_map = make_node_map(nodes) # maps id to node
+    for id, ord in zip(perm, np.arange(0, len(G['nodes']))):
+        node_map[id]['order'] = ord
+    return {'nodes':nodes, 'edges':G['edges']}
+
+def perm_fails(id_tuple, G):
+    """True if the perm fails itself wrt the wheeler property, ignore the zero-in-degree requirement."""
+    return get_sub_graph_ids(G, id_tuple) | p(get_ordered_graph, id_tuple) | p(is_wheeler_no_degree) | p(lambda x : not x)
+
+# TODO: if all perms fail for some label set, what happens?
+=======
+>>>>>>> a1a848bbcd082297462cb4bf6c581eef1153fded
 def get_all_orderings(G, label_set):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
@@ -102,6 +121,8 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
     if N * (E * E + V) > MAX_ITERATIONS:
         return dict({'ordering':None, 'message':f'Too many possibilities to try. There are {N} possible orderings => {N * (E * E + V)} iterations over graph elements required.'})
 
+    # TODO: because we now cut back on possible permutations as they are generated, consider stopping early if we reach
+    #       MAX_ITERATIONS / (E^2 + V) or if the set of all orderings is too large.
     os = get_all_orderings(G, label_set)
     for o in os:
         if is_wheeler(o): return {"ordering":o, "message":GOOD_MESSAGE}
