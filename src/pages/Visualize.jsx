@@ -136,7 +136,7 @@ function Visualize () {
                     return textFileCompressed;
                 }   
                 var result = response.data;
-                const oil = {O: result.O, I: result.I, L: result.L, X:result.X, C: result.C}
+                const oil = {O: result.O, I: result.I, L: result.L, C: result.C};
                 var link = refCompressedDownload.current;
                 link.href = makeTextFile(oil);
                 link.style.display = 'block';

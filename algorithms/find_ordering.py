@@ -58,7 +58,7 @@ def get_all_orderings(G, label_set):
         node_map = make_node_map(nodes) # maps id to node
         for id, ord in zip(perm, r):
             node_map[id]['order'] = ord
-        return {'nodes':nodes, 'edges':G['edges']}
+        return {"nodes":nodes, "edges":G['edges']}
 
     return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
@@ -104,6 +104,6 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
 
     os = get_all_orderings(G, label_set)
     for o in os:
-        if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
+        if is_wheeler(o): return {"ordering":o, "message":GOOD_MESSAGE}
 
     return dict({'ordering':None, 'message':ALL_ORDERS_MESSAGE})
