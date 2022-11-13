@@ -16,7 +16,6 @@ def getSingleStringWheelerGraph(inputStr):
                         edge = {'label': character,
                                 'source': nodes[index]['id'],
                                 'target': nodes[index+1]['id'],
-                                'strings': [],
                                 }
                         edges.append(edge)
         

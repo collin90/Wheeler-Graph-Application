@@ -1,11 +1,9 @@
 import numpy as np
 import itertools as it
 from is_wheeler import *
-from has_cycle import has_label_cycle
-from graph_utils import *
+from has_cycle import *
 from collections import defaultdict
 from copy import deepcopy
-from sspipe import p, px
 
 GOOD_MESSAGE = 'Graph is Wheeler.'
 DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with different labels.'
@@ -44,6 +42,7 @@ def combos(l):
         accum.extend(with_t)
     return accum
 
+<<<<<<< HEAD
 def get_ordered_graph(G, perm):
     """Orders the graph according to the given permutation of ids. Does not modify original graph.
     
@@ -60,6 +59,8 @@ def perm_fails(id_tuple, G):
     return get_sub_graph_ids(G, id_tuple) | p(get_ordered_graph, id_tuple) | p(is_wheeler_no_degree) | p(lambda x : not x)
 
 # TODO: if all perms fail for some label set, what happens?
+=======
+>>>>>>> a1a848bbcd082297462cb4bf6c581eef1153fded
 def get_all_orderings(G, label_set):
     """Return all possible orderings. Considers how edge labels determine a range of values
     for which a node can take in the order.
@@ -67,9 +68,16 @@ def get_all_orderings(G, label_set):
     label_set is a map from an edge label to set of all node ids with that incoming edge label.
     """
     vals = [ label_set[k] for k in sorted(label_set.keys()) ] # get label sets sorted by edge labels
-    # Permute the ids, but keep only the permutations that don't fail. See perm_fails
-    perms = [ [ id_tuple for id_tuple in it.permutations(ids) if not perm_fails(id_tuple, G) ] for ids in vals ]
+    perms = [ list(it.permutations(ids)) for ids in vals ] # try every permutation of the nodes within an equivalence class defined by incoming edge label
     all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of permutations from the line above
+    r = np.arange(0, len(G['nodes'])) # [0..number of vertices]
+
+    def get_ordered_graph(G, perm):
+        nodes = deepcopy(G['nodes'])
+        node_map = make_node_map(nodes) # maps id to node
+        for id, ord in zip(perm, r):
+            node_map[id]['order'] = ord
+        return {"nodes":nodes, "edges":G['edges']}
 
     return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
@@ -117,6 +125,6 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
     #       MAX_ITERATIONS / (E^2 + V) or if the set of all orderings is too large.
     os = get_all_orderings(G, label_set)
     for o in os:
-        if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
+        if is_wheeler(o): return {"ordering":o, "message":GOOD_MESSAGE}
 
     return dict({'ordering':None, 'message':ALL_ORDERS_MESSAGE})

@@ -5,7 +5,7 @@ from getSingleStringWheelerGraph import getSingleStringWheelerGraph
 from getMultiStringWheelerGraph import getMultiStringWheelerGraph
 from getOILC import getOILC
 from ordered_wheeler_property import check_for_wheeler_property
-from enhancedMultiStringWheelerGraph import enhancedMultiStringWheelerGraph
+from find_ordering import find_ordering
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +16,7 @@ def visualize():
         graph = getSingleStringWheelerGraph(request.json['str'][0])
         return jsonify({"result": graph})
     elif(len(request.json['str']) > 0):
-        graph = enhancedMultiStringWheelerGraph(request.json['str'])
+        graph = getMultiStringWheelerGraph(request.json['str'])
         return jsonify({"result": graph})
     else:
         return jsonify({"result": {"nodes": [], "edges": []}})
@@ -27,17 +27,23 @@ def compressed():
     if (len(request.json['str']) == 1) :
         graph = getSingleStringWheelerGraph(request.json['str'][0])
     elif(len(request.json['str']) > 0):
-        graph = enhancedMultiStringWheelerGraph(request.json['str'])
+        graph = getMultiStringWheelerGraph(request.json['str'])
     else : graph = {'nodes': [], 'edges': []}
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)
 
 @app.route('/checkWheeler', methods = ['POST'])
 def checkWheeler():
-    nodes = request.json['nodes']
+    nodes = request.json['nodes'] 
     edges = request.json['edges']
     isWheeler = {'result' : check_for_wheeler_property(nodes, edges)}
     return jsonify(isWheeler)
+
+
+@app.route('/findOrdering', methods=['POST'])
+def findOrdering():
+    r = find_ordering({'nodes': request.json['nodes'], 'edges': request.json['edges']}, MAX_ITERATIONS=520307712005)
+    return jsonify({"graph": str(r['ordering']), "message": r['message']})
 
 
 if __name__ == '__main__':
