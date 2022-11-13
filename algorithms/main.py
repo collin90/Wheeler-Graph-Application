@@ -45,6 +45,10 @@ def findOrdering():
     r = find_ordering({'nodes': request.json['nodes'], 'edges': request.json['edges']}, MAX_ITERATIONS=1000000000000000000)
     return jsonify({"graph": str(r['ordering']), "message": r['message']})
 
+@app.route("/")
+def index():
+    return "Congratulations, you're looking at your web app base endpoint"
+
 
 if __name__ == '__main__':
 	app.run(debug = True)
