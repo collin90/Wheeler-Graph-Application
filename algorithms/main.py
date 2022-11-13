@@ -42,7 +42,7 @@ def checkWheeler():
 
 @app.route('/findOrdering', methods=['POST'])
 def findOrdering():
-    r = find_ordering({'nodes': request.json['nodes'], 'edges': request.json['edges']}, MAX_ITERATIONS=1000000000000000000)
+    r = find_ordering({'nodes': request.json['nodes'], 'edges': request.json['edges']}, MAX_ITERATIONS=1000000000)
     return jsonify({"graph": str(r['ordering']), "message": r['message']})
 
 @app.route("/")
