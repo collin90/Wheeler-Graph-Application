@@ -1,6 +1,5 @@
 import unittest
 import json
-from is_wheeler import is_wheeler
 from find_ordering import * # imports find_ordering function and MESSAGE consts
 from sspipe import p
 
@@ -47,8 +46,10 @@ class TestFindOrdering(unittest.TestCase):
     def large(self):
         def t(msg, fname):
             test(self, msg, fname, None)
-        t(GOOD_MESSAGE, 'large_orderable1.txt') # 20 nodes. 4 different edge labels. Incredibly large worst case.
+        t(GOOD_MESSAGE, 'large_orderable1.txt') # 21 nodes. 4 different edge labels. Incredibly large worst case.
         t(ALL_ORDERS_MESSAGE, 'large_unorderable1.txt') # Same graph as above but added edge makes unorderable
+        t(GOOD_MESSAGE, 'large_orderable3.txt') # 24 nodes
+        t(ALL_ORDERS_MESSAGE, 'large_unorderable2.txt')
 
     # The above functions are not run by unittest because they do not begin with "test". Run them here.
     def test_suite(self):

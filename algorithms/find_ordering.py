@@ -73,10 +73,9 @@ def get_all_orderings(G, label_set, MAX_COMBOS = 2**18):
     for pset in perms:
         cs *= len(pset)
     if cs > MAX_COMBOS: # cs = len(all_combos) below
-        return []
+        return [] # TODO: error message for this?
 
     all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of permutations from the line above
-    r = np.arange(0, len(G['nodes'])) # [0..number of vertices]
 
     return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
