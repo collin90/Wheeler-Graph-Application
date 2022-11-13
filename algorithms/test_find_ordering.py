@@ -19,23 +19,34 @@ def print_order(filename, MAX_ITERATIONS=2**20):
     infile.close()
     print(find_ordering(json.loads(graph_string), MAX_ITERATIONS)['ordering']['nodes'])
 
-class TestFindOrdering(unittest.TestCase):
-    def test_find_ordering(self):
-        self.assertEqual(GOOD_MESSAGE, get_message('simple_true1.txt'))
-        self.assertEqual(GOOD_MESSAGE, get_message('simple_true2.txt'))
-        self.assertEqual(GOOD_MESSAGE, get_message('simple_true3.txt'))
-        self.assertEqual(CYCLE_MESSAGE, get_message('simple_false1.txt')) # could check for a cycle with all the same edge labels
-        self.assertEqual(DIFF_LABELS_MESSAGE, get_message('simple_false2.txt'))
+def test(this, message, filename, MAX_ITERATIONS=2**20):
+    this.assertEqual(message, get_message(filename, MAX_ITERATIONS))
 
-        self.assertEqual(GOOD_MESSAGE, get_message('complex_true1.txt')) # has 6 nodes, 11 edges => worst case is 6!*(11^2 + 6) ~= 91 thousand iterations over graph elements
-        self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable1.txt')) # has 8 nodes, 13 edges => worst case is 8!*(13^2 + 8) ~= 7 million
-        # self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable2.txt')) # no edges. Creates all permutations and succeeds on the first one.
-        self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable3.txt')) # has 12 nodes, 13 edges => worst case is 12!*(13^2 + 12) ~= 86 billion
-        self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable4.txt', 2**23)) # 12n, 14e => 99.6 billion
-        self.assertEqual(GOOD_MESSAGE, get_message('complex_orderable5.txt', 2**23)) # Created from multistring. 14 nodes?
-        self.assertEqual(DIFF_LABELS_MESSAGE, get_message('complex_false1.txt')) # has 6 nodes
-        self.assertEqual(CYCLE_MESSAGE, get_message('complex_unorderable1.txt', 2**23)) # 12n, 15e => 113 billion worst case. Is detected by finding a cycle
-        self.assertEqual(ALL_ORDERS_MESSAGE, get_message('complex_unorderable2.txt', 2**23)) # 12n, 15e => 113 billion worst case.
+class TestFindOrdering(unittest.TestCase):
+    def test_simple(self):
+        test(self, GOOD_MESSAGE, 'simple_true1.txt')
+        test(self, GOOD_MESSAGE, 'simple_true2.txt')
+        test(self, GOOD_MESSAGE, 'simple_true3.txt')
+        test(self, CYCLE_MESSAGE, 'simple_false1.txt')
+        test(self, DIFF_LABELS_MESSAGE, 'simple_false2.txt')
+
+    def test_complex_orderable(self):
+        """These graphs are somewhat 'complex'. They aren't super simple or super large."""
+        test(self, GOOD_MESSAGE, 'complex_true1.txt') # 6 nodes. Is from is_wheeler. Already ordered
+        test(self, GOOD_MESSAGE, 'complex_orderable1.txt') # 8 nodes, 13 edges
+        test(self, GOOD_MESSAGE, 'complex_orderable2.txt') # no edges. Must create all orderings
+        test(self, GOOD_MESSAGE, 'complex_orderable3.txt') # 12 nodes, 13 edges
+        test(self, GOOD_MESSAGE, 'complex_orderable4.txt', 2**23) # 12 nodes 14 edges
+        test(self, GOOD_MESSAGE, 'complex_orderable5.txt', 2**23) # 14 nodes
+
+    def test_complex_unorderable(self):
+        test(self, DIFF_LABELS_MESSAGE, 'complex_false1.txt') # 6 nodes. Is from is_wheeler tests
+        test(self, CYCLE_MESSAGE, 'complex_unorderable1.txt') # 12 nodes, 15 edges => 113 billion worst case
+        test(self, ALL_ORDERS_MESSAGE, 'complex_unorderable2.txt') # 12 nodes, 15 edges
+
+    def test_large(self):
+        test(self, GOOD_MESSAGE, 'large_orderable1.txt', None) # 20 nodes. 4 different edge labels. Incredibly large worst case.
+        test(self, ALL_ORDERS_MESSAGE, 'large_unorderable1.txt', None) # Same graph as above but added edge makes unorderable
 
 if __name__ == '__main__':
     unittest.main()

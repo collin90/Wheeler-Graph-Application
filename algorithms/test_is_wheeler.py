@@ -18,6 +18,7 @@ class TestIsWheeler(unittest.TestCase):
         self.assertTrue(run_file('simple_true1.txt'))
         self.assertTrue(run_file('simple_true2.txt'))
         self.assertTrue(run_file('simple_true3.txt'))
+        self.assertTrue(run_file('complex_orderable2.txt')) # no edges
 
         self.assertTrue(run_file('complex_true1.txt'))
         self.assertFalse(run_file('complex_false1.txt'))
