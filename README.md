@@ -30,5 +30,11 @@ HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!
        7.  yarn dev
 
     
+THIS APP IS DEPLOYED NOW.
 
+1. the python back end is running at https://python-wheeler-algorithms.ue.r.appspot.com/
+2. The front end is running with github pages at https://collin90.github.io/Wheeler-Graph-Application/#/
+
+PLEASE NOTE: If you make changes to the python backend, and save them, that won't affect the app immediately. I'll need to redeploy the app
+                IF you want the changes to be seen real time, you need to go into the javascript code and change the url back to localhost and run the dev server.
     
