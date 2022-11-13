@@ -92,7 +92,7 @@ function WheelerProperty () {
                     <input type="file" accept='.txt' onChange={handleFileInput} />
                 </Grid>
                 <Grid item xs={4}>
-                    <Button onClick={handleFileSubmit} variant='outlined'>Find Wheeler Ordering</Button>
+                    <Button onClick={handleFileSubmit} variant='outlined'>Find a Wheeler Ordering</Button>
                 </Grid>
             </Grid>
             <Typography variant="h6">{message}</Typography>
