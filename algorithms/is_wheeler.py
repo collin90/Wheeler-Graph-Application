@@ -1,21 +1,6 @@
 import numpy as np
+from graph_utils import *
 from collections import defaultdict
-
-def q(ls, k):
-    """Queries a list of dictionaries ls for the key k and returns a new list"""
-    return [ d[k] for d in ls ]
-
-def make_node_map(nodes):
-    d = dict()
-    for id, n in zip(q(nodes, 'id'), nodes):
-        d[id] = n
-    return d
-
-def get_in_degrees(edges):
-    d = defaultdict(int)
-    for id in q(edges, 'target'):
-        d[id] += 1
-    return d
 
 def zero_in_degree_are_first(nodes, in_degree):
     m = np.inf # minimum order of a node with nonzero in-degree
@@ -25,20 +10,15 @@ def zero_in_degree_are_first(nodes, in_degree):
         elif in_degree[n['id']] > 0 and n['order'] < m: m = n['order']
     return M < m
 
-def is_wheeler(G):
-    """A graph is Wheeler if the nodes can be ordered such that
-    1) 0 in-degree nodes come before others
-    And for all e = (u, v, a) and e' = (u', v', a')  with source =: u, target =: v, label =: a,
-    2) a < a' => v < v'                     <=> not (a < a' and v >= v')
-    3) (a = a') and (u < u') => v <= v'     <=> not (a = a' and u < u' and v > v')
-    
-    O(E^2 + V)
-    """
+def _is_wheeler(G, test_in_degree=True):
+    """Determines if graph is Wheeler. Ignores the zero-in-degree condition if test_in_degree=False"""
     nodes, edges = G['nodes'], G['edges']
     node_map = make_node_map(nodes) # Maps id to the node with that id
-    in_degree = get_in_degrees(edges) # Maps id to degree of node
 
-    if not zero_in_degree_are_first(nodes, in_degree): return False
+    if test_in_degree:
+        in_degree = get_in_degrees(edges) # Maps id to degree of node
+
+        if not zero_in_degree_are_first(nodes, in_degree): return False
 
     # Now compare all edges for cases 2 and 3
     def case2(e1, e2):
@@ -51,3 +31,17 @@ def is_wheeler(G):
         for e2 in edges:
             if (not case2(e1, e2)) or (not case3(e1, e2)): return False
     return True
+
+def is_wheeler(G):
+    """A graph is Wheeler if the nodes can be ordered such that
+    1) 0 in-degree nodes come before others
+    And for all e = (u, v, a) and e' = (u', v', a')  with source =: u, target =: v, label =: a,
+    2) a < a' => v < v'                     <=> not (a < a' and v >= v')
+    3) (a = a') and (u < u') => v <= v'     <=> not (a = a' and u < u' and v > v')
+    
+    O(E^2 + V)
+    """
+    return _is_wheeler(G)
+
+def is_wheeler_no_degree(G):
+    return _is_wheeler(G, False)
