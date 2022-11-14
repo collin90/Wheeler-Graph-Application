@@ -26,7 +26,7 @@ const URL = `https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app/c
 
 let id = 1;
 const getId = () => `${id++}`;
-const decrementId = () => {id--};
+const decrementId = () => `${id--}`;
 const resetId = () => {id = 1};
 
 const edgeOptions = {
@@ -125,28 +125,34 @@ const AddNodeOnEdgeDrop = () => {
 
   const handleNodeClick = (event, node) => {
     if(nodes.length > 1) {
-      const id_dropped = node.id;
-      decrementId();
-      const newEdges = edges.filter(e => {return (e.source != node.id && e.target != node.id)});
-      const newNodes = nodes.filter(n => {return n.id != node.id});
+      const id_dropped = parseInt(node.id);
+      const a = decrementId();
+      
+      //First, kill all edges with this node as a source or target, as well as the node itself.
+      const newEdges = edges.filter(e => {return (e.source != id_dropped && e.target != id_dropped)});
+      const newNodes = nodes.filter(n => {return n.id != id_dropped});
+      
+      //Next, update all the nodes So they are 1 less if they were bigger than the one that got dropped.
       const updatedNewNodes = newNodes.map(n => {
-        if(n.id > id_dropped){
+        if(parseInt(n.id) > id_dropped){
           const newId = (parseInt(n.id) - 1).toString();
           return {id: newId, position: n.position, data: {label: newId}}
         }
         else return n;
       })
+
+      //Finally, update all the edges so they are still connecting the right nodes.
       const updatedNewEdges = newEdges.map(e => {
-        if(e.source > id_dropped && e.target > id_dropped){
+        if(parseInt(e.source) > id_dropped && parseInt(e.target) > id_dropped){
           const newSource = (parseInt(e.source) - 1).toString();
           const newTarget = (parseInt(e.target) - 1).toString();
           return {id: e.id, target: newTarget, source: newSource, label: e.label}
         }
-        else if(e.source > id_dropped){
+        else if(parseInt(e.source) > id_dropped){
           const newSource = (parseInt(e.source) - 1).toString();
           return {id: e.id, target: e.target, source: newSource, label: e.label}
         }
-        else if(e.target > id_dropped){
+        else if(parseInt(e.target) > id_dropped){
           const newTarget = (parseInt(e.target) - 1).toString();
           return {id: e.id, target: newTarget, source: e.source, label: e.label}
         }
