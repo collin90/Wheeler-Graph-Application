@@ -18,7 +18,7 @@ function WheelerProperty () {
     const [graphableNodes, setGraphableNodes] = useState([]);
     const [graphableEdges, setGraphableEdges] = useState([]);
     const [message, setMessage] = useState('');
-    const URL = `https://python-wheeler-algorithm-service-34nimsvaoa-uk.a.run.app/`;
+    const URL = `https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app/`;
 
     
     const formGraph = (nodes, edges) => {
