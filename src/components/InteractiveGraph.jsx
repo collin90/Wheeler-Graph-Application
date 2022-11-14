@@ -13,7 +13,6 @@ import { v4 as uuidv4 } from 'uuid';
 import './css/index.css';
 import axios from 'axios';
 import { MarkerType } from 'reactflow';
-//https://python-wheeler-algorithms.ue.r.appspot.com/   URL
 
 const initialNodes = [
   {
@@ -23,7 +22,7 @@ const initialNodes = [
   },
 ];
 
-const URL = `https://python-wheeler-algorithms.ue.r.appspot.com/checkWheeler`;
+const URL = `https://python-wheeler-algorithm-service-34nimsvaoa-uk.a.run.app/checkWheeler`;
 
 let id = 1;
 const getId = () => `${id++}`;
