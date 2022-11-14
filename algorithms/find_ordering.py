@@ -55,7 +55,7 @@ def get_ordered_graph(G, perm):
     return {'nodes':nodes, 'edges':G['edges']}
 
 def perm_fails(id_tuple, G):
-    """True if the perm fails itself wrt the wheeler property, ignore the zero-in-degree requirement."""
+    """True if the perm fails itself wrt the wheeler property, ignoring the zero-in-degree requirement."""
     return get_sub_graph_ids(G, id_tuple) | p(get_ordered_graph, id_tuple) | p(is_wheeler_no_degree) | p(lambda x : not x)
 
 # TODO: if all perms fail for some label set, what happens?
