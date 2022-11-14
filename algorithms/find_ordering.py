@@ -10,6 +10,11 @@ GOOD_MESSAGE = 'Graph is Wheeler.'
 DIFF_LABELS_MESSAGE = 'Graph cannot be Wheeler because a node has incoming edges with different labels.'
 ALL_ORDERS_MESSAGE = 'Graph is not Wheeler because all possible orderings were tried.'
 CYCLE_MESSAGE = 'Graph is not Wheeler because there is a cycle using edges with one unique edge label.'
+TOO_LARGE_MESSAGE = 'Too many possible orderings to try.'
+
+def fac(x):
+    if x < 2: return 1
+    return x * fac(x - 1)
 
 def flatten_tuples(l):
     """Flattens a list of tuples into a list"""
@@ -58,28 +63,25 @@ def perm_fails(id_tuple, G):
     """True if the perm fails itself wrt the wheeler property, ignoring the zero-in-degree requirement."""
     return get_sub_graph_ids(G, id_tuple) | p(get_ordered_graph, id_tuple) | p(is_wheeler_no_degree) | p(lambda x : not x)
 
-# TODO: if all perms fail for some label set, what happens?
-def get_all_orderings(G, label_set, MAX_COMBOS = 2**18):
-    """Return all possible orderings. Considers how edge labels determine a range of values
-    for which a node can take in the order.
-    
-    label_set is a map from an edge label to set of all node ids with that incoming edge label.
-    """
+def reduce_perms(G, label_set):
+    """Cut down on permutations required to check by ruling out perms that fail themselves"""
     vals = [ label_set[k] for k in sorted(label_set.keys()) ] # get label sets sorted by edge labels
     # try every permutation of the nodes within an equivalence class defined by incoming edge label
-    perms = [ [ id_tuple for id_tuple in it.permutations(ids) if not perm_fails(id_tuple, G) ] for ids in vals]
+    return [ [ id_tuple for id_tuple in it.permutations(ids) if not perm_fails(id_tuple, G) ] for ids in vals ]
+
+def get_all_orderings(G, perms):
+    """Return all possible orderings.
     
-    cs = 1
-    for pset in perms:
-        cs *= len(pset)
-    if cs > MAX_COMBOS: # cs = len(all_combos) below
-        return [] # TODO: error message for this?
+    label_set is a map from an edge label to set of all node ids with that incoming edge label.
 
-    all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of permutations from the line above
-
+    """
+    all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of given permutations
     return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
-def find_ordering(G, MAX_ITERATIONS=2**20):
+# TODO: Consider adding one tuple of ids at a time, and if it every fails, then we can cancel and move on to
+# the next one. However, I would have to change how I generate my combos.
+# ^ Or maybe I wouldn't. As the tail is generated, I skip if it fails.
+def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
     """Given a graph G, finds an ordering on the graph is possible. Will not try if the number of iterations over
     graph elements is greater than MAX_ITERATIONS.
     
@@ -107,21 +109,21 @@ def find_ordering(G, MAX_ITERATIONS=2**20):
     # Partition the nodes by the incoming label. This is sort of the inverse of incoming.
     label_set = get_label_set(G)
 
-    fac = lambda x : x * fac(x - 1) if x > 1 else 1 # factorial
+    # If each label set might need to check more than 2**10 orders, I'll back out of the computation.
+    max_lset_orders = max([ fac(len(s)) for s in label_set.values() ])
+    if MAX_ORDERS is not None and max_lset_orders > MAX_ORDERS: return dict({'ordering':None, 'message':TOO_LARGE_MESSAGE})
 
-    # Now must try every permutation of nodes with same edge label.
-    N = 1 # I wish we could use np.product() for this, but it overflows at 2^32
-    for p in [ fac(len(l)) for l in list(label_set.values()) ]:
-        N *= p
-    V = len(nodes)
-    E = len(edges)
-    # Assume that for every permutation, we must check if the whole graph is wheeler. It is wheeler in O(E^2 + V) for V the size of the vertices=nodes.
-    if MAX_ITERATIONS is not None and N * (E * E + V) > MAX_ITERATIONS:
-        return dict({'ordering':None, 'message':f'Too many possibilities to try. There are {N} possible orderings => {N * (E * E + V)} iterations over graph elements required.'})
+    perms = reduce_perms(G, label_set)
+    
+    # Now that the total number of permutations we must try is significantly reduced, check how many orderings will really be tried
+    if MAX_ITERATIONS is not None:
+        n_orders = 1
+        for pset in perms:
+            n_orders *= len(pset)
+        # Since each order requires a call to is_wheeler in O(E^2 + V), total iterations is O(n_orders * (E^2 + V))
+        if n_orders * (len(edges)**2 + len(nodes)) > MAX_ITERATIONS: return dict({'ordering':None, 'message':TOO_LARGE_MESSAGE})
 
-    # TODO: because we now cut back on possible permutations as they are generated, consider stopping early if we reach
-    #       MAX_ITERATIONS / (E^2 + V) or if the set of all orderings is too large.
-    os = get_all_orderings(G, label_set)
+    os = get_all_orderings(G, perms)
     for o in os:
         if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
 

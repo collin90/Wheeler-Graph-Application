@@ -5,21 +5,14 @@ from sspipe import p
 
 test_folder = './algorithms/unit_test_files/wheeler/'
 
-def get_message(filename, MAX_ITERATIONS=2**20):
+def get_message(filename, MAX_ITERATIONS, MAX_ORDERS):
     infile = open(test_folder + filename, 'r')
     graph_string = infile.readline().removesuffix('\n')
     infile.close()
-    return graph_string | p(json.loads) | p(find_ordering, MAX_ITERATIONS) | p(lambda x : x['message'])
+    return graph_string | p(json.loads) | p(find_ordering, MAX_ITERATIONS, MAX_ORDERS) | p(lambda x : x['message'])
 
-def print_order(filename, MAX_ITERATIONS=2**20):
-    """Prints the nodes from the ordering so that we can see the solution."""
-    infile = open(test_folder + filename, 'r')
-    graph_string = infile.readline().removesuffix('\n')
-    infile.close()
-    print(find_ordering(json.loads(graph_string), MAX_ITERATIONS)['ordering']['nodes'])
-
-def test(this, message, filename, MAX_ITERATIONS=2**20):
-    this.assertEqual(message, get_message(filename, MAX_ITERATIONS))
+def test(this, message, filename, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
+    this.assertEqual(message, get_message(filename, MAX_ITERATIONS, MAX_ORDERS))
 
 class TestFindOrdering(unittest.TestCase):
     def simple(self):
@@ -33,7 +26,7 @@ class TestFindOrdering(unittest.TestCase):
         """These graphs are somewhat 'complex'. They aren't super simple or super large."""
         test(self, GOOD_MESSAGE, 'complex_true1.txt') # 6 nodes. Is from is_wheeler. Already ordered
         test(self, GOOD_MESSAGE, 'complex_orderable1.txt') # 8 nodes, 13 edges
-        test(self, GOOD_MESSAGE, 'complex_orderable2.txt') # no edges. Must create all orderings
+        test(self, GOOD_MESSAGE, 'complex_orderable2.txt', MAX_ORDERS=None) # no edges. Must create all orderings
         test(self, GOOD_MESSAGE, 'complex_orderable3.txt') # 12 nodes, 13 edges
         test(self, GOOD_MESSAGE, 'complex_orderable4.txt', 2**23) # 12 nodes 14 edges
         test(self, GOOD_MESSAGE, 'complex_orderable5.txt', 2**23) # 14 nodes
@@ -45,10 +38,11 @@ class TestFindOrdering(unittest.TestCase):
 
     def large(self):
         def t(msg, fname):
-            test(self, msg, fname, None)
+            test(self, msg, fname, 2**29) # over 500 million worst case
         t(GOOD_MESSAGE, 'large_orderable1.txt') # 21 nodes. 4 different edge labels. Incredibly large worst case.
         t(ALL_ORDERS_MESSAGE, 'large_unorderable1.txt') # Same graph as above but added edge makes unorderable
         t(GOOD_MESSAGE, 'large_orderable3.txt') # 24 nodes
+        t(TOO_LARGE_MESSAGE, 'large_orderable4.txt') # 31 nodes. Large alphabet. Is orderable when we let up to 4 billion ~ 2^32 iterations
         t(ALL_ORDERS_MESSAGE, 'large_unorderable2.txt')
 
     # The above functions are not run by unittest because they do not begin with "test". Run them here.
