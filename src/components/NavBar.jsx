@@ -3,6 +3,8 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import { useNavigate, useParams } from "react-router";
+
 
 function NavBar () {
     //return (
@@ -25,13 +27,19 @@ function NavBar () {
      //   </nav>
     //);
     const [value, setValue] = React.useState('Wheeler Graphs');
+    const navigate = useNavigate();
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
+      if(newValue == 'Wheeler Graphs') navigate('/');
+      else if (newValue == 'Tutorial') navigate('/tutorial');
+      else if (newValue == 'Generate/Visualize') navigate('/visualize');
+      else if (newValue == 'Pattern Matching') navigate('/patternmatch');
+      else if (newValue == 'Wheeler Property') navigate('/wheelerproperty')
     };
   
     return (
-      <Box sx={{ width: '100%'}}>
+      <Box sx={{ width: '100%', height : '8%'}}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -39,11 +47,11 @@ function NavBar () {
           indicatorColor="secondary"
           aria-label="secondary tabs example"
         >
-            <Tab value="Wheeler Graphs" label="Wheeler Graphs"><Link to="/" /></Tab>
-            <Tab value="Tutorial" label="Tutorial"><Link to="/tutorial" /></Tab>
-            <Tab value="Generate/Visualize" label="Generate/Visualize" ><Link to="/visualize"/></Tab>
-            <Tab value="Pattern Match" label="Pattern Matching" ><Link to="/patternmatch" /> </Tab>
-            <Tab value="Wheeler Property" label="Wheeler Property" ><Link to="/wheelerproperty" /> </Tab>
+            <Tab value="Wheeler Graphs" label="Wheeler Graphs"></Tab>
+            <Tab value="Tutorial" label="Tutorial"></Tab>
+            <Tab value="Generate/Visualize" label="Generate/Visualize" ></Tab>
+            <Tab value="Pattern Match" label="Pattern Matching" ></Tab>
+            <Tab value="Wheeler Property" label="Wheeler Property" ></Tab>
         </Tabs>
       </Box>
     );
