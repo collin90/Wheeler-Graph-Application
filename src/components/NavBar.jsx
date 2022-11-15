@@ -31,7 +31,7 @@ function NavBar () {
     };
   
     return (
-      <Box sx={{ width: '100%', height: '24px' }}>
+      <Box sx={{ width: '100%'}}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -39,11 +39,11 @@ function NavBar () {
           indicatorColor="secondary"
           aria-label="secondary tabs example"
         >
-            <Link to="/"><Tab value="Wheeler Graphs" label="Wheeler Graphs" /></Link>
-            <Link to="/tutorial"><Tab value="Tutorial" label="Tutorial" /></Link>
-            <Link to="/visualize"><Tab value="Generate/Visualize" label="Generate/Visualize" /></Link>
-            <Link to="/patternmatch"><Tab value="Pattern Match" label="Pattern Matching" /></Link>
-            <Link to="/wheelerproperty"><Tab value="Wheeler Property" label="Wheeler Property" /></Link>
+            <Tab value="Wheeler Graphs" label="Wheeler Graphs"><Link to="/" /></Tab>
+            <Tab value="Tutorial" label="Tutorial"><Link to="/tutorial" /></Tab>
+            <Tab value="Generate/Visualize" label="Generate/Visualize" ><Link to="/visualize"/></Tab>
+            <Tab value="Pattern Match" label="Pattern Matching" ><Link to="/patternmatch" /> </Tab>
+            <Tab value="Wheeler Property" label="Wheeler Property" ><Link to="/wheelerproperty" /> </Tab>
         </Tabs>
       </Box>
     );
