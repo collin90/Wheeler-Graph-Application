@@ -34,17 +34,18 @@ function NavBar () {
       if(newValue == 'Wheeler Graphs') navigate('/');
       else if (newValue == 'Tutorial') navigate('/tutorial');
       else if (newValue == 'Generate/Visualize') navigate('/visualize');
-      else if (newValue == 'Pattern Matching') navigate('/patternmatch');
+      else if (newValue == 'Pattern Match') navigate('/patternmatch');
       else if (newValue == 'Wheeler Property') navigate('/wheelerproperty')
     };
   
     return (
-      <Box sx={{ width: '100%', justifyContent: "right", display: 'flex', fontSize: '32px', fontWeight: '600'}}>
+      <Box mt={1} bgcolor='light-blue' sx={{ width: '100%', justifyContent: "flex", display: 'flex', fontSize: '38px', fontWeight: 'bolder'}}>
         <Tabs
           value={value}
           onChange={handleChange}
-          textColor="secondary"
-          indicatorColor="secondary"
+          textColor="primary"
+          sx={{'backgroundColor':'#EDF1FF', width: '100%'}}
+          indicatorColor="primary"
           aria-label="secondary tabs example"
         >
             <Tab value="Wheeler Graphs" label="Wheeler Graphs"></Tab>
