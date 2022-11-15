@@ -39,7 +39,7 @@ function NavBar () {
     };
   
     return (
-      <Box sx={{ width: '100%', height : '15%', justifyContent: "right", display: 'flex'}}>
+      <Box sx={{ width: '100%', justifyContent: "right", display: 'flex', fontSize: '32px', fontWeight: '600'}}>
         <Tabs
           value={value}
           onChange={handleChange}
