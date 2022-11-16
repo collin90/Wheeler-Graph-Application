@@ -7,25 +7,25 @@ import { useNavigate, useParams } from "react-router";
 
 
 function NavBar () {
-    //return (
-    //    <nav className="nav">
-     //       <Link to="/" className="site-title">Wheeler Graphs</Link>
-     //       <ul>
-     //           <li>
-     //               <Link to="/tutorial">Tutorial</Link>
-     //           </li>
-     //           <li>
-     //               <Link to="/visualize">Visualize</Link>
-     //           </li>
-     //           <li>
-     //               <Link to="/patternmatch">Pattern Matching</Link>
-     //           </li>
-     //           <li>
-     //               <Link to="/wheelerproperty">Wheeler Property</Link>
-     //           </li>
-     //       </ul>
-     //   </nav>
-    //);
+    return (
+        <nav className="nav">
+            <Link to="/" className="site-title">Wheeler Graphs</Link>
+            <ul>
+                <li>
+                    <Link to="/tutorial">Tutorial</Link>
+                </li>
+                <li>
+                    <Link to="/visualize">Visualize</Link>
+                </li>
+                <li>
+                    <Link to="/patternmatch">Pattern Matching</Link>
+                </li>
+                <li>
+                    <Link to="/wheelerproperty">Find Ordering</Link>
+                </li>
+            </ul>
+        </nav>
+    );
     const [value, setValue] = React.useState('Wheeler Graphs');
     const navigate = useNavigate();
 
@@ -52,9 +52,9 @@ function NavBar () {
             <Tab value="Tutorial" label="Tutorial"></Tab>
             <Tab value="Generate/Visualize" label="Generate/Visualize" ></Tab>
             <Tab value="Pattern Match" label="Pattern Matching" ></Tab>
-            <Tab value="Wheeler Property" label="Wheeler Property" ></Tab>
+            <Tab value="Wheeler Property" label="Find Ordering" ></Tab>
         </Tabs>
       </Box>
-    );
+    ); 
 
 } export default NavBar;

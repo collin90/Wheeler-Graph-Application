@@ -61,7 +61,7 @@ function Home() {
                     1. <Link to={"/tutorial"}>Tutorial</Link>: Learn all about Wheeler graphs and why they are important, and create some of your own! <br></br>
                     2. <Link to={"/visualize"}>Visualize</Link>: Visualize a Wheeler graph by inputting strings or text files <br></br>
                     3. <Link to={"/patternmatching"}>Pattern Matching</Link>: Match a string against a constructed graph <br></br>
-                    4. <Link to={"/wheelerproperty"}>Wheeler Property</Link>: Put in an unordered graph and determine if its a Wheeler graph or not <br></br>
+                    4. <Link to={"/wheelerproperty"}>Wheeler Property</Link>: Put in an unordered graph and try to find an ordering that satisfies the wheeler property if possible <br></br>
                 </Typography>
             </Box>
             <Box pt={3} py={10}>
