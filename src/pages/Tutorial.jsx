@@ -97,7 +97,7 @@ function Tutorial() {
                     <ol start="2">
                         <li>
                             <MathJax.Node inline formula={`a \\prec a' \\Longrightarrow v < v'`} />
-                            <Typography variant="body1" ml={4}>If an edge labeled a is alphabetically less than an edge labeled a', then that the lesser edge's destination should be less than the greater edge's destination. </Typography>
+                            <Typography variant="body1" ml={4}>If an edge labeled a is lexigraphically less than an edge labeled a', then that the lesser edge's destination should be less than the greater edge's destination. </Typography>
                             <Typography variant="body1" ml={6}>This also creates the corollary that all edges entering the same node have the same label since a node cannot have two incoming edges with different labels </Typography>
                         </li>
                         <Typography variant="body1" ml={6}>
