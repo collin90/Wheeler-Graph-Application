@@ -19,8 +19,10 @@ function WheelerProperty () {
     const [graphableEdges, setGraphableEdges] = useState([]);
     const [message, setMessage] = useState('');
     const URL = `https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app/`;
+    const refJSONDownload=useRef(null);
+    let textFileJSON = null;
 
-    
+
     const formGraph = (nodes, edges) => {
         //create the colors list
         let colors = {};
@@ -83,6 +85,21 @@ function WheelerProperty () {
         ); 
     }
 
+    const createWheelerGraphFile = () => {   
+        const makeTextFile = () => {
+            var data = new Blob([JSON.stringify({nodes: nodes.map(node => ({id: node.id, order: node.order})), edges: edges.map(edge => ({id: uuidv4(), source: edge.source, target: edge.target, label: edge.label, strings: edge.strings}))})], {type: 'text/json'});
+            if (textFileJSON !== null) {
+              window.URL.revokeObjectURL(textFile);
+            }
+            textFileJSON = window.URL.createObjectURL(data);
+            return textFileJSON;
+          };
+    
+        var link = refJSONDownload.current;
+        link.href = makeTextFile();
+        link.style.display = 'block';
+    }
+
     return (
         <Container>
             <Box py={3}>
@@ -102,6 +119,17 @@ function WheelerProperty () {
                     {graphableNodes.length < 200 ? <Graph nodes={graphableNodes} edges={graphableEdges}/> : <Graph ndoes={[]} edges={[]} /> }
                 </div>
             </Box>
+            <Stack spacing={.125} mb={3}>
+                <Grid container direction = "row" mb={4}>
+                    <Grid item xs={4}>
+                        <Button onClick={createWheelerGraphFile} variant='outlined'>Create Wheeler Graph JSON</Button>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <a download="graphJSON.txt" ref={refJSONDownload} style={{'display':'none'}}>Download JSON Object</a>
+                    </Grid>
+                </Grid>
+            </Stack>
+
         </Container>
     );
 
