@@ -24,7 +24,7 @@ function Visualize () {
     const refCompressedDownload=useRef(null);
     let textFileJSON = null;
     let textFileCompressed = null;
-    const URL = `https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app/`
+    const URL = `http://127.0.0.1:5000/`;
 
     const formGraph = (nodes, edges) => {
         //create the colors list
