@@ -5,14 +5,14 @@ TOPIC: Wheeler graph visualization, and algorithms!!!
 TEAM MEMBERS: Brandon Stride, Collin Hughes, Joanna Bi, Julia Ross
 
 Current Goals: 
-    1. Build Tutorial Page
-        a. Build interactive graph component (with react flow) so it can be nested into the tutorial page easily
-    2. Finalize visualize page
-        a. Build algorithm that compresses multi-string wheeler graphs (per section 4.4 of the paper: https://www.sciencedirect.com/science/article/pii/S0304397517305285)
-    3. Refactor / Integrate wheeler graph detection algorithms.
-        a. Start stylizing the "Wheeler Property" page.
-    4. Deploy both server and client apps for the presentation on wednesday (11/16/2022). 
-
+    1. (Collin) Refactor Interactive Graph such that it will update LIVE to show the OILC representation of the graph if it is wheeler
+        1a. (Julia/Joanna) Add the hover feature to display additional inforation when you hover over certain key terms. You could also show a link to reference pages with this.
+    2. (Julia/Joanna) Build a python algorithm for the pattern matching page to take in an OILC file, and convert it to a graph visuialization (nodes and edges)
+    3. (Anyone who's brave) Build a pattern matching algortihm to visually (with node highlighting!) trace a string P through the wheeler graph created from ^. This should be a step-by-step trace, as in, the user can click their way through the pattern matching process letter-by-letter, with new nodes being highlighted at every step, like a debugger. Or, they can click "show result", and have the whole thing happen at once. We should also report below the graph, whether P is found, as well as how many times its found. If possible, and this is a 'stretch goal', what indices of what strings P is found.
+    4. (Brandon) Refactor findOrdering to a functional programming language without convoluting overall server architecture too significantly.
+    5. (Brandon) Add the merge idea to the findOrdering, and compare the results.
+    6. (Collin) Optimize the memory usage for the following algorithms: getSingleStringWheelerGraph, and getTrieWheelerGraph. Very important for running visualize with big inputs on our deployed app in the cloud. Because I'm cheap!!
+    7. (Collin) Clean up The pages, such that components are modularized into react functions (like the download buttons) so that its easier to reuse things from page to page.
 
 
 HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!
@@ -32,9 +32,8 @@ HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!
     
 THIS APP IS DEPLOYED NOW.
 
-1. the python back end is running at https://python-wheeler-algorithms.ue.r.appspot.com/
+1. the python back end is running at https://python-wheeler-algorithms.ue.r.appspot.com/  HOWEVER, it is not in use right now. Use localhost for now plz!
 2. The front end is running with github pages at https://collin90.github.io/Wheeler-Graph-Application/#/
 
-PLEASE NOTE: If you make changes to the python backend, and save them, that won't affect the app immediately. I'll need to redeploy the app
-                IF you want the changes to be seen real time, you need to go into the javascript code and change the url back to localhost and run the dev server.
+
     

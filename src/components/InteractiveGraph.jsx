@@ -22,7 +22,7 @@ const initialNodes = [
   },
 ];
 
-const URL = `https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app/checkWheeler`;
+const URL = `http://127.0.0.1:5000/`;
 
 let id = 1;
 const getId = () => `${id++}`;

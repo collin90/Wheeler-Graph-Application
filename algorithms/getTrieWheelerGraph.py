@@ -26,7 +26,6 @@ def getTrieWheelerGraph (inputArr):
                 target = n['id']
                 label = inputStr[i]
                 e = {'source': source, 'target': target, 'label': label}
-                print(e)
                 edges.append({'source': source, 'target': target, 'label': label})
 
     #step 3, now to sort the nodes.
