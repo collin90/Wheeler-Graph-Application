@@ -16,14 +16,17 @@ def getTrieWheelerGraph (inputArr):
         #walk across each string letter by letter
         for i in range(len(inputStr)):
             #if the current walk has already been made, we do nothing!
-            if (inputStr[0:i] in ids_dict): continue
+            if (inputStr[0:i+1] in ids_dict): continue
             #if the current walk has not already been made, we will need to add a new node and edge :)
             else :
                 n = {"id" : inputStr[0:i+1]}
+                nodes.append(n)
                 ids_dict[n['id']] = 1
                 source = '$' if i == 0 else inputStr[0:i]
                 target = n['id']
                 label = inputStr[i]
+                e = {'source': source, 'target': target, 'label': label}
+                print(e)
                 edges.append({'source': source, 'target': target, 'label': label})
 
     #step 3, now to sort the nodes.

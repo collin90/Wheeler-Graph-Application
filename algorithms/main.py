@@ -18,7 +18,7 @@ def visualize():
         graph = getSingleStringWheelerGraph(request.json['str'][0])
         return jsonify({"result": graph})
     elif(len(request.json['str']) > 0):
-        graph = getMultiStringWheelerGraph(request.json['str'])
+        graph = getTrieWheelerGraph(request.json['str'])
         return jsonify({"result": graph})
     else:
         return jsonify({"result": {"nodes": [], "edges": []}})
@@ -29,7 +29,7 @@ def compressed():
     if (len(request.json['str']) == 1) :
         graph = getSingleStringWheelerGraph(request.json['str'][0])
     elif(len(request.json['str']) > 0):
-        graph = getTrieWheelerGraph(request.json['str'])
+        graph = getMultiStringWheelerGraph(request.json['str'])
     else : graph = {'nodes': [], 'edges': []}
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)
