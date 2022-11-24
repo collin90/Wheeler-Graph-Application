@@ -76,6 +76,7 @@ def reduce_perms(G, label_set):
 
 # TODO: track which nodes are affected by the addition of another tuple, and only check the edges
 # that are relevant.
+# TODO: make this more like merge sort rather than selection sort.
 def try_combos(l, G):
     """
     l looks like [[(), ..., ()], ..., [(), ..., ()]] i.e. it is a list of lists of tuples.

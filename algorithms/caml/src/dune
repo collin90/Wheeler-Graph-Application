@@ -1,0 +1,35 @@
+(library
+ (name permutations)
+ (modules permutations)
+ (libraries 
+   core))
+
+(library
+ (name graph_utils)
+ (modules graph_utils)
+ (libraries 
+   core
+   base
+   ppx_deriving_yojson.runtime)
+ (preprocess (pps ppx_jane ppx_deriving_yojson)))
+
+(library
+ (name find_ordering)
+ (modules find_ordering)
+ (libraries 
+   core
+   base
+   graph_utils
+   permutations
+   ppx_deriving_yojson.runtime)
+ (preprocess (pps ppx_jane ppx_deriving_yojson)))
+
+(executable
+  (name order)
+  (modules order)
+  (libraries
+    core
+    yojson
+    find_ordering
+    graph_utils
+    core_unix.sys_unix))
