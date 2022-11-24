@@ -40,7 +40,7 @@ type graph = {
   edges: edgelist;
 } [@@deriving yojson]
 
-let graph_from_file fname = Yojson.Safe.from_file fname |> graph_of_yojson |> Result.ok |> Option.value_exn
+let graph_from_file fname = Yojson.Safe.from_file fname |> graph_of_yojson |> Result.ok_or_failwith
 
 (* Assumes nodes in ns have distinct ids *)
 let get_node_map (ns: nodelist) : node String_map.t =
