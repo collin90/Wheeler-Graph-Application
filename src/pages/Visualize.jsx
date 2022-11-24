@@ -24,7 +24,7 @@ function Visualize () {
     const refCompressedDownload=useRef(null);
     let textFileJSON = null;
     let textFileCompressed = null;
-    const URL = `https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app/`
+    const URL = `http://127.0.0.1:5000/`;
 
     const formGraph = (nodes, edges) => {
         //create the colors list
@@ -121,27 +121,58 @@ function Visualize () {
     const createWheelerGraphCompressedFile = () => {
         const path = URL + 'compressed';
         setLoading(true);
-        axios.post(path, {str: fileContent}).then(
-            (response) => {
-                function makeTextFile (oil) {
-                    var data = new Blob([JSON.stringify(oil)], {type: 'text/json'});
-                    if (textFileCompressed !== null) {
-                        window.URL.revokeObjectURL(textFile);
-                    }
-                    textFileCompressed = window.URL.createObjectURL(data);
-                    return textFileCompressed;
-                }   
-                var result = response.data;
-                const oil = {O: result.O, I: result.I, L: result.L, C: result.C};
-                var link = refCompressedDownload.current;
-                link.href = makeTextFile(oil);
-                link.style.display = 'block';
-                setLoading(false);
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        
+        if(fileContent.length === 0) {
+            const textArr = [];
+            texts.forEach(text => textArr.push(text.text));
+            axios.post(path, {str: textArr}).then(
+                (response) => {
+                    function makeTextFile (oil) {
+                        var data = new Blob([JSON.stringify(oil)], {type: 'text/json'});
+                        if (textFileCompressed !== null) {
+                            window.URL.revokeObjectURL(textFile);
+                        }
+                        textFileCompressed = window.URL.createObjectURL(data);
+                        return textFileCompressed;
+                    }   
+                    var result = response.data;
+                    const oil = {O: result.O, I: result.I, L: result.L, C: result.C};
+                    var link = refCompressedDownload.current;
+                    link.href = makeTextFile(oil);
+                    link.style.display = 'block';
+                    setLoading(false);
+                },
+                (error) => {
+                    console.log(error);
+                    setLoading(false);
+                }
+            );
+        }
+
+        else {
+            axios.post(path, {str: fileContent}).then(
+                (response) => {
+                    function makeTextFile (oil) {
+                        var data = new Blob([JSON.stringify(oil)], {type: 'text/json'});
+                        if (textFileCompressed !== null) {
+                            window.URL.revokeObjectURL(textFile);
+                        }
+                        textFileCompressed = window.URL.createObjectURL(data);
+                        return textFileCompressed;
+                    }   
+                    var result = response.data;
+                    const oil = {O: result.O, I: result.I, L: result.L, C: result.C};
+                    var link = refCompressedDownload.current;
+                    link.href = makeTextFile(oil);
+                    link.style.display = 'block';
+                    setLoading(false);
+                },
+                (error) => {
+                    console.log(error);
+                    setLoading(false);
+                }
+            );
+        }
     }
 
     const addTextField = () => {

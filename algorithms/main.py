@@ -3,9 +3,11 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from getSingleStringWheelerGraph import getSingleStringWheelerGraph 
 from getMultiStringWheelerGraph import getMultiStringWheelerGraph
+from getTrieWheelerGraph import getTrieWheelerGraph
 from getOILC import getOILC
 from ordered_wheeler_property import check_for_wheeler_property
 from find_ordering import find_ordering
+
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +18,7 @@ def visualize():
         graph = getSingleStringWheelerGraph(request.json['str'][0])
         return jsonify({"result": graph})
     elif(len(request.json['str']) > 0):
-        graph = getMultiStringWheelerGraph(request.json['str'])
+        graph = getTrieWheelerGraph(request.json['str'])
         return jsonify({"result": graph})
     else:
         return jsonify({"result": {"nodes": [], "edges": []}})
@@ -27,7 +29,7 @@ def compressed():
     if (len(request.json['str']) == 1) :
         graph = getSingleStringWheelerGraph(request.json['str'][0])
     elif(len(request.json['str']) > 0):
-        graph = getMultiStringWheelerGraph(request.json['str'])
+        graph = getTrieWheelerGraph(request.json['str'])
     else : graph = {'nodes': [], 'edges': []}
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)
