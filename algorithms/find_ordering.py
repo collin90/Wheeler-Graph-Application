@@ -131,3 +131,17 @@ def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
         if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
 
     return dict({'ordering':None, 'message':ALL_ORDERS_MESSAGE})
+
+
+# It's much faster to run the executable from the command line than it is to run the Python code above.
+# HOWEVER, it's slower to run the executable from within Python as I do below...
+
+# from subprocess import Popen, PIPE, STDOUT
+# import json
+
+# # Expected to be called from Wheeler-Graph-Application/ and not inside Wheeler-Graph-Application/algorithms/
+# def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
+#     # For now I'm ignoring the max args
+#     child = Popen(['./algorithms/order.exe', '--json', json.dumps(G), '0'], stdout=PIPE, stderr=STDOUT)
+#     output, _ = child.communicate() # second item is error
+#     return json.loads(output)

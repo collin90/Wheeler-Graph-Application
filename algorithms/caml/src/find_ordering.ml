@@ -2,7 +2,7 @@
    FIND_ORDERING
 
    Finds an ordering on a given graph. General graph functions are in graph_utils.ml
-
+   Helper functions wrt permutations are in permutations.ml
 *)
 
 open Core
@@ -130,6 +130,7 @@ let try_all_orderings (os: graph list) : (graph, string) result =
   |> Result.of_option ~error:all_orders_message
 
 (* TODO: make max_orders 8! = 40320 and go back to method in python implementation *)
+(* Monadic '>>=' binding are with Result. If it is ever Error 'msg', then it skips over the rest. *)
 let find_ordering ?(max_orders: int = 1000000) (g: graph) (*?(max_iterations = 1000000)*) : return_record =
   match
     g
@@ -140,4 +141,4 @@ let find_ordering ?(max_orders: int = 1000000) (g: graph) (*?(max_iterations = 1
     >>= try_all_orderings
   with
   | Ok g -> { ordering = g; message = good_message }
-  | Error s -> { ordering = { nodes = []; edges = [] }; message = s} (* return empty graph *)
+  | Error s -> { ordering = { nodes = []; edges = [] }; message = s} (* return empty graph and the error message *)
