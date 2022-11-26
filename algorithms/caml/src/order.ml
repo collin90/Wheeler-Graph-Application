@@ -10,33 +10,23 @@
 *)
 
 open Core
-
-(* It's a better idea to use a map. Then I can add any number of arguments and access them with a string. It wouldn't be as hardcoded *)
-type arg_record = {
-  file: string option;
-  json: string option;
-  max_orders: int option;
-  max_iterations: int option;
-}
-
-let empty_args = { file = None; json = None; max_orders = None; max_iterations = None }
+module String_map = Map.Make(String) (* Could also copy Graph_utils.String_map, but that gave a syntax error? *)
 
 let parse_args xs =
   let rec parse_args' acc = function
-    | "--file" :: filename :: xss -> parse_args' { acc with file = Some filename } xss
-    | "--json" :: graphstring :: xss -> parse_args' { acc with json = Some graphstring } xss
-    | "--max_orders" :: x :: xss -> parse_args' { acc with max_orders = Some (Int.of_string x) } xss
-    | "--max_iterations" :: x :: xss -> parse_args' { acc with max_iterations = Some (Int.of_string x) } xss
+    | tag :: value :: xss when String.is_prefix tag ~prefix:"--" -> parse_args' (String_map.add_exn acc ~key:tag ~data:value) xss
     | _ -> acc
   in
-  parse_args' empty_args xs
+  parse_args' String_map.empty xs
 
 let get_graph args =
-  match args.json, args.file with
+  match String_map.find args "--json", String_map.find args "--file" with
   | Some j, None -> Yojson.Safe.from_string j |> Graph_utils.graph_of_yojson |> Result.ok_or_failwith
   | None, Some f -> Graph_utils.graph_from_file f (* same as line above but with Yojson.Safe.from_file *)
   | None, None -> failwith "[ARGUMENT ERROR] Not enough arguments. Expected named argument \"--file\" or \"--json\"."
   | _ -> failwith "[ARGUMENT ERROR] Too many arguments. Expected only one of \"--file\" or \"--json\" but got both."
+
+let find m k f = Option.Let_syntax.(String_map.find m k >>| f)
 
 let () = 
   let args =
@@ -45,9 +35,10 @@ let () =
     |> List.tl_exn (* First arg is always executable name. Ignore it *)
     |> parse_args
   in
+  let get_int_arg = fun s -> find args s Int.of_string in
   args
   |> get_graph
-  |> Find_ordering.find_ordering ?max_orders:(args.max_orders) ?max_iterations:(args.max_iterations)
+  |> Find_ordering.find_ordering ?max_orders:(get_int_arg "--max_orders") ?max_iterations:(get_int_arg "--max_iterations")
   |> Find_ordering.return_record_to_yojson
   |> Yojson.Safe.to_string
   |> print_endline
