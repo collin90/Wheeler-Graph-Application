@@ -38,8 +38,8 @@ let is_wheeler_tests =
         "Complex" >:: test_complex_wheeler;
        ]
 
-let assert_message ?(max_orders) (infile: string) (message: string) : unit =
-  let output = infile |> read_graph |> find_ordering ?max_orders
+let assert_message ?(max_orders) ?(max_iterations) (infile: string) (message: string) : unit =
+  let output = infile |> read_graph |> find_ordering ?max_orders ?max_iterations
   in
   OUnit2.assert_equal message output.message
 
@@ -62,10 +62,10 @@ let test_complex_ordering _ =
   assert_message "complex_unorderable2.txt" all_orders_message
 
 let test_large_ordering _ =
-  let case = assert_message ?max_orders:(Some 0) in
+  let case = assert_message ?max_orders:None ?max_iterations:(Some (Int.pow 2 29)) in
   case "large_orderable1.txt" good_message;
   case "large_orderable3.txt" good_message;
-  (* case "large_orderable4.txt" too_large_message; (* Increase bound to let this work *) *)
+  case "large_orderable4.txt" too_large_message; (* Increase bound to let this work *)
   case "large_unorderable1.txt" all_orders_message;
   case "large_unorderable2.txt" all_orders_message
 

@@ -1,3 +1,5 @@
+[@@@warning "-27"] (* One of combos or combos' is not used. Ignore warning about unused variable *)
+
 open Core
 
 let rec fac x = if x < 2 then 1 else x * (fac @@ x - 1)
@@ -46,3 +48,32 @@ let combos (l : 'a list list list) : 'a list list list =
       List.cartesian_product hd cs |> List.map ~f:(fun (a, b) -> a :: b)
     in
     List.filter l ~f:(Fn.compose not List.is_empty) |> combos'
+
+let list_of_tuple2 = function a, b -> [a; b]
+
+(*
+This has the above functionality, but it joins all of the ().
+The example then has result
+[{a, b, c, d, e},
+{a, b, c, e, d},
+{b, a, c, d, e},
+{b, a, c, e, d}]
+
+Also filters out any combos based on optional argument ?filter
+*)
+let rec combos' ?(filter: 'a list -> bool = Fn.const true) = function
+  | [] -> []
+  | [p] -> List.filter p ~f:filter (* We may prefer to use a filter option so that we don't pass over unnecessarily *)
+  | a :: b :: [] -> begin
+    List.cartesian_product a b
+    |> List.map ~f:list_of_tuple2 (* Take all pairs <=> all combos *)
+    |> List.map ~f:List.join (* flatten *)
+    |> List.filter ~f:filter
+  end
+  | l -> begin
+    List.length l / 2
+    |> List.split_n l (* Split into two approximately equal pieces *)
+    |> Tuple2.map ~f:combos' (* Find combos of each piece separately *)
+    |> list_of_tuple2
+    |> combos' (* Join the two combos *)
+  end

@@ -5,6 +5,8 @@
    Helper functions wrt permutations are in permutations.ml
 *)
 
+[@@@warning "-27"] (* Ignore unused variable warnings *)
+
 open Core
 open Graph_utils
 open Permutations
@@ -43,12 +45,12 @@ let check_label_cycle (g: graph) : (graph, string) result =
 (* True if all nodes with zero in-degree come first in the ordering on the graph *)
 let zero_in_first (g: graph) : bool =
   let in_degree = get_in_degrees g in
-  let q id = match String_map.find in_degree id with None -> 0 | Some x -> x in
+  let deg id = match String_map.find in_degree id with None -> 0 | Some x -> x in
   let rec aux (ns: nodelist) (m: int) (m0: int) : bool =
     match ns with
     | [] -> m0 < m (* compare max and min orders *)
     | hd :: tl -> begin
-      let d = q hd.id in
+      let d = deg hd.id in
       if d = 0 && hd.order > m0 then aux tl m hd.order else (* update max order for zero-in-degree*)
       if d > 0 && hd.order < m then aux tl hd.order m0 else (* update min order for nonzero-in-degree*)
       aux tl m m0
@@ -84,30 +86,30 @@ let perm_passes_subg (perm: string list) (subg: graph) : bool =
 let perm_passes (perm: string list) (g: graph) : bool =
   get_sub_graph g perm |> perm_passes_subg perm
 
-let get_perms (max_orders: int) (g: graph) : (string list list list, string) result =
+let get_perms (max_orders: int) (max_iterations: int) (g: graph) : (string list list list, string) result =
   let get_perms' (ids: string list) : string list list =
     let subg = get_sub_graph g ids in (* Take subgraph here so we don't do it on every permutation *)
-    ids
-    |> permutations ~equal:String.( = )
-    |> List.filter ~f:(fun perm -> perm_passes_subg perm subg) (* Only keep perms that don't fail themselves *)
+    ids |> permutations ~equal:String.( = ) |> List.filter ~f:(fun perm -> perm_passes_subg perm subg)
   in
-  let ls =
+  let id_eq_classes =
     g
     |> get_label_set
     |> String_map.to_alist ?key_order:(Some `Increasing)
-    |> List.map ~f:(fun (_, ss) -> String_set.to_list ss)
+    |> List.map ~f:(fun (_, ss) -> String_set.to_list ss) (* Disregard label; just keep equivalence class of node ids *)
   in
-  ls
-  |> List.fold ~init:1 ~f:(fun accum l -> fac (List.length l) * accum) (* Compute how many permutations will be needed *)
-  |> fun num_orders -> num_orders < (if max_orders = 0 then Int.max_value else max_orders) (* Ignore max_orders if 0 *) (* TODO: clean this up *)
-  |> res ls too_large_message
+  id_eq_classes
+  |> fun ls -> if List.exists ls ~f:(fun l -> List.length l > max_orders) then Error too_large_message else Ok ls
+  >>| List.fold ~init:1 ~f:(fun accum l -> fac (List.length l) * accum) (* How many permutations might be needed in worst case *)
+  >>= fun num_iters -> if num_iters > max_iterations then Error too_large_message else Ok id_eq_classes
   >>| List.map ~f:get_perms'
 
+  (* TODO: combine this with try_all_orderings and filter by is_wheeler_no_degree on each step
+     ^ see filter_all_orderings *)
 let get_all_orderings (g: graph) (perms: string list list list) : (graph list, string) result =
   let n = List.length g.nodes in
   perms
-  |> combos
-  |> List.map ~f:List.join (* Flatten lists out to be a list of ids *)
+  |> combos (* combos' here and no join statement afterwards is just a little slower *)
+  |> List.map ~f:List.join
   |> fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error all_orders_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *)
   >>| List.map ~f:(Fn.flip get_ordered_graph g)
 
@@ -129,14 +131,24 @@ let try_all_orderings (os: graph list) : (graph, string) result =
   |> List.find ~f:is_wheeler
   |> Result.of_option ~error:all_orders_message
 
-(* TODO: make max_orders 8! = 40320 and go back to method in python implementation *)
+let filter_all_orderings (g: graph) (perms: string list list list) : (graph, string) result =
+  let my_filter = fun ids -> get_sub_graph g ids |> get_ordered_graph ids |> is_wheeler_no_degree in
+  let n = List.length g.nodes in
+  perms
+  |> combos' ?filter:(Some my_filter)
+  |> fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error all_orders_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *) (* Is it better to assert that all are length n ?*)
+  >>| List.map ~f:(Fn.flip get_ordered_graph g)
+  >>| List.find ~f:is_wheeler (* Now also check the zero-in-degree criteria *) (* TODO: switch to zero_in_first b/c all already pass the edge criteria? *)
+  >>= Result.of_option ~error:all_orders_message
+
 (* Monadic '>>=' binding are with Result. If it is ever Error 'msg', then it skips over the rest. *)
-let find_ordering ?(max_orders: int = 1000000) (g: graph) (*?(max_iterations = 1000000)*) : return_record =
+let find_ordering ?(max_orders: int = Int.max_value) ?(max_iterations: int = Int.max_value) (g: graph) : return_record =
   match
     g
     |> check_diff_labels
     >>= check_label_cycle
-    >>= get_perms max_orders
+    >>= get_perms max_orders max_iterations
+    (* >>= filter_all_orderings g *) (* This is just a little slower than if I were to use it and remove the next two lines *)
     >>= get_all_orderings g
     >>= try_all_orderings
   with
