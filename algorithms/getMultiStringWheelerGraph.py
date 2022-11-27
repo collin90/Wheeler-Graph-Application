@@ -1,3 +1,4 @@
+#This file is not currently in use! It was replaced by the getTrieWheelerGraph algorithm. That one is slightly more cool looking and space effective.
 
 def getMultiStringWheelerGraph (inputArr):
     nodes = []

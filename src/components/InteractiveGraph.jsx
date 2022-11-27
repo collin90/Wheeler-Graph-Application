@@ -22,7 +22,7 @@ const initialNodes = [
   },
 ];
 
-const URL = `http://127.0.0.1:5000/`;
+const URL = `http://127.0.0.1:5000/checkWheeler`;
 
 let id = 1;
 const getId = () => `${id++}`;
