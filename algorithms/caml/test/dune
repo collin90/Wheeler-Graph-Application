@@ -1,0 +1,10 @@
+ (test
+  (name tests)
+  (libraries
+    core
+    ounit2
+    graph_utils
+    permutations
+    find_ordering
+    core_unix.sys_unix
+    ppx_deriving_yojson))

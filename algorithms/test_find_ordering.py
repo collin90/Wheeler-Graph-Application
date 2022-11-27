@@ -3,11 +3,16 @@ import json
 from find_ordering import * # imports find_ordering function and MESSAGE consts
 from sspipe import p
 
+def remove_suffix(input_string, suffix):
+    if suffix and input_string.endswith(suffix):
+        return input_string[:-len(suffix)]
+    return input_string
+
 test_folder = './algorithms/unit_test_files/wheeler/'
 
 def get_message(filename, MAX_ITERATIONS, MAX_ORDERS):
     infile = open(test_folder + filename, 'r')
-    graph_string = infile.readline().removesuffix('\n')
+    graph_string = remove_suffix(infile.readline(), '\n')
     infile.close()
     return graph_string | p(json.loads) | p(find_ordering, MAX_ITERATIONS, MAX_ORDERS) | p(lambda x : x['message'])
 
@@ -38,11 +43,11 @@ class TestFindOrdering(unittest.TestCase):
 
     def large(self):
         def t(msg, fname):
-            test(self, msg, fname, 2**29) # over 500 million worst case
+            test(self, msg, fname, 2**30) # over 1 billion worst case
         t(GOOD_MESSAGE, 'large_orderable1.txt') # 21 nodes. 4 different edge labels. Incredibly large worst case.
         t(ALL_ORDERS_MESSAGE, 'large_unorderable1.txt') # Same graph as above but added edge makes unorderable
         t(GOOD_MESSAGE, 'large_orderable3.txt') # 24 nodes
-        t(TOO_LARGE_MESSAGE, 'large_orderable4.txt') # 31 nodes. Large alphabet. Is orderable when we let up to 4 billion ~ 2^32 iterations
+        # t(TOO_LARGE_MESSAGE, 'large_orderable4.txt') # 31 nodes. Large alphabet. Is orderable when we let up to 4 billion ~ 2^32 iterations
         t(ALL_ORDERS_MESSAGE, 'large_unorderable2.txt')
 
     # The above functions are not run by unittest because they do not begin with "test". Run them here.

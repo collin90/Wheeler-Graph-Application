@@ -40,10 +40,11 @@ def combos(l):
     if n == 0: return []
     if n == 1: return [ [t] for t in l[0] ] # give each tuple its own list to be built upon
 
+    further_perms = combos(l[1:]) # use recursion and assume it works on the tail
+
     accum = []
     for t in l[0]:
-        further_perms = combos(l[1:]) # use recursion and assume it works on the tail
-        with_t = further_perms.copy()
+        with_t = deepcopy(further_perms)
         { pm.insert(0, t) for pm in with_t } # this tuple needs to be included in the combos
         accum.extend(with_t)
     return accum
@@ -55,7 +56,7 @@ def get_ordered_graph(G, perm):
     """
     nodes = deepcopy(G['nodes'])
     node_map = make_node_map(nodes) # maps id to node
-    for id, ord in zip(perm, np.arange(0, len(G['nodes']))):
+    for ord, id in enumerate(perm):
         node_map[id]['order'] = ord
     return {'nodes':nodes, 'edges':G['edges']}
 
@@ -78,9 +79,8 @@ def get_all_orderings(G, perms):
     all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of given permutations
     return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
-# TODO: Consider adding one tuple of ids at a time, and if it every fails, then we can cancel and move on to
-# the next one. However, I would have to change how I generate my combos.
-# ^ Or maybe I wouldn't. As the tail is generated, I skip if it fails.
+# TODO: As orderings are built, ensure they are "sub-wheeler". But each time we add an ordering
+# of an equivalence class, we only check the edges that are new. No need to check old edges.
 def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
     """Given a graph G, finds an ordering on the graph is possible. Will not try if the number of iterations over
     graph elements is greater than MAX_ITERATIONS.
@@ -115,6 +115,9 @@ def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
 
     perms = reduce_perms(G, label_set)
     
+    # Check if there are no possible permutations for some label set. In this case, some eq class cannot be ordered at all
+    # if any( [ not len(x) for x in perms ]): dict({'ordering':None, 'message':ALL_ORDERS_MESSAGE})
+    
     # Now that the total number of permutations we must try is significantly reduced, check how many orderings will really be tried
     if MAX_ITERATIONS is not None:
         n_orders = 1
@@ -128,3 +131,17 @@ def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
         if is_wheeler(o): return {'ordering':o, 'message':GOOD_MESSAGE}
 
     return dict({'ordering':None, 'message':ALL_ORDERS_MESSAGE})
+
+
+# It's much faster to run the executable from the command line than it is to run the Python code above.
+# HOWEVER, it's slower to run the executable from within Python as I do below...
+
+from subprocess import Popen, PIPE, STDOUT
+import json
+
+# Expected to be called from Wheeler-Graph-Application/ and not inside Wheeler-Graph-Application/algorithms/
+def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
+    # For now I'm ignoring the max args
+    child = Popen(['./algorithms/order.exe', '--json', json.dumps(G), '0'], stdout=PIPE, stderr=STDOUT)
+    output, _ = child.communicate() # second item is error
+    return json.loads(output)
