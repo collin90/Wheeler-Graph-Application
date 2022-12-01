@@ -113,7 +113,7 @@ function Tutorial() {
                         <li> Nodes with
                             <div class="has-popup" onMouseOver={handleMouseOver2} onMouseOut={handleMouseOut2}> in-degree </div>
                             {popUp2 && <p class="popup"> A node's in-degree is how many edges are directed towards it. Likewise, the out-degree is how many edges are coming out of it.  </p>}
-                            0 come before nodes with positive in-degree</li>
+                            0 come before nodes with positive in-degree </li>
                         <Typography variant="body1" ml={4}> Nodes without an arrow pointing towards them must come first </Typography>
                     </ol>
                     <Typography variant="body1">
@@ -136,7 +136,7 @@ function Tutorial() {
                         </div>
                         <li>
                             <MathJax.Node inline formula={`(a = a') \\land (u < u') \\Longrightarrow v \\leq v'`} />
-                            <Typography variant="body1" ml={4}>If an edge labeled a is alphabetically equal to an edge labeled a' and the source of a is less than the source of a', then the destination of a must be less than or equal to the destination of a'. </Typography>
+                            <Typography variant="body1" ml={4}>If an edge labeled a is lexigraphically equal to an edge labeled a' and the source of a is less than the source of a', then the destination of a must be less than or equal to the destination of a'. </Typography>
                         </li>
                         <Typography variant="body1" ml={6}>
                             <br></br> A = A, 10 &lt; 30, and 20 &#8804; 40 =&gt; property holds
@@ -418,11 +418,10 @@ function Tutorial() {
 
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Pattern Matching Inquiry </Typography>
                     <Typography variant="body1" pb={15}>
-                        tbd
-                        {/* A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
+                        A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
                         the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
                         is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
-                        We can perform a relatively quick binary search on the compressed Graph. */}
+                        We can perform a relatively quick binary search on the compressed Graph.
                     </Typography>
                 </Box>
             </MathJax.Provider>
