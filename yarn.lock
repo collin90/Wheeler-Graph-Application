@@ -1410,6 +1410,11 @@ react-mathjax@^1.0.1:
   dependencies:
     load-script "^1.0.0"
 
+react-modal-hover@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/react-modal-hover/-/react-modal-hover-1.1.13.tgz#784c6cc2f0adfbf217da4c5c09676baa81ae3c21"
+  integrity sha512-WmpCIL3xg52rOS+gEnp2M7BZwRiI1IPKg9aPKmnbFJnYliWge9qPPO+RIVmk1tOQYi7YGWXFulWWck99384U0Q==
+
 react-refresh@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"

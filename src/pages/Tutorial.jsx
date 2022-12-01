@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import MathJax from "react-mathjax";
 import Graph from "../components/Graph";
 import InteractiveGraph from "../components/InteractiveGraph";
+import { useState } from 'react';
 import { MarkerType } from 'reactflow';
 
 const nodes2 = [
@@ -68,25 +69,51 @@ const edges4 = [
 ]
 
 function Tutorial() {
+
+    const [popUp, setpopUp] = useState(false);
+    const handleMouseOver = () => {
+        setpopUp(true);
+    };
+    const handleMouseOut = () => {
+        setpopUp(false);
+    }
+
+    const [popUp2, setpopUp2] = useState(false);
+    const handleMouseOver2 = () => {
+        setpopUp2(true);
+    };
+    const handleMouseOut2 = () => {
+        setpopUp2(false);
+    }
+
     return (
+
         <Container>
+
             <MathJax.Provider>
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Why Wheeler? </Typography>
                     <Typography variant="body1" ml={4}>
-                        The Burrows-Wheeler Transform is an algorithm that compresses a string. Due to properties like reversibility, it is very useful for many applications.
-                        It originally only compresses a single string, but there now there are variations for other data structures like sets of strings and de Bruijn graphs.
+                        The <a href="https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform"> Burrows Wheeler Transform </a> is an algorithm that compresses a string. Due to properties like reversibility, it is very useful for many applications.
+                        It originally only compresses a single string, but there now there are variations for other data structures like sets of strings and <a href="https://en.wikipedia.org/wiki/De_Bruijn_graph">de Bruijn graphs</a>.
                         The Wheeler graph is a framework that includes these variations.
                     </Typography>
                 </Box>
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Wheeler Graph Definition </Typography>
                 </Box>
+
                 <Box>
-                    <Typography variant="body1"> A <b>Wheeler Graph</b> is a directed edge-labeled graph, where each label is from a totally-ordered alphabet and the following are true. </Typography>
+                    <Typography variant="body1" display="inline"> A <b>Wheeler Graph</b> is a </Typography>
+                    <Typography variant="body1" class="has-popup" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> directed edge-labeled graph</Typography>
+                    {popUp && <p class="popup"> A directed edge-labeled graph is a graph where the edges (lines) are labeled and have directions represented by arrows going between the nodes (vertices). </p>}
+                    <Typography variant="body1" display="inline">, where each label is from a totally-ordered alphabet and the following are true. </Typography>
                     <Typography variant="body1"> The nodes can be ordered such that, </Typography>
                     <ol>
-                        <li>Nodes with in-degree 0 come before nodes with positive in-degree</li>
+                        <li> Nodes with
+                            <div class="has-popup" onMouseOver={handleMouseOver2} onMouseOut={handleMouseOut2}> in-degree </div>
+                            {popUp2 && <p class="popup"> A node's in-degree is how many edges are directed towards it. Likewise, the out-degree is how many edges are coming out of it.  </p>}
+                            0 come before nodes with positive in-degree</li>
                         <Typography variant="body1" ml={4}> Nodes without an arrow pointing towards them must come first </Typography>
                     </ol>
                     <Typography variant="body1">
