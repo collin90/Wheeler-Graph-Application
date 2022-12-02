@@ -25,8 +25,8 @@ def visualize():
         return jsonify({"result": {"nodes": [], "edges": []}})
 
 
-@app.route('/compressed', methods = ['POST'])
-def compressed():
+@app.route('/compressedGivenFiles', methods = ['POST'])
+def compressedGivenFiles():
     if (len(request.json['str']) == 1) :
         graph = getSingleStringWheelerGraph(request.json['str'][0])
     elif(len(request.json['str']) > 0):

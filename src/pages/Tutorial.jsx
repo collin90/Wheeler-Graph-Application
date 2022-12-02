@@ -4,9 +4,9 @@ import Box from "@mui/material/Box";
 import MathJax from "react-mathjax";
 import Graph from "../components/Graph";
 import InteractiveGraph from "../components/InteractiveGraph";
+import InteractiveGraphWithOILC from "../components/InteractiveGraphWithOILC";
 import { useState } from 'react';
 import { MarkerType } from 'reactflow';
-import InteractiveGraphWithOILC from "../components/InteractiveGraphWithOILC";
 
 const nodes2 = [
     { id: 'node1', style: { width: 30, height: 30, fontsize: 10 }, position: { x: 100, y: 50 } },

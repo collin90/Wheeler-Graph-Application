@@ -7,12 +7,7 @@ TEAM MEMBERS: Brandon Stride, Collin Hughes, Joanna Bi, Julia Ross
 Current Goals: 
     1. (Collin) Refactor Interactive Graph such that it will update LIVE to show the OILC representation of the graph if it is wheeler
         1a. (Julia/Joanna) Add the hover feature to display additional inforation when you hover over certain key terms. You could also show a link to reference pages with this.
-    2. (Julia/Joanna) Build a python algorithm for the pattern matching page to take in an OILC file, and convert it to a graph visuialization (nodes and edges)
-    3. (Anyone who's brave) Build a pattern matching algortihm to visually (with node highlighting!) trace a string P through the wheeler graph created from ^. This should be a step-by-step trace, as in, the user can click their way through the pattern matching process letter-by-letter, with new nodes being highlighted at every step, like a debugger. Or, they can click "show result", and have the whole thing happen at once. We should also report below the graph, whether P is found, as well as how many times its found. If possible, and this is a 'stretch goal', what indices of what strings P is found.
-    4. (Brandon) Refactor findOrdering to a functional programming language without convoluting overall server architecture too significantly.
-    5. (Brandon) Add the merge idea to the findOrdering, and compare the results.
-    6. (Collin) Optimize the memory usage for the following algorithms: getSingleStringWheelerGraph, and getTrieWheelerGraph. Very important for running visualize with big inputs on our deployed app in the cloud. Because I'm cheap!!
-    7. (Collin) Clean up The pages, such that components are modularized into react functions (like the download buttons) so that its easier to reuse things from page to page.
+    2. (Collin) Build a pattern matching algortihm to visually (with node highlighting!) trace a string P through the wheeler graph created from ^. This should be a step-by-step trace, as in, the user can click their way through the pattern matching process letter-by-letter, with new nodes being highlighted at every step, like a debugger. Or, they can click "show result", and have the whole thing happen at once. We should also report below the graph, whether P is found, as well as how many times its found. If possible, and this is a 'stretch goal', what indices of what strings P is found.
 
 
 HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!

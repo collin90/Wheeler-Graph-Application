@@ -119,7 +119,7 @@ function Visualize () {
     }
 
     const createWheelerGraphCompressedFile = () => {
-        const path = URL + 'compressed';
+        const path = URL + 'compressedGivenFiles';
         setLoading(true);
         
         if(fileContent.length === 0) {

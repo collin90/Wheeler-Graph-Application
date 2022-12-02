@@ -269,7 +269,7 @@ const Interactive = () => {
         <Typography variant="h4" sx={{ fontWeight: 'medium' }}>I: {I}</Typography>
         <Typography variant="h4" sx={{ fontWeight: 'medium' }}>L: {L}</Typography>
         <Typography variant="h4" sx={{ fontWeight: 'medium' }}>C: {C}</Typography>
-      </Grid> : <></>
+      </Grid> 
     </Grid>
     </>
   );
@@ -277,6 +277,7 @@ const Interactive = () => {
 
 
 function InteractiveGraphWithOILC () {
+
   return (
     <ReactFlowProvider>
         <Interactive/>
