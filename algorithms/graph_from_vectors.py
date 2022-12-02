@@ -44,10 +44,10 @@ def findEdges(O, L, C):
 
 #TESTING 
 
-O = '01001010101101101'
+#O = '01001010101101101'
 #I = ''
-L = 'TCGGTTAA'
-C = [2, 3, 5, 8]
+#L = 'TCGGTTAA'
+#C = [2, 3, 5, 8]
 
 #print(findEdges(O, L, C))
 #print(createEdges(O, L, C))
