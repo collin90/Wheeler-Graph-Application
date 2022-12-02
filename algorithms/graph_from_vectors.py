@@ -43,19 +43,19 @@ def findEdges(O, L, C):
 def getEdgy(L, C):
     alpha = []
     edgy = {}
-    a_len = 0
+    a_len = 0 #track how long alphabet is so we stop scanning string L when we've found the whole alphabet
     for i in range(len(L)):
         if L[i] not in alpha:
             alpha.append(L[i])
             a_len = a_len + 1
         if a_len > len(C):
             break
-    alpha.sort()
+    alpha.sort() # sort alphabet so it aligns with ordering of C
     for a in range(len(C)):
         if a == 0:
             edgy[alpha[a]] = 1
         else:
-            edgy[alpha[a]] = C[a - 1] + 1
+            edgy[alpha[a]] = C[a - 1] + 1 # Edgy for a given label is C[prior_label] + 1
     return edgy
 
 #TESTING 
