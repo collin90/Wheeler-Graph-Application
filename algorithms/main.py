@@ -8,7 +8,8 @@ from getOILC import getOILC
 from getOILCbasic import getOILCbasic
 from ordered_wheeler_property import check_for_wheeler_property
 from find_ordering import find_ordering
-
+from graph_from_vectors import graph_from_OILC
+from itertools import groupby
 
 app = Flask(__name__)
 CORS(app)
@@ -50,6 +51,21 @@ def checkWheeler():
     isWheeler = {'result' : check_for_wheeler_property(nodes, edges)}
     return jsonify(isWheeler)
 
+
+@app.route('/getGraphFromOILC', methods = ['POST'])
+def getGraphFromOILC():
+    O = request.json['oilc']['O']
+    L_init = request.json['oilc']['L']
+    C = request.json['oilc']['C']
+    groups = groupby(L_init, str.isdigit)
+    expanded = []
+    for is_numeric, characters in groups:
+        if is_numeric:
+            expanded.append(expanded[-1] * (int(''.join(characters)) - 1))
+        else:
+            expanded.extend(characters)
+    L = ''.join(expanded)
+    return jsonify(graph_from_OILC(O,L,C))
 
 @app.route('/findOrdering', methods=['POST'])
 def findOrdering():

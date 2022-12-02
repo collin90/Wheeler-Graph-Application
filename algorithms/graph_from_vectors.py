@@ -3,12 +3,12 @@ def graph_from_OILC(O, L, C):
     nodes_count = O.count("1")
     edges = createEdges(O, L, C)
     nodes = createNodes(nodes_count)
-    return nodes, edges
+    return {'nodes': nodes, 'edges': edges}
 
 def createNodes(count):
     nodes = []
     for i in range(count):
-        nodes.append({'id':i})
+        nodes.append({'id':i+1})
     return nodes
 
 def createEdges(O, L, C):
