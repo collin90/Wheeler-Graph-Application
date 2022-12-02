@@ -5,6 +5,7 @@ from getSingleStringWheelerGraph import getSingleStringWheelerGraph
 from getMultiStringWheelerGraph import getMultiStringWheelerGraph
 from getTrieWheelerGraph import getTrieWheelerGraph
 from getOILC import getOILC
+from getOILCbasic import getOILCbasic
 from ordered_wheeler_property import check_for_wheeler_property
 from find_ordering import find_ordering
 
@@ -33,6 +34,14 @@ def compressed():
     else : graph = {'nodes': [], 'edges': []}
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)
+
+@app.route('/compressedGivenGraph', methods = ['POST'])
+def compressedGivenGraph():
+    nodes = request.json['nodes'] 
+    edges = request.json['edges']
+    oilc = getOILCbasic(nodes, edges)
+    return jsonify(oilc)
+
 
 @app.route('/checkWheeler', methods = ['POST'])
 def checkWheeler():

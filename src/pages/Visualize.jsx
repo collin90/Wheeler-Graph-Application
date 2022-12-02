@@ -233,7 +233,7 @@ function Visualize () {
             <br></br>
             <Box py={2} sx={{ border: 3}} mb={3}>
                 <div style={{width:'auto', height:window.innerHeight/1.5}}>
-                    {nodes.length < 200 ? <Graph nodes={nodes} edges={edges}/> : <Graph ndoes={[]} edges={[]} /> }
+                    {nodes.length < 200 ? <Graph nodes={nodes} edges={edges}/> : <Graph nodes={[]} edges={[]} /> }
                 </div>
             </Box>
             <Stack spacing={.125} mb={3}>
