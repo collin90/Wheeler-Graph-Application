@@ -48,7 +48,7 @@ def getEdgy(L, C):
         if L[i] not in alpha:
             alpha.append(L[i])
             a_len = a_len + 1
-        if a_len > len(C):
+        if a_len == len(C):
             break
     alpha.sort() # sort alphabet so it aligns with ordering of C
     for a in range(len(C)):
@@ -62,10 +62,10 @@ def getEdgy(L, C):
 
 #O = '01001010101101101'
 #I = ''
-#L = 'TCGGTTAA'
-#C = [2, 3, 5, 8]
+L = 'TCGGTTAA'
+C = [2, 3, 5, 8]
 
 #print(findEdges(O, L, C))
 #print(createEdges(O, L, C))
 
-#print(getEdgy(L, C))
+print(getEdgy(L, C))
