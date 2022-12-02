@@ -101,4 +101,4 @@ def getOILC (nodes, edges):
             if(edge['label'] <= a): C[i] += 1
 
             
-    return {'O': O_compressed, 'I': I_compressed, 'L': L_compressed, 'C': C}
+    return {'O': O, 'I': I, 'L': L_compressed, 'C': C}
