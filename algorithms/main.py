@@ -1,4 +1,3 @@
-#algorithm to determine if a graph has the wheeler property!
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from getSingleStringWheelerGraph import getSingleStringWheelerGraph 
@@ -9,6 +8,7 @@ from getOILCbasic import getOILCbasic
 from ordered_wheeler_property import check_for_wheeler_property
 from find_ordering import find_ordering
 from graph_from_vectors import graph_from_OILC
+from get_num_pattern_matches import get_num_pattern_matches
 from itertools import groupby
 
 app = Flask(__name__)
@@ -66,6 +66,26 @@ def getGraphFromOILC():
             expanded.extend(characters)
     L = ''.join(expanded)
     return jsonify(graph_from_OILC(O,L,C))
+
+@app.route('/patternMatch', methods = ['POST'])
+def patternMatch():
+    O = request.json['oilc']['O']
+    L_init = request.json['oilc']['L']
+    C = request.json['oilc']['C']
+    groups = groupby(L_init, str.isdigit)
+    expanded = []
+    for is_numeric, characters in groups:
+        if is_numeric:
+            expanded.append(expanded[-1] * (int(''.join(characters)) - 1))
+        else:
+            expanded.extend(characters)
+    L = ''.join(expanded)
+    P = request.json['p']
+
+    result = {'num_matches': get_num_pattern_matches(O,L,C,P)}
+    return jsonify(result)
+
+
 
 @app.route('/findOrdering', methods=['POST'])
 def findOrdering():
