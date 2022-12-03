@@ -3,13 +3,15 @@ def getTrieWheelerGraph (inputArr):
     edges = []
     ids_dict = {}
 
-    #in this implementation we will take our multistring, and convert it into our friend the suffix trie
-    #the trie data structure is wheeler, because of the orderability of the trie nodes in multistrings.
-    #all we need to do is build the suffix trie, sort the nodes by reverse abc order, and we are done!
+    #in this implementation we will take our multistring, and convert it into our friend the trie
+    #the trie data structure is wheeler, because of the orderability of the nodes in multistrings.
+    #all we need to do is build the trie, sort the nodes by reverse abc order, and we are done!
     
     
     #step 1, the root node. Ez.
-    nodes.append({"id" : "$"})
+    nodes.append({"id" : "#"})
+    for i in range(len(inputArr)):
+        inputArr[i] = inputArr[i] + '$'
 
     #Step 2, now to build the trie.
     for inputStr in inputArr:
@@ -22,7 +24,7 @@ def getTrieWheelerGraph (inputArr):
                 n = {"id" : inputStr[0:i+1]}
                 nodes.append(n)
                 ids_dict[n['id']] = 1
-                source = '$' if i == 0 else inputStr[0:i]
+                source = '#' if i == 0 else inputStr[0:i]
                 target = n['id']
                 label = inputStr[i]
                 e = {'source': source, 'target': target, 'label': label}

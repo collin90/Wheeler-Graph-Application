@@ -19,6 +19,7 @@ function PatternMatch () {
     const [fileContent, setFileContent] = useState([]);
     const [P, setP] = useState({id: uuidv4(), text: ""});
     const [PSubstring, setPSubstring] = useState("");
+    const [matchMessage, setMatchMessage] = useState("");
     const URL = `http://127.0.0.1:5000/`;
 
     //function that forms the initial graph after you submit an oilc file. 
@@ -32,7 +33,7 @@ function PatternMatch () {
         let nodeIndex = 0;
         let column = 0;
         let row = 0;
-        const numRows = Math.ceil(Math.sqrt(nodes.length));
+        const numRows = Math.ceil(Math.sqrt(nodes.length/2));
         const getPosition = () => {
             let xPos = Math.ceil(15 + 60*column);
             let yPos = Math.ceil(15 + 75*row);
@@ -85,6 +86,25 @@ function PatternMatch () {
         setP({id: P.id, text: ""});
     }
 
+    const checkForFullMatch = (nodes) => {
+        let highlightedNodes = nodes.filter(node => {return node.style.background === '#90EE90'});
+        let numHighlighted = highlightedNodes.length;
+        if (numHighlighted === 0 && PSubstring.length) setMatchMessage("P is not found in this Wheeler Graph.");
+        else if (PSubstring.length === P.text.length && numHighlighted) {
+            //need to do a dfs of the graph to find out how many times P was found. :)
+            let count = 0;
+            const dfs = (nodeId) => {
+                let outgoing_edges = edges.filter(edge => {return edge.source === nodeId});
+                if (outgoing_edges.length === 0) count += 1;
+                outgoing_edges.forEach(edge => {dfs(edge.target)});
+            }
+            highlightedNodes.forEach(node => {dfs(node.id)});
+            const s = count > 1 ? 's' : '';
+            setMatchMessage(`P was found ${count} time${s}!`);
+        }
+        else setMatchMessage("");
+    }
+
     useEffect(() => {
         //We've just stepped to the next letter. What is that letter?
         const currentChar = PSubstring.charAt(PSubstring.length-1);
@@ -104,16 +124,18 @@ function PatternMatch () {
             else return {id: node.id, style: {width: 30, height: 30, fontsize: 10, background:'white'}, data: {label: node.id}, position: node.position}
         });
         setNodes(highlightedNodes);
+        checkForFullMatch(highlightedNodes);
     }, [PSubstring]);
+
 
 
     const handleStep = () => {
         const p_sub = PSubstring.length < P.text.length ? P.text.substring(0,PSubstring.length+1) : P.text
-        setPSubstring(p_sub);
+        if(nodes.length < 200) setPSubstring(p_sub);
     }
 
     const handleRestart = () => {
-        setPSubstring("");
+        if (nodes.length < 200) setPSubstring("");
     }
 
 
@@ -141,10 +163,11 @@ function PatternMatch () {
             </Stack>
             <br></br>
             <Typography variant="p">After you've input your OILC file and chosen a string P, you can trace the <b>Pattern Matching Process</b> letter by letter by clicking 
-            the <b>STEP</b> button below the graph. You can also skip to the end of the process and by clicking <b>MATCH</b>.</Typography>
+            the <b>STEP</b> button below the graph. The step function is meant for small graphs with under 200 nodes. You can also skip to the end of the pattern matching process 
+            by clicking <b>MATCH</b>.</Typography>
             <br></br>
             <Box py={2} sx={{ border: 3}} mt={3} mb={3}>
-                <div style={{width:'auto', height:window.innerHeight/1.5}}>
+                <div style={{width:'auto', height:window.innerHeight/1.75}}>
                     {nodes.length < 200 ? <Graph nodes={nodes} edges={edges}/> : <Graph nodes={[]} edges={[]} /> }
                 </div>
             </Box>
@@ -161,7 +184,11 @@ function PatternMatch () {
                     </Grid>
                 </Grid>
             </Stack>
-            <Typography variant="h4" mb={4}>{PSubstring}</Typography>
+            <Typography variant="h4">Results:</Typography>
+            <Box py={2} sx={{border: 1}}mb={3}>
+                <Typography variant="h5" mb={0}>{PSubstring}</Typography>
+                <Typography variant="h5" mb={1}>{matchMessage}</Typography>
+            </Box>
         </Container>
     );
 
