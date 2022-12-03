@@ -161,15 +161,20 @@ function PatternMatch () {
         const path = URL + 'patternMatch';
         //If the user has input something for both P and OILC, then make the server call to get the number of matches!
         if(P.text && OILC.C.length){
+            setPSubstringMessage("Please wait...");
+            setMatchMessage("");
             axios.post(path, {oilc: OILC, p: P.text}).then(
                 (response) => {
                     var result = response.data.num_matches;
                     setPSubstringMessage(P.text);
                     const s = result !== 1 ? 's' : '';
-                    setMatchMessage(`P was found ${result} time${s}!`)
+                    if (result > 0) setMatchMessage(`P was found at least ${result} time${s}!`);
+                    else setMatchMessage("P was not found!");
                 },
                 (error) => {
                     console.log(error);
+                    setPSubstringMessage(error);
+                    setMatchMessage("");
                 }
             );
         }
