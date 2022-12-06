@@ -18,6 +18,15 @@ def get_num_pattern_matches(O,L,C,P) :
     #now we have the orders of each node stored based on which letter is pointing to it.
     successful_range = ranges_dict[P[0]] if P[0] in ranges_dict else []
 
+
+    #finally, before looping over P, we need to identify for each node, the starting index of its edges in L. :
+    starting_index_for_nodes_edges = {}
+    count_edges = 0
+    for index, outgoing_edges_for_node in enumerate(O):
+        num_edges_for_this_node = len(outgoing_edges_for_node)
+        starting_index_for_nodes_edges[index] = count_edges
+        count_edges += num_edges_for_this_node
+
     for i in range(1,len(P)):
         current_letter = P[i]
         #we need to find out the RANGE OF NODES which come from successful_range, AND have their letter as current_letter
@@ -26,9 +35,10 @@ def get_num_pattern_matches(O,L,C,P) :
 
             #now we need to figure out which outgoing edge labels this node has.
             number_outgoing_edges = len(O[node_order+1])
-            starting_index_of_this_nodes_edges = 0
-            for n in O[0:node_order+1]:
-                starting_index_of_this_nodes_edges += len(n)
+            #starting_index_of_this_nodes_edges = 0
+            #for n in O[0:node_order+1]:
+            #    starting_index_of_this_nodes_edges += len(n)
+            starting_index_of_this_nodes_edges = starting_index_for_nodes_edges[node_order+1]
             
             edge_labels = [L[j] for j in range(starting_index_of_this_nodes_edges, starting_index_of_this_nodes_edges+number_outgoing_edges)]
             #if the target letter is in the outgoing edge labels for this node, we need to figure out the rank of the first one.
