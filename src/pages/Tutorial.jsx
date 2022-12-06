@@ -416,26 +416,10 @@ function Tutorial() {
                             </ul>
                         </div>
                     </Typography>
-                    <Typography variant="body1">
-                        Now that you understand how to encode wheeler graphs with bit vectors, here is another interactive graph, where you can now see the OILC
-                        representation of the graph as you build it (as long as your current graph is a wheeler graph).
-                    </Typography>
-                    <Box py={2} sx={{ border: 3 }} mt={2} mb={3}>
-                        <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
-                            <InteractiveGraphWithOILC/>
-                        </div>
-                    </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35}> Pattern Matching Inquiry </Typography>
-                    <Typography variant="body1">
-                        A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
-                        the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
-                        is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
-                        We can perform a relatively quick binary search on the compressed Graph.
-                    </Typography>
                     <Typography variant="body1" py={3}>
                         <b>Compressed Permutation Index</b>
                         <br></br>
-                        An additional data structure used in pattern matching is the array, C. C is composed of the number of edge labels that are lexicographically
+                        An additional data structure, which used in pattern matching, is the array, C. C is composed of the number of edge labels that are lexicographically
                         less than or equal to a given label. Each index in array C coordinates to a member of the given string's alphabet, ordered lexicographically.
                         You can compute C as follows:
                         <br></br>
@@ -446,7 +430,6 @@ function Tutorial() {
                         <br></br>
                         <br></br>
                         Below is C for the example we've been using.
-
                     </Typography>
                     <Typography variant="h5" align="center">
                         <div style={{ padding: 0 }}>
@@ -462,6 +445,22 @@ function Tutorial() {
                         </li>
                         </ul>
                         </div>
+                    </Typography>
+                    <Typography variant="body1">
+                        Now that you understand how to encode wheeler graphs with bit vectors, here is another interactive graph, where you can now see the OILC
+                        representation of the graph as you build it (as long as your current graph is a wheeler graph).
+                    </Typography>
+                    <Box py={2} sx={{ border: 3 }} mt={2} mb={3}>
+                        <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
+                            <InteractiveGraphWithOILC/>
+                        </div>
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35}> Pattern Matching Inquiry </Typography>
+                    <Typography variant="body1">
+                        A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
+                        the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
+                        is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
+                        We can perform a relatively quick binary search on the compressed Graph.
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Genomes as Graphs </Typography>
                     <Typography variant="body1" pb={15}>
