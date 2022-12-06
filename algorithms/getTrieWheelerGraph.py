@@ -1,3 +1,5 @@
+#used by the visualize tab. Gets a wheeler graph based on a set of strings, by finding the trie for those strings.
+
 def getTrieWheelerGraph (inputArr):
     nodes = []
     edges = []

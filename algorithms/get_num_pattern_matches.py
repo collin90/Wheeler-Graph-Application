@@ -1,3 +1,4 @@
+#Used by the pattern matching tab. This algorithm is executed when the user clicks the match button, if they have already input an oilc file and a string p.
 
 def get_num_pattern_matches(O,L,C,P) :
     #we are given O, L, and C from a wheeler graph, as well as a string P that we are trying to match. 

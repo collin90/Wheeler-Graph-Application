@@ -1,10 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from getSingleStringWheelerGraph import getSingleStringWheelerGraph 
-from getMultiStringWheelerGraph import getMultiStringWheelerGraph
 from getTrieWheelerGraph import getTrieWheelerGraph
 from getOILC import getOILC
-from getOILCbasic import getOILCbasic
 from ordered_wheeler_property import check_for_wheeler_property
 from find_ordering import find_ordering
 from graph_from_vectors import graph_from_OILC
@@ -14,6 +12,7 @@ from itertools import groupby
 app = Flask(__name__)
 CORS(app)
 
+###The following 2 methods are called exclusively via the VISUALIZE TAB
 @app.route('/visualize', methods =['POST'])
 def visualize():
     if (len(request.json['str']) == 1) :
@@ -25,7 +24,6 @@ def visualize():
     else:
         return jsonify({"result": {"nodes": [], "edges": []}})
 
-
 @app.route('/compressedGivenFiles', methods = ['POST'])
 def compressedGivenFiles():
     if (len(request.json['str']) == 1) :
@@ -36,14 +34,16 @@ def compressedGivenFiles():
     oilc = getOILC(graph['nodes'], graph['edges'])
     return jsonify(oilc)
 
+
+###The following method is called exclusively via the INTERACTIVE_GRAPH_WITH_OILC component.
 @app.route('/compressedGivenGraph', methods = ['POST'])
 def compressedGivenGraph():
     nodes = request.json['nodes'] 
     edges = request.json['edges']
-    oilc = getOILCbasic(nodes, edges)
+    oilc = getOILC(nodes, edges)
     return jsonify(oilc)
 
-
+###The following method is called by both the INTERACTIVE_GRAPH and INTERACTIVE_GRAPH_WITH_OILC components.
 @app.route('/checkWheeler', methods = ['POST'])
 def checkWheeler():
     nodes = request.json['nodes'] 
@@ -52,6 +52,7 @@ def checkWheeler():
     return jsonify(isWheeler)
 
 
+### The following 2 methods are called exclusively via the PATTERN MATCHING page.
 @app.route('/getGraphFromOILC', methods = ['POST'])
 def getGraphFromOILC():
     O = request.json['oilc']['O']
@@ -86,12 +87,14 @@ def patternMatch():
     return jsonify(result)
 
 
-
+### The following method is called exclusively via the FIND ORDERING page.
 @app.route('/findOrdering', methods=['POST'])
 def findOrdering():
     r = find_ordering({'nodes': request.json['nodes'], 'edges': request.json['edges']}, MAX_ITERATIONS=100000000000000000000)
     return jsonify({"graph": str(r['ordering']), "message": r['message']})
 
+
+### base endpoint for algorithms server.
 @app.route("/")
 def index():
     return "Congratulations, you're looking at your web app base endpoint"

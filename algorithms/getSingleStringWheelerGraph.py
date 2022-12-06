@@ -1,3 +1,4 @@
+#used by the visualize tab. Gets a wheeler graph given a single input string.
 
 def getSingleStringWheelerGraph(inputStr):
         nodes = []

@@ -1,3 +1,5 @@
+#used by the Pattern matching page. Uses O I and L vectors to produce lists of nodes and edges which can then be graphed.
+
 def graph_from_OILC(O, L, C):
 
     nodes_count = O.count("1")

@@ -74,7 +74,7 @@ const Interactive = () => {
               const o = response.data.O;
               const i = response.data.I;
               const l = response.data.L;
-              const c = response.data.C;
+              const c = '[' + response.data.C.toString() + ']';
               setO(o);
               setI(i);
               setL(l);
