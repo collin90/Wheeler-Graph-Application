@@ -438,9 +438,13 @@ function Tutorial() {
                         An additional data structure used in pattern matching is the array, C. C is composed of the number of edge labels that are lexicographically
                         less than or equal to a given label. Each index in array C coordinates to a member of the given string's alphabet, ordered lexicographically.
                         You can compute C as follows:
+                        <br></br>
+                        <br></br>
                         1. Lexicographically sort the string T.
+                        <br></br>
                         2. Find the index of the last occurance of each member of the alphabet, and add 1 if the array is zero-indexed.
-
+                        <br></br>
+                        <br></br>
                         Below is C for the example we've been using.
 
                     </Typography>
