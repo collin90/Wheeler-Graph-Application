@@ -426,11 +426,45 @@ function Tutorial() {
                         </div>
                     </Box>
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35}> Pattern Matching Inquiry </Typography>
-                    <Typography variant="body1" pb={15}>
+                    <Typography variant="body1">
                         A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
                         the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
                         is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
                         We can perform a relatively quick binary search on the compressed Graph.
+                    </Typography>
+                    <Typography variant="body1" py={3}>
+                        <b>Compressed Permutation Index</b>
+                        <br></br>
+                        An additional data structure used in pattern matching is the array, C. C is composed of the number of edge labels that are lexicographically
+                        less than or equal to a given label. Each index in array C coordinates to a member of the given string's alphabet, ordered lexicographically.
+                        You can compute C as follows:
+                        1. Lexicographically sort the string T.
+                        2. Find the index of the last occurance of each member of the alphabet, and add 1 if the array is zero-indexed.
+
+                        Below is C for the example we've been using.
+
+                    </Typography>
+                    <Typography variant="h5" align="center">
+                        <div style={{ padding: 0 }}>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                        <li>
+                        L: TAAGCG
+                        </li>
+                        <li>
+                        sort(L): AACGGT
+                        </li>
+                        <li>
+                        C: [2,3,5,6]
+                        </li>
+                        </ul>
+                        </div>
+                    </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Genomes as Graphs </Typography>
+                    <Typography variant="body1" pb={15}>
+                    Genetic variation is poorly represented by linear references, and doing so has been the cause of bias and 
+                    poor results when mapping *add hover for genetic mapping*. It is difficult to create a representation that scales to the size of the human genome. Given 
+                    their compact storage and pattern matching capability, Wheeler Graphs offer a new way to represent large strings. So, a major 
+                    motivation for Wheeler Graphs is their application to genomics.
                     </Typography>
                 </Box>
             </MathJax.Provider>

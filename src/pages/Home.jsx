@@ -71,7 +71,13 @@ function Home() {
                 </Typography>
                 <Typography variant="body1" pt={3}>
                     <p class="apa-reference">
+                        Ferragina, P. &amp; Venturini, R. (2007). Compressed Permuterm Index. SIGIR '07: Proceedings of the 30th annual international ACM SIGIR conference on Research and development in information retrieval. https://doi.org/10.1145/1277741.1277833
+                    </p>
+                    <p class="apa-reference">
                         Gagie, T., Manzini, G., &amp; Sirén, J. (2017). Wheeler graphs: A framework for BWT-based data structures. Theoretical Computer Science, 698, 67–78. https://doi.org/10.1016/j.tcs.2017.06.016
+                    </p>
+                    <p class="apa-reference">
+                        Garrison, E., Sirén, J., Novak, A. et al. (2018). Variation graph toolkit improves read mapping by representing genetic variation in the reference. Nat Biotechnol 36, 875–879. https://www.nature.com/articles/nbt.4227
                     </p>
                     <p class="apa-reference">
                         Gibney, D., &amp; Thankachan, S. V. (2022). On the complexity of recognizing Wheeler graphs. Algorithmica, 84, 784–814. https://doi.org/10.1007/s00453-021-00917-5                     </p>
