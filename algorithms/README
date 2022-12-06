@@ -2,7 +2,7 @@ This is the Python server source code for the Wheeler Graph Application running 
 
 How to interpret the contents in this folder:
 
-    - The best place to start to understand how to navigate this busy directory is main.py. This is the routing page which handles all requests from the Wheeler Graph Application. Each python file / method in this algorithms directory is called either directly or indirectly from main.py. Also, you can find which tabs in the Wheeler Graph Application call which methods in comments above the methods in main.py. 
+    - The best place to start (after reading this file) to understand how to navigate this busy directory is main.py. This is the routing page which handles all requests from the Wheeler Graph Application. Each python file / method in this algorithms directory is called either directly or indirectly from main.py. Also, you can find which tabs in the Wheeler Graph Application call which methods in comments above the methods in main.py. 
     
     - The only python files that aren't used by the application currently are found in the /unused_scripts folder. These files are either attempts at algorithms we didn't up using, or old versions of algorithms that were later replaced by better ones.
 
@@ -19,6 +19,20 @@ How to test the algorithms in this folder:
 
         * nodes  --->   [{id: string/node order, order: wheeler graph ordering (sometimes optional)}, {...}, .. {...}]  * the ID of a node can be its position in the wheeler ordering
         * edges  --->   [{id: string, source: node ID, target: node ID, label: letter in the alphabet}, {...} .. {...}]
-        * 
+        * G      --->   just a combination of nodes and edges. {nodes: nodes[], edges: edges[]}
+        * O      --->   The O in OILC files. A bitvector corresponding to the outdegree of nodes in a wheeler graph. ex: 00100111010101010111
+        * L      --->   The L in OILC files. A compressed array of letters in the alphabet corresponding to edge labels in a wheeler graph. ex: a1b2a1b3c2a2c4
+        * C      --->   the C in an OILC file (see our actual description of OILC files on the tutorial tab in the Wheeler Graph Application)
+        (notice I in OILC is not used anywhere... that's becuase the Wheeler Graph Application only uses strings & multistrings which don't need the I part like a general wheeler graph)
+        * inputStr ->   A 'genome' string you want to make a wheeler graph out of. ex: ACGGTTTTGAGGAGCCGGAGA etc.
+        * inputArr ->   A list of 'genome' strings you want to make a wheeler graph out of.
 
 
+        With these input params, you can unit test anything in this folder (except graph_utils.py, but that's not an algorithm). Again, I think its best to just use the application to generate outputs, and use those outputs in other tabs to visualize the results as testing instead.
+
+    - NOTE: One limitation of the Wheeler Graph Application is that it is NOT focused on handling bad inputs. For our project timespan, we were a lot more focused on making sure that good results were produced if the user inputs a 'correct' input, like 'aggttcccadfasdfadsf' to visualize and not something like '&)}]]&^%^%$*~~```'. We don't have any known input bugs that cause the application to crash, but we didn't look very hard. We mostly just focused on implementing the algorithms and making the visualizations nice, not intense testing.
+
+    - Feel free to use the files in /unit_test_files as inputs for various functionalities in the Wheeler Graph Application. These are the main test files we used to visualize what our application was showing to the user, and they were all created to test a variety of uses in the app.
+
+
+Thank you!!
