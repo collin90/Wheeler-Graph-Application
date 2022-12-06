@@ -463,8 +463,10 @@ function Tutorial() {
                     <Typography variant="body1" pb={15}>
                     Genetic variation is poorly represented by linear references, and doing so has been the cause of bias and 
                     poor results when mapping *add hover for genetic mapping*. It is difficult to create a representation that scales to the size of the human genome. Given 
-                    their compact storage and pattern matching capability, Wheeler Graphs offer a new way to represent large strings. So, a major 
-                    motivation for Wheeler Graphs is their application to genomics.
+                    their compact storage, Wheeler Graphs offer a new way to represent large strings. So, a major motivation for Wheeler Graphs is their application to genomics. 
+                    Further, when applying Wheeler graphs to genomics, the utility of pattern matching is especially relevant. Finding patterns in DNA sequences is a primary focus
+                    in modern genetics. For example, finding a pattern in the human genome that is linked to a certain rare disease can help physicians predict
+                    and diagnose the condition, and thus treat it sooner and better.
                     </Typography>
                 </Box>
             </MathJax.Provider>
