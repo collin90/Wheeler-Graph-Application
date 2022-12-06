@@ -2,7 +2,7 @@ import unittest
 import json
 from has_cycle import *
 
-test_folder = './algorithms/unit_test_files/cycle/'
+test_folder = './algorithms/unit_test_files/Find Ordering Test Files/cycle/'
 
 def run_file(filename, f):
     """Gets the graph from the file and returns the result of the function f on that graph"""

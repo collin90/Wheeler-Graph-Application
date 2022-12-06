@@ -5,9 +5,14 @@ TOPIC: Wheeler graph visualization, and algorithms!!!
 TEAM MEMBERS: Brandon Stride, Collin Hughes, Joanna Bi, Julia Ross
 
 Current Goals: 
-    1. (Collin) Refactor Interactive Graph such that it will update LIVE to show the OILC representation of the graph if it is wheeler
-        1a. (Julia/Joanna) Add the hover feature to display additional inforation when you hover over certain key terms. You could also show a link to reference pages with this.
-    2. (Collin) Build a pattern matching algortihm to visually (with node highlighting!) trace a string P through the wheeler graph created from ^. This should be a step-by-step trace, as in, the user can click their way through the pattern matching process letter-by-letter, with new nodes being highlighted at every step, like a debugger. Or, they can click "show result", and have the whole thing happen at once. We should also report below the graph, whether P is found, as well as how many times its found. If possible, and this is a 'stretch goal', what indices of what strings P is found.
+
+    1. (Joanna) Finishing the pattern matching tutorial. Final adjustments to the tutorial page. Someone should really look into Ben's mid presentation feedback and incorporate that in the tutorial otherwise we'll prob lose points again.
+
+    2. (Collin) Write up a readme on how to test the various methods in our algorithms folder.
+
+    3. (Collin) Redeploy the code to the old cloud sdk server so we can present again.
+
+    4. (All) finishing the paper.
 
 
 HOW TO RUN THIS APP IN YOUR DEVELOPMENT SERVER!!!

@@ -2,7 +2,7 @@ import unittest
 import json
 from is_wheeler import is_wheeler
 
-test_folder = './algorithms/unit_test_files/wheeler/'
+test_folder = './algorithms/unit_test_files/Find Ordering Test Files/wheeler/'
 
 def run_file(filename):
     """Gets the graph from the file and returns the result of is_wheeler"""
