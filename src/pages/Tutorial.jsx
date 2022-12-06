@@ -433,7 +433,7 @@ function Tutorial() {
                     </Typography>
                     <Typography variant="h5" align="center">
                         <div style={{ padding: 0 }}>
-                        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 5 }}>
                         <li>
                         L: TAAGCG
                         </li>
@@ -455,8 +455,8 @@ function Tutorial() {
                             <InteractiveGraphWithOILC/>
                         </div>
                     </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35}> Pattern Matching Inquiry </Typography>
-                    <Typography variant="body1">
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35} py={5}> Pattern Matching Inquiry </Typography>
+                    <Typography variant="body1" pb={5}>
                         A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
                         the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
                         is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
