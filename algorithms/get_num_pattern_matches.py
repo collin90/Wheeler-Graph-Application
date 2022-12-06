@@ -15,8 +15,15 @@ def get_num_pattern_matches(O,L,C,P) :
     for i in range(1, len(alphabet)):
         ranges_dict[alphabet[i]] = [j for j in range(C[i-1], C[i])]
 
+    print("O: " + str(O))
+    print("L: " + L)
+    print("C: " + str(C))
+    print("P: " + P)
+    print(ranges_dict)
     #now we have the orders of each node stored based on which letter is pointing to it.
     successful_range = ranges_dict[P[0]] if P[0] in ranges_dict else []
+    print("successful range")
+    print(successful_range)
 
     for i in range(1,len(P)):
         current_letter = P[i]
@@ -26,18 +33,20 @@ def get_num_pattern_matches(O,L,C,P) :
 
             #now we need to figure out which outgoing edge labels this node has.
             number_outgoing_edges = len(O[node_order+1])
-            starting_index_of_this_nodes_edges = 1
-            for n in O[0:node_order]:
+            starting_index_of_this_nodes_edges = 0
+            for n in O[0:node_order+1]:
                 starting_index_of_this_nodes_edges += len(n)
             
             edge_labels = [L[j] for j in range(starting_index_of_this_nodes_edges, starting_index_of_this_nodes_edges+number_outgoing_edges)]
-            
+            print("edge labels for node " + str(node_order))
+            print(edge_labels)
             #if the target letter is in the outgoing edge labels for this node, we need to figure out the rank of the first one.
             rank = 0
             if(current_letter in edge_labels):
                 for x in range(0, starting_index_of_this_nodes_edges):
                     if (L[x] == current_letter): rank += 1
-
+            print("rank")
+            print(rank)
             #now that we have the edge labels coming from this node, we need to add the target nodes from these edges to next_successful_range
             #IF the edge label is equal to current_letter.
             for e in edge_labels:
@@ -45,7 +54,9 @@ def get_num_pattern_matches(O,L,C,P) :
                     #we need to find out exactly which node this edge points to by using its rank.
                     next_successful_range.append(ranges_dict[e][rank])
                     rank += 1
-            
+
+        print("next successful range")
+        print(next_successful_range)    
         successful_range = next_successful_range
 
     return len(successful_range)
