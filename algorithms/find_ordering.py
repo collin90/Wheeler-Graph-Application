@@ -1,3 +1,5 @@
+#used by the find ordering tab. This is the primary function called when the user clicks find ordering.
+
 import numpy as np
 import itertools as it
 from is_wheeler import *

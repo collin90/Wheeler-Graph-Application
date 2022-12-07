@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import MathJax from "react-mathjax";
 import Graph from "../components/Graph";
 import InteractiveGraph from "../components/InteractiveGraph";
+import InteractiveGraphWithOILC from "../components/InteractiveGraphWithOILC";
+import { useState } from 'react';
 import { MarkerType } from 'reactflow';
 
 const nodes2 = [
@@ -68,25 +70,51 @@ const edges4 = [
 ]
 
 function Tutorial() {
+
+    const [popUp, setpopUp] = useState(false);
+    const handleMouseOver = () => {
+        setpopUp(true);
+    };
+    const handleMouseOut = () => {
+        setpopUp(false);
+    }
+
+    const [popUp2, setpopUp2] = useState(false);
+    const handleMouseOver2 = () => {
+        setpopUp2(true);
+    };
+    const handleMouseOut2 = () => {
+        setpopUp2(false);
+    }
+
     return (
+
         <Container>
+
             <MathJax.Provider>
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Why Wheeler? </Typography>
                     <Typography variant="body1" ml={4}>
-                        The Burrows-Wheeler Transform is an algorithm that compresses a string. Due to properties like reversibility, it is very useful for many applications.
-                        It originally only compresses a single string, but there now there are variations for other data structures like sets of strings and de Bruijn graphs.
+                        The <a href="https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform"> Burrows Wheeler Transform </a> is an algorithm that compresses a string. Due to properties like reversibility, it is very useful for many applications.
+                        It originally only compresses a single string, but there now there are variations for other data structures like sets of strings and <a href="https://en.wikipedia.org/wiki/De_Bruijn_graph">de Bruijn graphs</a>.
                         The Wheeler graph is a framework that includes these variations.
                     </Typography>
                 </Box>
                 <Box pt={3}>
                     <Typography variant="h4" sx={{ fontWeight: 'medium' }}> Wheeler Graph Definition </Typography>
                 </Box>
+
                 <Box>
-                    <Typography variant="body1"> A <b>Wheeler Graph</b> is a directed edge-labeled graph, where each label is from a totally-ordered alphabet and the following are true. </Typography>
+                    <Typography variant="body1" display="inline"> A <b>Wheeler Graph</b> is a </Typography>
+                    <Typography variant="body1" className="has-popup" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}> directed edge-labeled graph</Typography>
+                    {popUp && <p className="popup"> A directed edge-labeled graph is a graph where the edges (lines) are labeled and have directions represented by arrows going between the nodes (vertices). </p>}
+                    <Typography variant="body1" display="inline">, where each label is from a totally-ordered alphabet and the following are true. </Typography>
                     <Typography variant="body1"> The nodes can be ordered such that, </Typography>
                     <ol>
-                        <li>Nodes with in-degree 0 come before nodes with positive in-degree</li>
+                        <li> Nodes with
+                            <div className="has-popup" onMouseOver={handleMouseOver2} onMouseOut={handleMouseOut2}> in-degree </div>
+                            {popUp2 && <p className="popup"> A node's in-degree is how many edges are directed towards it. Likewise, the out-degree is how many edges are coming out of it.  </p>}
+                            0 come before nodes with positive in-degree </li>
                         <Typography variant="body1" ml={4}> Nodes without an arrow pointing towards them must come first </Typography>
                     </ol>
                     <Typography variant="body1">
@@ -109,7 +137,7 @@ function Tutorial() {
                         </div>
                         <li>
                             <MathJax.Node inline formula={`(a = a') \\land (u < u') \\Longrightarrow v \\leq v'`} />
-                            <Typography variant="body1" ml={4}>If an edge labeled a is alphabetically equal to an edge labeled a' and the source of a is less than the source of a', then the destination of a must be less than or equal to the destination of a'. </Typography>
+                            <Typography variant="body1" ml={4}>If an edge labeled a is lexigraphically equal to an edge labeled a' and the source of a is less than the source of a', then the destination of a must be less than or equal to the destination of a'. </Typography>
                         </li>
                         <Typography variant="body1" ml={6}>
                             <br></br> A = A, 10 &lt; 30, and 20 &#8804; 40 =&gt; property holds
@@ -132,7 +160,7 @@ function Tutorial() {
                 </Box>
                 <Box py={2} sx={{ border: 3 }} mb={3}>
                     <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
-                        <InteractiveGraph />
+                        <InteractiveGraph/>
                     </div>
                 </Box>
                 <Box pt={10}>
@@ -388,14 +416,60 @@ function Tutorial() {
                             </ul>
                         </div>
                     </Typography>
-
-                    <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Pattern Matching Inquiry </Typography>
-                    <Typography variant="body1" pb={15}>
-                        tbd
-                        {/* A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
+                    <Typography variant="body1" py={3}>
+                        <b>Compressed Permutation Index</b>
+                        <br></br>
+                        An additional data structure, which used in pattern matching, is the array, C. C is composed of the number of edge labels that are lexicographically
+                        less than or equal to a given label. Each index in array C coordinates to a member of the given string's alphabet, ordered lexicographically.
+                        You can compute C as follows:
+                        <br></br>
+                        <br></br>
+                        1. Lexicographically sort the string T.
+                        <br></br>
+                        2. Find the index of the last occurance of each member of the alphabet, and add 1 if the array is zero-indexed.
+                        <br></br>
+                        <br></br>
+                        Below is C for the example we've been using.
+                    </Typography>
+                    <Typography variant="h5" align="center">
+                        <div style={{ padding: 0 }}>
+                        <ul style={{ listStyle: "none", padding: 0, margin: 5 }}>
+                        <li>
+                        L: TAAGCG
+                        </li>
+                        <li>
+                        sort(L): AACGGT
+                        </li>
+                        <li>
+                        C: [2,3,5,6]
+                        </li>
+                        </ul>
+                        </div>
+                    </Typography>
+                    <Typography variant="body1">
+                        Now that you understand how to encode wheeler graphs with bit vectors, here is another interactive graph, where you can now see the OILC
+                        representation of the graph as you build it (as long as your current graph is a wheeler graph).
+                    </Typography>
+                    <Box py={2} sx={{ border: 3 }} mt={2} mb={3}>
+                        <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
+                            <InteractiveGraphWithOILC/>
+                        </div>
+                    </Box>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35} py={5}> Pattern Matching Inquiry </Typography>
+                    <Typography variant="body1" pb={5}>
+                        A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
                         the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
                         is possible because of the graph's path coherence property. This makes the matching process easier in a pattern matching problem.
-                        We can perform a relatively quick binary search on the compressed Graph. */}
+                        We can perform a relatively quick binary search on the compressed Graph.
+                    </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Genomes as Graphs </Typography>
+                    <Typography variant="body1" pb={15}>
+                    Genetic variation is poorly represented by linear references, and doing so has been the cause of bias and 
+                    poor results when mapping *add hover for genetic mapping*. It is difficult to create a representation that scales to the size of the human genome. Given 
+                    their compact storage, Wheeler Graphs offer a new way to represent large strings. So, a major motivation for Wheeler Graphs is their application to genomics. 
+                    Further, when applying Wheeler graphs to genomics, the utility of pattern matching is especially relevant. Finding patterns in DNA sequences is a primary focus
+                    in modern genetics. For example, finding a pattern in the human genome that is linked to a certain rare disease can help physicians predict
+                    and diagnose the condition, and thus treat it sooner and better.
                     </Typography>
                 </Box>
             </MathJax.Provider>

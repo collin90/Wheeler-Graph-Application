@@ -1,0 +1,38 @@
+This is the Python server source code for the Wheeler Graph Application running at: https://collin90.github.io/Wheeler-Graph-Application/#/
+
+How to interpret the contents in this folder:
+
+    - The best place to start (after reading this file) to understand how to navigate this busy directory is main.py. This is the routing page which handles all requests from the Wheeler Graph Application. Each python file / method in this algorithms directory is called either directly or indirectly from main.py. Also, you can find which tabs in the Wheeler Graph Application call which methods in comments above the methods in main.py. 
+    
+    - The only python files that aren't used by the application currently are found in the /unused_scripts folder. These files are either attempts at algorithms we didn't up using, or old versions of algorithms that were later replaced by better ones.
+
+    - Each python file in this directory also has a comment on the top line explaining where it was called from and what it is used for.
+
+    - The /unit_test_files directory contains sample input for the various tabs in the Wheeler Graph Application. They are also organized based on what tabs the files are meant to be used in testing. For example, the pattern matching tab in the Wheeler Graph Application takes an OILC file as its sample input. Thus, the files in the
+     /unit_test_files/Pattern Matching Test Files directory are OILC files for you to input to that tab. 
+
+     - The /caml folder is a bit different. One of our goals with this project was to make a find_ordering algorithm that works in reasonable amounts of time for as many graphs as possible. We weren't able to think of any new strategies for identifying wheeler graphs in polynomial time, so our find_ordering algorithms goal was to cut back on the worst case as much as possible, so we could still concievably get results for graphs even if they have lots of nodes, depending on the graph structure. The code for find_ordering is in this folder, and by inspecting it you can determine the shortcuts we tried to take to find wheeler orderings fast. However, this algorithm being written in python defeats its own purpose, since python is one of the slowest languages imaginable. So, one of our team members mapped the python algorithms associated with find_ordering to OCaml, a functional programming language that follows the exact same strategy as its python algorithm counterpart, but faster. The OCaml implementation is (its a crying shame) NOT integrated into the Wheeler Graph Application, because the python subproccess used to call the OCaml executable is slower than running the actual python algorithm. Instead, the python version is used. But, on its own, the OCaml version is faster, and we leave it in this folder so that we can demonstrate it during presentation, and in case its somehow integrated in the future.
+
+How to test the algorithms in this folder:
+
+    - PLEASE NOTE: Simply calling the methods in this directory using test files in the /unit_test_files as input will not work. This is because main.py massages the data in these files before distributing the work out to the algorithms, and then massages the algorithm results before sending them back to the client to see in the Wheeler Graph Application. So, the best way to test the files and reproduce results is definitely by using the actual Wheeler Graph Application. To test the methods individually, you just need to look at the method parameters for each exported function. In most cases, the parameters are easily understood. You will need to pass in combinations of the following data types:
+
+        * nodes  --->   [{id: string/node order, order: wheeler graph ordering (sometimes optional)}, {...}, .. {...}]  * the ID of a node can be its position in the wheeler ordering
+        * edges  --->   [{id: string, source: node ID, target: node ID, label: letter in the alphabet}, {...} .. {...}]
+        * G      --->   just a combination of nodes and edges. {nodes: nodes[], edges: edges[]}
+        * O      --->   The O in OILC files. A bitvector corresponding to the outdegree of nodes in a wheeler graph. ex: 00100111010101010111
+        * L      --->   The L in OILC files. A compressed array of letters in the alphabet corresponding to edge labels in a wheeler graph. ex: a1b2a1b3c2a2c4
+        * C      --->   the C in an OILC file (see our actual description of OILC files on the tutorial tab in the Wheeler Graph Application)
+        (notice I in OILC is not used anywhere... that's becuase the Wheeler Graph Application only uses strings & multistrings which don't need the I part like a general wheeler graph)
+        * inputStr ->   A 'genome' string you want to make a wheeler graph out of. ex: ACGGTTTTGAGGAGCCGGAGA etc.
+        * inputArr ->   A list of 'genome' strings you want to make a wheeler graph out of.
+
+
+        With these input params, you can unit test anything in this folder (except graph_utils.py, but that's not an algorithm). Again, I think its best to just use the application to generate outputs, and use those outputs in other tabs to visualize the results as testing instead.
+
+    - NOTE: One limitation of the Wheeler Graph Application is that it is NOT focused on handling bad inputs. For our project timespan, we were a lot more focused on making sure that good results were produced if the user inputs a 'correct' input, like 'aggttcccadfasdfadsf' to visualize and not something like '&)}]]&^%^%$*~~```'. We don't have any known input bugs that cause the application to crash, but we didn't look very hard. We mostly just focused on implementing the algorithms and making the visualizations nice, not intense testing.
+
+    - Feel free to use the files in /unit_test_files as inputs for various functionalities in the Wheeler Graph Application. These are the main test files we used to visualize what our application was showing to the user, and they were all created to test a variety of uses in the app.
+
+
+Thank you!!

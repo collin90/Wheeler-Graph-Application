@@ -1,4 +1,4 @@
-# Some helper functions for working with graphs
+# Some helper functions for working with graphs (used in find ordering algorithm)
 
 from collections import defaultdict
 import numpy as np

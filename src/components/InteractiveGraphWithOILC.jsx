@@ -8,6 +8,7 @@ import ReactFlow, {
 } from 'reactflow';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Typography from "@mui/material/Typography";
 import 'reactflow/dist/style.css';
 import { v4 as uuidv4 } from 'uuid';
 import './css/index.css';
@@ -41,14 +42,18 @@ const fitViewOptions = {
   padding: 3,
 };
 
-const  AddNodeOnEdgeDrop = () => {
+const Interactive = () => {
   const reactFlowWrapper = useRef(null);
   const connectingNodeId = useRef(null);
-  const refJSONDownload=useRef(null);
+  const refJSONDownload = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [change, setChange] = useState(0);
   const [wheeler, setWheeler] = useState(1);
+  const [O, setO] = useState("");
+  const [I, setI] = useState("");
+  const [L, setL] = useState("");
+  const [C, setC] = useState("");
   const { project } = useReactFlow();
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
   let textFileJSON = null;
@@ -60,6 +65,32 @@ const  AddNodeOnEdgeDrop = () => {
       (response) => {
         var result = response.data;
         setWheeler(result.result);
+        //if the result is true (the graph is wheeler, we need to get the OILC representation)
+        if(result.result) {
+          let path = `${URL}/compressedGivenGraph`;
+          console.log(path);
+          axios.post(path, {nodes: nodes, edges: edges}).then(
+            (response) =>{
+              const o = response.data.O;
+              const i = response.data.I;
+              const l = response.data.L;
+              const c = '[' + response.data.C.toString() + ']';
+              setO(o);
+              setI(i);
+              setL(l);
+              setC(c);
+            }, (error) => {
+              console.log(error);
+            }
+          );
+        }
+        else {
+          setO("");
+          setI("");
+          setL("");
+          setC("");
+        }
+
       }, (error) => {
         console.log(error);
       }
@@ -172,7 +203,6 @@ const  AddNodeOnEdgeDrop = () => {
   }
 
   const addNode = () => {
-    const newNodes = nodes;
     const id = getId();
     const newNode = {
       id: id,
@@ -199,7 +229,7 @@ const  AddNodeOnEdgeDrop = () => {
 
   return (
     <>
-    <div className="wrapper" ref={reactFlowWrapper}>
+    <div className="wrapper" ref={reactFlowWrapper}> 
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -216,7 +246,7 @@ const  AddNodeOnEdgeDrop = () => {
         fitViewOptions={fitViewOptions}
       />
     </div>
-    <Grid container direction="row" mb={4}>
+    <Grid container direction="row">
       <Grid item xs={3} >
         {wheeler ? <h2>This is a Wheeler Graph!</h2> : <h2>Not A Wheeler Graph!</h2>}
       </Grid>
@@ -233,17 +263,26 @@ const  AddNodeOnEdgeDrop = () => {
         <a download="graphJSON.txt" ref={refJSONDownload} style={{'display':'none'}}>Download JSON Object</a>
       </Grid>
     </Grid>
+    <Grid container direction="row">
+      <Grid item>
+        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>O: {O}</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>I: {I}</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>L: {L}</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>C: {C}</Typography>
+      </Grid> 
+    </Grid>
     </>
   );
 };
 
 
-function InteractiveGraph () {
+function InteractiveGraphWithOILC () {
+
   return (
-          <ReactFlowProvider>
-              <AddNodeOnEdgeDrop/>
-          </ReactFlowProvider>
+    <ReactFlowProvider>
+        <Interactive/>
+    </ReactFlowProvider>
     );
 }
 
-export default InteractiveGraph;
+export default InteractiveGraphWithOILC;

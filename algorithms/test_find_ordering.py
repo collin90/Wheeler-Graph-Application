@@ -8,7 +8,7 @@ def remove_suffix(input_string, suffix):
         return input_string[:-len(suffix)]
     return input_string
 
-test_folder = './algorithms/unit_test_files/wheeler/'
+test_folder = './algorithms/unit_test_files/Find Ordering Test Files/wheeler/'
 
 def get_message(filename, MAX_ITERATIONS, MAX_ORDERS):
     infile = open(test_folder + filename, 'r')

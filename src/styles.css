@@ -3,7 +3,7 @@
 }
 
 body {
-    margin:0;
+    margin: 0;
 }
 
 .nav {
@@ -34,7 +34,7 @@ body {
     height: 100%;
     display: flex;
     align-items: center;
-    padding:.25rem;
+    padding: .25rem;
 }
 
 .nav li.active {
@@ -48,4 +48,33 @@ body {
 .apa-reference {
     padding-left: 36px;
     text-indent: -36px;
+}
+
+.has-popup {
+    display: inline;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.popup {
+    display: inline;
+    position: absolute;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    max-width: 500px;
+    z-index: 999;
+    background: white;
+    padding: 10px;
+    border: 1px solid grey;
+    box-shadow: 0 0 2px 2px grey;
+}
+
+.popup2 {
+    box-sizing: border-box;
+    overflow-y: scroll;
+    z-index: 999;
+    background: white;
+    padding: 10px;
+    border: 1px solid grey;
+    box-shadow: 0 0 2px 2px grey;
 }
