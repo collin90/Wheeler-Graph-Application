@@ -5,16 +5,18 @@
   Optional arguments are --max_orders and --max_iterations.
 
   Example of valid call with --json:
-  ./order.exe --json "{\"nodes\":[{\"id\":\"0\",\"order\":0},{\"id\":\"1\",\"order\":1},{\"id\":\"2\",\"order\":2}],\"edges\":[{\"id\":\"asd\",\"source\":\"0\",\"target\":\"1\",\"label\":\"A\"},{\"id\":\"asdf\",\"source\":\"0\",\"target\":\"2\",\"label\":\"A\"}]}" 100
+  ./order.exe --json "{\"nodes\":[{\"id\":\"0\",\"order\":0},{\"id\":\"1\",\"order\":1},{\"id\":\"2\",\"order\":2}],\"edges\":[{\"id\":\"asd\",\"source\":\"0\",\"target\":\"1\",\"label\":\"A\"},{\"id\":\"asdf\",\"source\":\"0\",\"target\":\"2\",\"label\":\"A\"}]}" --max_orders 100
 
 *)
 
 open Core
 module String_map = Map.Make(String) (* Could also copy Graph_utils.String_map, but that gave a syntax error? *)
 
+let is_tag = String.is_prefix ~prefix:"--"
+
 let parse_args xs =
   let rec parse_args' acc = function
-    | tag :: value :: xss when String.is_prefix tag ~prefix:"--" -> parse_args' (String_map.add_exn acc ~key:tag ~data:value) xss
+    | tag :: value :: xss when is_tag tag -> parse_args' (String_map.add_exn acc ~key:tag ~data:value) xss
     | _ -> acc
   in
   parse_args' String_map.empty xs

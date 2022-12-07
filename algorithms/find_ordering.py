@@ -79,16 +79,17 @@ def get_all_orderings(G, perms):
     all_combos = [ flatten_tuples(ts) for ts in combos(perms) ] # try every combination of given permutations
     return [ get_ordered_graph(G, perm) for perm in all_combos ]
 
-# TODO: As orderings are built, ensure they are "sub-wheeler". But each time we add an ordering
-# of an equivalence class, we only check the edges that are new. No need to check old edges.
 def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
     """Given a graph G, finds an ordering on the graph is possible. Will not try if the number of iterations over
-    graph elements is greater than MAX_ITERATIONS.
+    graph elements is greater than MAX_ITERATIONS. Finds all permutations within equivalence classes as long
+    as it will not need to try more than MAX_ORDERS such permutations. Then will check total orderings against
+    MAX_ITERATIONS.
     
     Parameters
     ----------
     G : { 'nodes': node list, 'edges': edge list }
     MAX_ITERATIONS: int = 2^20
+    MAX_ORDERS: int = 8!
 
     Returns
     -------
@@ -136,12 +137,15 @@ def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
 # It's much faster to run the executable from the command line than it is to run the Python code above.
 # HOWEVER, it's slower to run the executable from within Python as I do below...
 
-from subprocess import Popen, PIPE, STDOUT
-import json
+# from subprocess import Popen, PIPE, STDOUT
+# import json
 
-# Expected to be called from Wheeler-Graph-Application/ and not inside Wheeler-Graph-Application/algorithms/
-def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
-    # For now I'm ignoring the max args
-    child = Popen(['./algorithms/order.exe', '--json', json.dumps(G), '0'], stdout=PIPE, stderr=STDOUT)
-    output, _ = child.communicate() # second item is error
-    return json.loads(output)
+# # Expected to be called from Wheeler-Graph-Application/ and not inside Wheeler-Graph-Application/algorithms/
+# def find_ordering(G, MAX_ITERATIONS=2**20, MAX_ORDERS=fac(8)):
+#     # For now I'm ignoring the max args
+#     child = Popen(['./algorithms/order.exe',
+#                     '--json', json.dumps(G),
+#                     '--max_orders', str(MAX_ORDERS),
+#                     '--max_iterations', str(MAX_ITERATIONS)], stdout=PIPE, stderr=STDOUT)
+#     output = child.communicate()[0] # [1] is error output
+#     return json.loads(output)

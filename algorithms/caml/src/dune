@@ -1,13 +1,13 @@
 (library
  (name permutations)
  (modules permutations)
- (libraries 
+ (libraries
    core))
 
 (library
  (name graph_utils)
  (modules graph_utils)
- (libraries 
+ (libraries
    core
    base
    ppx_deriving_yojson.runtime)
@@ -16,7 +16,7 @@
 (library
  (name find_ordering)
  (modules find_ordering)
- (libraries 
+ (libraries
    core
    base
    graph_utils
