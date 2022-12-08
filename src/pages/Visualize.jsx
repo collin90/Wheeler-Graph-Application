@@ -247,7 +247,7 @@ function Visualize () {
                 </Grid>
                 <Grid container direction = "row" mb={4}>
                     <Grid item xs={4}>
-                        <Button onClick={createWheelerGraphCompressedFile} variant='outlined'>Create Compressed Index (files only)</Button>
+                        <Button onClick={createWheelerGraphCompressedFile} variant='outlined'>Create Compressed Index (OILC)</Button>
                     </Grid>
                     <Grid item xs={4}>
                         <a download="wheelergraphCompressed.txt" ref={refCompressedDownload} style={{'display':'none'}}>Download Compressed Index</a>
