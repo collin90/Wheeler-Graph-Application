@@ -1,5 +1,7 @@
 This is the Python server source code for the Wheeler Graph Application running at: https://collin90.github.io/Wheeler-Graph-Application/#/
 
+THIS APP IS DEPLOYED NOW. The python back end is running at https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app HOWEVER, this will not always be the case. Soon, I will delete this service because its not free!!!
+
 HOW TO RUN THIS PYTHON SERVER IN YOUR DEVELOPMENT SERVER!!!
 
     A) In your terminal, navigate to the algorithms folder. Then, run these commands in your terminal
