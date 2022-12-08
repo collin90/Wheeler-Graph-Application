@@ -1,5 +1,16 @@
 This is the Python server source code for the Wheeler Graph Application running at: https://collin90.github.io/Wheeler-Graph-Application/#/
 
+HOW TO RUN THIS PYTHON SERVER IN YOUR DEVELOPMENT SERVER!!!
+
+    A) In your terminal, navigate to the algorithms folder. Then, run these commands in your terminal
+       1.  pip install virtualenv
+       2.  virtualenv env
+       3.  source env/Scripts/activate     ** it might be env/bin/activate if you get an error. You should see (env) as the output on your terminal; it might also be ```./env/Scripts/activate.ps1```, and this could require that you run ```Set-ExecutionPolicy RemoteSigned``` **
+       4.  pip install flask flask_cors
+       5.  python main.py    **this should launch a dev server for the app.
+
+    *Please note, even if the app is running on your localhost, if you wish to make the Wheeler Graph Application hit the localhost endpoint, you need to make sure that the url variable in /src/url.js is set to the localhost url provided when you run 'python main.py'. Otherwise the Wheeler Graph Application may be configured to use the deployed enpoint url. 
+
 How to interpret the contents in this folder:
 
     - The best place to start (after reading this file) to understand how to navigate this busy directory is main.py. This is the routing page which handles all requests from the Wheeler Graph Application. Each python file / method in this algorithms directory is called either directly or indirectly from main.py. Also, you can find which tabs in the Wheeler Graph Application call which methods in comments above the methods in main.py. 

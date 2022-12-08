@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import TextBox from '../components/TextBox';
 import { useEffect } from "react";
+import { URL } from '../url.js';
 
 function PatternMatch () {
     
@@ -22,7 +23,7 @@ function PatternMatch () {
     const [PSubstring, setPSubstring] = useState("");
     const [PSubstringMessage, setPSubstringMessage] = useState("");
     const [matchMessage, setMatchMessage] = useState("");
-    const URL = `http://127.0.0.1:5000/`;
+    //const URL = `http://127.0.0.1:5000/`;
 
     //function that forms the initial graph after you submit an oilc file. 
     const formInitialGraph = (nodes, edges) => {

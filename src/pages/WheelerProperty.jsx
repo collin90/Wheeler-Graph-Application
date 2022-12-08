@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import { v4 as uuidv4 } from 'uuid';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
+import { URL } from '../url.js';
 
 
 function WheelerProperty () {
@@ -18,7 +19,6 @@ function WheelerProperty () {
     const [graphableNodes, setGraphableNodes] = useState([]);
     const [graphableEdges, setGraphableEdges] = useState([]);
     const [message, setMessage] = useState('');
-    const URL = `http://127.0.0.1:5000/`;
     const refJSONDownload=useRef(null);
     let textFileJSON = null;
 

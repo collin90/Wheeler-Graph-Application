@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid';
 import TextBox from '../components/TextBox';
+import { URL } from '../url.js';
 
 function Visualize () {
     
@@ -24,7 +25,6 @@ function Visualize () {
     const refCompressedDownload=useRef(null);
     let textFileJSON = null;
     let textFileCompressed = null;
-    const URL = `http://127.0.0.1:5000/`;
 
     const formGraph = (nodes, edges) => {
         //create the colors list

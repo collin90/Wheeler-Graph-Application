@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import './css/index.css';
 import axios from 'axios';
 import { MarkerType } from 'reactflow';
+import { URL } from '../url.js';
 
 const initialNodes = [
   {
@@ -23,7 +24,6 @@ const initialNodes = [
   },
 ];
 
-const URL = `http://127.0.0.1:5000`;
 
 let id = 1;
 const getId = () => `${id++}`;
