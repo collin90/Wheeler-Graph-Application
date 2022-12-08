@@ -26,11 +26,6 @@ let too_large_message = "Too many possible orderings to try."
 
 (* See Graph_utils for some of the general graph functions *)
 
-let (><) = Fn.flip
-let (||>) f g a = f a |> g (* Can pipe using this without a ```fun x -> x |>``` at the start. let (||>) = Fn.flip Fn.compose makes it weakly typed for some reason *)
-(* ^ e.g. let m = (List.take >< 10) ||> List.map ~f:(( * ) 2) ||> List.last_exn;; multiply first 10 elements by 2, then get last element  *)
-(* This would otherwise be let m = fun ls -> List.take ls 10 |> List.map ~f:(( * ) 2) |> List.last_exn *)
-
 (* CYCLES *)
 
 (* Looks for a cycle in the graph made only of edges with one label. Self-loops do not count *)
@@ -113,19 +108,6 @@ let get_all_orderings (g: graph) (max_iterations: int) (perms: string list list 
   >>= fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error all_orders_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *)
   >>| List.map ~f:(get_ordered_graph >< g)
 
-(* Checks if the graph has some node with two different incoming edge labels.
-   If so, then Error msg. If not, then Ok graph. *)
-let check_diff_labels (g: graph) : (graph, string) result =
-  let ls = get_label_set g
-    |> String_map.to_alist
-    |> List.map ~f:Tuple2.get2
-  in
-  let n_sets id = List.filter ls ~f:(String_set.mem >< id) |> List.length in (* number of sets in which id occurs *)
-  g.nodes
-  |> Node.ids
-  |> List.for_all ~f:(fun id -> (n_sets id) < 2) (* assert that each node is in fewer than 2 label sets *)
-  |> fun is_ok -> if is_ok then Ok g else Error diff_labels_message
-
 (* We cache cartesian product of edges because they don't change *)
 let try_all_orderings (edges: edgelist) (os: graph list) : (graph, string) result =
   os
@@ -144,6 +126,19 @@ let filter_all_orderings (g: graph) (perms: string list list list) : (graph, str
   >>= Result.of_option ~error:all_orders_message
   >>| (get_ordered_graph >< g)
 
+(* Checks if the graph has some node with two different incoming edge labels.
+  If so, then Error msg. If not, then Ok graph. *)
+let check_diff_labels (g: graph) : (graph, string) result =
+  let ls = get_label_set g
+    |> String_map.to_alist
+    |> List.map ~f:Tuple2.get2
+  in
+  let n_sets id = List.filter ls ~f:(String_set.mem >< id) |> List.length in (* number of sets in which id occurs *)
+  g.nodes
+  |> Node.ids
+  |> List.for_all ~f:(fun id -> (n_sets id) < 2) (* assert that each node is in fewer than 2 label sets *)
+  |> fun is_ok -> if is_ok then Ok g else Error diff_labels_message
+
 (* Monadic '>>=' binding are with Result. If it is ever Error 'msg', then it skips over the rest. *)
 let find_ordering ?(max_orders: int = Int.max_value) ?(max_iterations: int = Int.max_value) (g: graph) : return_record =
   match
@@ -151,7 +146,7 @@ let find_ordering ?(max_orders: int = Int.max_value) ?(max_iterations: int = Int
     |> check_diff_labels
     >>= check_label_cycle
     >>= get_perms max_orders
-    (*>>= filter_all_orderings g *)(* This is just a little slower than if I were to use it and remove the next two lines *)
+    (*>>= filter_all_orderings g*)(* This is just a little slower than if I were to use it and remove the next two lines *)
     >>= get_all_orderings g max_iterations
     >>= try_all_orderings g.edges
   with
