@@ -455,7 +455,7 @@ function Tutorial() {
                             <InteractiveGraphWithOILC/>
                         </div>
                     </Box>
-                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35} py={5}> Pattern Matching Inquiry </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35} > Pattern Matching Inquiry </Typography>
                     <Typography variant="body1" pb={5}>
                         A third motivation for using Wheeler Graphs is in their application for pattern matching. Above, we showed
                         the notable compression capability of Wheeler Graphs. We observe that this compression maintains an ordering, which
@@ -464,12 +464,10 @@ function Tutorial() {
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Genomes as Graphs </Typography>
                     <Typography variant="body1" pb={15}>
-                    Genetic variation is poorly represented by linear references, and doing so has been the cause of bias and 
-                    poor results when mapping *add hover for genetic mapping*. It is difficult to create a representation that scales to the size of the human genome. Given 
-                    their compact storage, Wheeler Graphs offer a new way to represent large strings. So, a major motivation for Wheeler Graphs is their application to genomics. 
-                    Further, when applying Wheeler graphs to genomics, the utility of pattern matching is especially relevant. Finding patterns in DNA sequences is a primary focus
-                    in modern genetics. For example, finding a pattern in the human genome that is linked to a certain rare disease can help physicians predict
-                    and diagnose the condition, and thus treat it sooner and better.
+                    Linear representations of genomes are not graph based. Traditionally, they are composed of one or more sequences. Linear representations of genomes may poorly capture genetic variation and diploid genomes because only one version of the genome can be displayed at a time. Since graphs may branch, as we’ve seen in this tutorial, a singular graph can produce many different strings. 
+                    Graph based representations of genomes can also prevent bias when looking for genetic variation. A traditional method might use a reference genome to compare alternative genomes for variation. This creates bias towards the reference genome. Representing multiple sequences in one graph may mitigate this bias by not establishing one sequence as the reference.
+                    Wheeler graphs are particularly useful for representing genomes because they may represent a large genome in a reasonable amount of space, given the compact storage we discussed above. We also explore pattern matching in this tutorial. Finding patterns in DNA sequences is a focus of modern genetics.
+                    For example, finding a pattern in the human genome that is linked to a certain rare disease can help physicians predict and diagnose a condition.
                     </Typography>
                 </Box>
             </MathJax.Provider>
