@@ -38,16 +38,14 @@ const initialEdges = [
   { id: 'edge8_4', animated: true, source: 'node8', target: 'node4', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor('A'), }, style: { strokeWidth: 2, stroke: getColor('A'), } },
   { id: 'edge6_8', animated: true, source: 'node6', target: 'node8', label: 'C', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor('C'), }, style: { strokeWidth: 2, stroke: getColor('C'), } },
   { id: 'edge5_4', animated: true, source: 'node5', target: 'node4', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor('A'), }, style: { strokeWidth: 2, stroke: getColor('A'), } },
-  { id: 'edge5_6', animated: true, source: 'node5', target: 'node6', label: 'C', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor('C'), }, style: { strokeWidth: 2, stroke: getColor('C'), } },
+  { id: 'edge5_7', animated: true, source: 'node5', target: 'node7', label: 'C', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor('C'), }, style: { strokeWidth: 2, stroke: getColor('C'), } },
 ]
 
 const TutorialGraph = () => {
 
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
-  let step = 0;
-  let goodNodes = [];
-  let goodEdges = [];
+  const [step, setStep] = useState(0);
 
   useEffect(() => {
     resetGraph();
@@ -56,52 +54,85 @@ const TutorialGraph = () => {
   const resetGraph = () => {
     setNodes(initialNodes);
     setEdges(initialEdges);
-    step = 0;
+    setStep(0);
   }
 
-  const nextStep = (dir) => {
-    if (dir = 1 && step < 4) {
-        step++;
+  const nextStep = () => {
+    let newstep = step;
+    if (step < 3) {
+        newstep = step + 1;
+        setStep(newstep);
     } 
-
-    if (dir = 0 && step > 0) {
-      step--;
-    }
-
-    switch(step) {
+    let goodNodes = [];
+    let goodEdges = [];
+    switch(newstep) {
       case 1:
-        // goodNodes = ['node5', 'node6'];
-        // setNodes((nds) => 
-        //   nds.map((node) => {
-        //     if (goodNodes.includes(node.id)) {
-        //       node.style = { ...node.style, backgroundColor: '#90EE90' };
-        //     }
-        //   }
-        // ));
-        // goodEdges = ["edge7_6", "edge1_5", "edge3_5"];
-        // setEdges();
-        // B
-        //nodes: 5, 6
-        //edges: 7-6, 1-5, 3-5, 
-        break;
+          goodNodes = ['node5', 'node6'];
+          goodEdges = ['edge1_5', 'edge3_5', 'edge7_6'];
+          break;
       case 2:
-        // goodNodes = ['node8', 'node6'];
-        // goodEdges.push("edge5_7");
-        // goodEdges.push("edge6_8");
-
-        // C
-        //nodes: 8, 6
-        //edges: 6-8, 5-7, 
-        break;
+          goodNodes = ['node7', 'node8'];
+          goodEdges = ['edge1_5', 'edge3_5', 'edge7_6', 'edge5_7', 'edge6_8'];
+          break;
       case 3:
-        // goodNodes = ['node4'];
-        // goodEdges = ["edge7_6", "edge6_8", "edge8_4"];
-        //A
-        //nodes: 4
-        //edges: 8-4
-        break;
+          goodNodes = ['node4'];
+          goodEdges = ['edge7_6', 'edge6_8', 'edge8_4'];
+          break;
       default:
     }
+    let highlightedNodes = nodes.map(node => {
+      if(goodNodes.includes(node.id)){
+          return {id: node.id, style: {width: 30, height: 30, fontsize: 10, background:'#90EE90'}, data: {label: node.data.label}, position: node.position}
+      }
+      else return {id: node.id, style: {width: 30, height: 30, fontsize: 10, background:'white'}, data: {label: node.data.label}, position: node.position}
+    });
+    let highlightedEdges = edges.map(edge => {
+      if(goodEdges.includes(edge.id)){
+        return { id: edge.id, animated: true, source: edge.source, target: edge.target, label: edge.label, markerEnd: edge.markerEnd, style: { strokeWidth: 2, stroke: '#90EE90'} };
+      }
+      else return {id: edge.id, animated: true, source: edge.source, target: edge.target, label: edge.label, markerEnd: edge.markerEnd, style: { strokeWidth: 2, stroke: getColor(edge.label)} };
+    });
+    setNodes(highlightedNodes);
+    setEdges(highlightedEdges);
+  }
+
+  const prevStep = () => {
+    let newstep = step;
+    let goodNodes = [];
+    let goodEdges = [];
+    if (step > 0) {
+      newstep = step - 1;
+      setStep(newstep);
+    }
+    switch(newstep) {
+      case 1:
+          goodNodes = ['node5', 'node6'];
+          goodEdges = ['edge1_5', 'edge3_5', 'edge7_6'];
+          break;
+      case 2:
+          goodNodes = ['node7', 'node8'];
+          goodEdges = ['edge1_5', 'edge3_5', 'edge7_6', 'edge5_7', 'edge6_8'];
+          break;
+      case 3:
+          goodNodes = ['node4'];
+          goodEdges = ['edge7_6', 'edge6_8', 'edge8_4'];
+          break;
+      default:
+    }
+    let highlightedNodes = nodes.map(node => {
+      if(goodNodes.includes(node.id)){
+          return {id: node.id, style: {width: 30, height: 30, fontsize: 10, background:'#90EE90'}, data: {label: node.data.label}, position: node.position}
+      }
+      else return {id: node.id, style: {width: 30, height: 30, fontsize: 10, background:'white'}, data: {label: node.data.label}, position: node.position}
+    });
+    let highlightedEdges = edges.map(edge => {
+      if(goodEdges.includes(edge.id)){
+        return { id: edge.id, animated: true, source: edge.source, target: edge.target, label: edge.label, markerEnd: edge.markerEnd, style: { strokeWidth: 2, stroke: '#90EE90'} };
+      }
+      else return {id: edge.id, animated: true, source: edge.source, target: edge.target, label: edge.label, markerEnd: edge.markerEnd, style: { strokeWidth: 2, stroke: getColor(edge.label)} };
+    });
+    setNodes(highlightedNodes);
+    setEdges(highlightedEdges);
   }
 
   return (
@@ -116,10 +147,10 @@ const TutorialGraph = () => {
           <Button onClick={resetGraph} variant='outlined'>Reset</Button>
         </Grid>
         <Grid item xs={3} >
-          <Button onClick={nextStep(0)} variant='outlined' >Previous</Button>
+          <Button onClick={prevStep} variant='outlined' >Previous</Button>
         </Grid>
         <Grid item xs={3} >
-          <Button onClick={nextStep(1)} variant='outlined' >Next</Button>
+          <Button onClick={nextStep} variant='outlined' >Next</Button>
         </Grid>
       </Grid>
     </>
