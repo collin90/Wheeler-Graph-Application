@@ -481,7 +481,7 @@ function Tutorial() {
                     </Typography>
                     <PatternMatchingTutorial />
                     <Box pt={10}>
-                        <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Genomes as Graphs </Typography>
+                        <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Application: Genomes as Graphs </Typography>
                         <Typography variant="body1" pb={15}>
                             Linear representations of genomes are not graph based. Traditionally, they are composed of one or more sequences.
                             Linear representations of genomes may poorly capture genetic variation and diploid genomes because only one version of the genome can be displayed at a time. Since graphs may branch, as we’ve seen in this tutorial, a singular graph can produce many different strings.
