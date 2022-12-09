@@ -17,14 +17,14 @@ const getColor = (label) => {
 }
 
 const initialNodes = [
-  { id: 'node1', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '1' }, position: { x: 550, y: 50 } },
-  { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '2' }, position: { x: 600, y: 150 } },
-  { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '3' }, position: { x: 600, y: 250 } },
-  { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '4' }, position: { x: 550, y: 350 } },
-  { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '5' }, position: { x: 400, y: 350 } },
-  { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '6' }, position: { x: 350, y: 250 } },
-  { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '7' }, position: { x: 350, y: 150 } },
-  { id: 'node8', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '8' }, position: { x: 400, y: 50 } },
+  { id: 'node1', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '1' }, position: { x: 500, y: 25 } },
+  { id: 'node2', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '2' }, position: { x: 650, y: 75 } },
+  { id: 'node3', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '3' }, position: { x: 500, y: 150 } },
+  { id: 'node4', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '4' }, position: { x: 300, y: 400 } },
+  { id: 'node5', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '5' }, position: { x: 350, y: 225 } },
+  { id: 'node6', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '6' }, position: { x: 600, y: 350 } },
+  { id: 'node7', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '7' }, position: { x: 550, y: 250 } },
+  { id: 'node8', style: { width: 30, height: 30, fontsize: 10 }, data: { label: '8' }, position: { x: 400, y: 350 } },
 ]
 const initialEdges = [
   { id: 'edge1_2', animated: true, source: 'node1', target: 'node2', label: 'A', markerEnd: { type: MarkerType.ArrowClosed, width: 8, height: 8, color: getColor('A'), }, style: { strokeWidth: 2, stroke: getColor('A'), } },
@@ -138,12 +138,12 @@ const TutorialGraph = () => {
   return (
     <>
       <Box py={2} sx={{ border: 3 }} mb={3}>
-        <div style={{ height: 400 }}>
+        <div style={{ height: 450 }}>
           <Graph nodes={nodes} edges={edges} />
         </div>
       </Box>
       <Grid container direction="row" >
-        <Grid item xs={3} >
+        <Grid item xs={6} >
           <Button onClick={resetGraph} variant='outlined'>Reset</Button>
         </Grid>
         <Grid item xs={3} >

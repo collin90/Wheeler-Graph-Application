@@ -226,9 +226,8 @@ function PatternMatch () {
                     </Grid>
                 </Grid>
             </Stack>
-            <Typography variant="h4">Results:</Typography>
-            <Box py={2} sx={{border: 1}}mb={3}>
-                <Typography variant="h5" mb={0}>{PSubstringMessage}</Typography>
+            <Typography variant="h5">Finding match for: {PSubstringMessage}</Typography>
+            <Box py={2} mb={3} ml={4}>
                 <Typography variant="h5" mb={1}>{matchMessage}</Typography>
             </Box>
         </Container>
