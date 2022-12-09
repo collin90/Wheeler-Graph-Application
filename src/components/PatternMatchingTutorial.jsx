@@ -56,20 +56,28 @@ const TutorialGraph = () => {
   const resetGraph = () => {
     setNodes(initialNodes);
     setEdges(initialEdges);
-    step = 1;
+    step = 0;
   }
 
-  const nextStep = () => {
+  const nextStep = (dir) => {
+    if (dir = 1) {
+      if (step < 4) {
+        step++
+      } else if (step > 0) {
+        step--;
+      }
+    }
+
     switch(step) {
       case 1:
-        goodNodes = ['node5', 'node6'];
-        setNodes((nds) => 
-          nds.map((node) => {
-            if (goodNodes.includes(node.id)) {
-              node.style = { ...node.style, backgroundColor: '#90EE90' };
-            }
-          }
-        ));
+        // goodNodes = ['node5', 'node6'];
+        // setNodes((nds) => 
+        //   nds.map((node) => {
+        //     if (goodNodes.includes(node.id)) {
+        //       node.style = { ...node.style, backgroundColor: '#90EE90' };
+        //     }
+        //   }
+        // ));
         // goodEdges = ["edge7_6", "edge1_5", "edge3_5"];
         // setEdges();
         // B
@@ -94,7 +102,6 @@ const TutorialGraph = () => {
         break;
       default:
     }
-    step++;
   }
 
   return (
@@ -109,7 +116,10 @@ const TutorialGraph = () => {
           <Button onClick={resetGraph} variant='outlined'>Reset</Button>
         </Grid>
         <Grid item xs={3} >
-          <Button onClick={nextStep} variant='outlined' >Next</Button>
+          <Button onClick={nextStep(1)} variant='outlined' >Previous</Button>
+        </Grid>
+        <Grid item xs={3} >
+          <Button onClick={nextStep(1)} variant='outlined' >Next</Button>
         </Grid>
       </Grid>
     </>
