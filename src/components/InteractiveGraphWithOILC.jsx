@@ -263,12 +263,12 @@ const Interactive = () => {
         <a download="graphJSON.txt" ref={refJSONDownload} style={{'display':'none'}}>Download JSON Object</a>
       </Grid>
     </Grid>
-    <Grid container direction="row">
+    <Grid container direction="row" ml={6}>
       <Grid item>
-        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>O: {O}</Typography>
-        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>I: {I}</Typography>
-        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>L: {L}</Typography>
-        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>C: {C}</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'medium' }}>O: {O}</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'medium' }}>I: {I}</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'medium' }}>L: {L}</Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'medium' }}>C: {C}</Typography>
       </Grid> 
     </Grid>
     </>

@@ -160,7 +160,7 @@ function Tutorial() {
                 </Box>
                 <Box py={2} sx={{ border: 3 }} mb={3}>
                     <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
-                        <InteractiveGraph/>
+                        <InteractiveGraph />
                     </div>
                 </Box>
                 <Box pt={10}>
@@ -433,17 +433,17 @@ function Tutorial() {
                     </Typography>
                     <Typography variant="h5" align="center">
                         <div style={{ padding: 0 }}>
-                        <ul style={{ listStyle: "none", padding: 0, margin: 5 }}>
-                        <li>
-                        L: TAAGCG
-                        </li>
-                        <li>
-                        sort(L): AACGGT
-                        </li>
-                        <li>
-                        C: [2,3,5,6]
-                        </li>
-                        </ul>
+                            <ul style={{ listStyle: "none", padding: 0, margin: 5 }}>
+                                <li>
+                                    L: TAAGCG
+                                </li>
+                                <li>
+                                    sort(L): AACGGT
+                                </li>
+                                <li>
+                                    C: [2,3,5,6]
+                                </li>
+                            </ul>
                         </div>
                     </Typography>
                     <Typography variant="body1">
@@ -452,7 +452,7 @@ function Tutorial() {
                     </Typography>
                     <Box py={2} sx={{ border: 3 }} mt={2} mb={3}>
                         <div style={{ width: 'auto', height: window.innerHeight / 1.5 }}>
-                            <InteractiveGraphWithOILC/>
+                            <InteractiveGraphWithOILC />
                         </div>
                     </Box>
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }} mt={35} > Pattern Matching Inquiry </Typography>
@@ -464,15 +464,18 @@ function Tutorial() {
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 'medium' }}> Genomes as Graphs </Typography>
                     <Typography variant="body1" pb={15}>
-                    Linear representations of genomes are not graph based. Traditionally, they are composed of one or more sequences. 
-                    Linear representations of genomes may poorly capture genetic variation and diploid genomes because only one version of the genome can be displayed at a time. Since graphs may branch, as we’ve seen in this tutorial, a singular graph can produce many different strings. 
-                    <br></br>
-                    <br></br>
-                    Graph based representations of genomes can also prevent bias when looking for genetic variation. A traditional method might use a reference genome to compare alternative genomes for variation. This creates bias towards the reference genome. Representing multiple sequences in one graph may mitigate this bias by not establishing one sequence as the reference.
-                    <br></br>
-                    <br></br>
-                    Wheeler graphs are particularly useful for representing genomes because they may represent a large genome in a reasonable amount of space, given the compact storage we discussed above. We also explore pattern matching in this tutorial. Finding patterns in DNA sequences is a focus of modern genetics.
-                    For example, finding a pattern in the human genome that is linked to a certain rare disease can help physicians predict and diagnose a condition.
+                        Linear representations of genomes are not graph based. Traditionally, they are composed of one or more sequences.
+                        Linear representations of genomes may poorly capture genetic variation and diploid genomes because only one version of the genome can be displayed at a time. Since graphs may branch, as we’ve seen in this tutorial, a singular graph can produce many different strings.
+                        <br></br>
+                        <br></br>
+                        Graph based representations of genomes can also prevent bias when looking for genetic variation.
+                        A traditional method might use a reference genome to compare alternative genomes for variation.
+                        This creates bias towards the reference genome.
+                        Representing multiple sequences in one graph may mitigate this bias by not establishing one sequence as the reference.
+                        <br></br>
+                        <br></br>
+                        Wheeler graphs are particularly useful for representing genomes because they may represent a large genome in a reasonable amount of space, given the compact storage we discussed above. We also explore pattern matching in this tutorial. Finding patterns in DNA sequences is a focus of modern genetics.
+                        For example, finding a pattern in the human genome that is linked to a certain rare disease can help physicians predict and diagnose a condition.
                     </Typography>
                 </Box>
             </MathJax.Provider>
