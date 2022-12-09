@@ -247,10 +247,10 @@ const Interactive = () => {
       />
     </div>
     <Grid container direction="row">
-      <Grid item xs={3} >
+      <Grid item xs={4} >
         {wheeler ? <h2>This is a Wheeler Graph!</h2> : <h2>Not A Wheeler Graph!</h2>}
       </Grid>
-      <Grid item xs={3} mt={3}>
+      <Grid item xs={2} mt={3}>
         <Button onClick={resetGraph} variant='outlined'>Reset Graph</Button>
       </Grid>
       <Grid item xs={3} mt={3}>
