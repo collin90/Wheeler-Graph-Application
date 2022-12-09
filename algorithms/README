@@ -2,7 +2,7 @@ This is the Python server source code for the Wheeler Graph Application running 
 
 GITHUB REPOSITORY FOR THE FULL WHEELER GRAPH APPLICATION : https://github.com/collin90/Wheeler-Graph-Application
 
-THIS APP IS DEPLOYED NOW. The python back end is running at https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app HOWEVER, this will not always be the case. Soon, I will delete this service because its not free!!!
+THIS APP IS DEPLOYED NOW. The Python back end is running at https://python-wheeler-algorithms-service-34nimsvaoa-uk.a.run.app HOWEVER, this will not always be the case. Soon, I will delete this service because its not free!!!
 
 HOW TO RUN THIS PYTHON SERVER IN YOUR DEVELOPMENT SERVER!!!
 
@@ -13,20 +13,20 @@ HOW TO RUN THIS PYTHON SERVER IN YOUR DEVELOPMENT SERVER!!!
        4.  pip install flask flask_cors
        5.  python main.py    **this should launch a dev server for the app.
 
-    *Please note, even if the app is running on your localhost, if you wish to make the Wheeler Graph Application hit the localhost endpoint, you need to make sure that the url variable in /src/url.js is set to the localhost url provided when you run 'python main.py'. Otherwise the Wheeler Graph Application may be configured to use the deployed enpoint url. 
+    *Please note, even if the app is running on your localhost, if you wish to make the Wheeler Graph Application hit the localhost endpoint, you need to make sure that the url variable in /src/url.js is set to the localhost url provided when you run 'Python main.py'. Otherwise the Wheeler Graph Application may be configured to use the deployed enpoint url. 
 
 How to interpret the contents in this folder:
 
-    - The best place to start (after reading this file) to understand how to navigate this busy directory is main.py. This is the routing page which handles all requests from the Wheeler Graph Application. Each python file / method in this algorithms directory is called either directly or indirectly from main.py. Also, you can find which tabs in the Wheeler Graph Application call which methods in comments above the methods in main.py. 
+    - The best place to start (after reading this file) to understand how to navigate this busy directory is main.py. This is the routing page which handles all requests from the Wheeler Graph Application. Each Python file / method in this algorithms directory is called either directly or indirectly from main.py. Also, you can find which tabs in the Wheeler Graph Application call which methods in comments above the methods in main.py. 
     
-    - The only python files that aren't used by the application currently are found in the /unused_scripts folder. These files are either attempts at algorithms we didn't up using, or old versions of algorithms that were later replaced by better ones.
+    - The only Python files that aren't used by the application currently are found in the /unused_scripts folder. These files are either attempts at algorithms we didn't up using, or old versions of algorithms that were later replaced by better ones.
 
-    - Each python file in this directory also has a comment on the top line explaining where it was called from and what it is used for.
+    - Each Python file in this directory also has a comment on the top line explaining where it was called from and what it is used for.
 
     - The /unit_test_files directory contains sample input for the various tabs in the Wheeler Graph Application. They are also organized based on what tabs the files are meant to be used in testing. For example, the pattern matching tab in the Wheeler Graph Application takes an OILC file as its sample input. Thus, the files in the
      /unit_test_files/Pattern Matching Test Files directory are OILC files for you to input to that tab. 
 
-     - The /caml folder is a bit different. One of our goals with this project was to make a find_ordering algorithm that works in reasonable amounts of time for as many graphs as possible. We weren't able to think of any new strategies for identifying wheeler graphs in polynomial time, so our find_ordering algorithms goal was to cut back on the worst case as much as possible, so we could still concievably get results for graphs even if they have lots of nodes, depending on the graph structure. The code for find_ordering is in this folder, and by inspecting it you can determine the shortcuts we tried to take to find wheeler orderings fast. However, this algorithm being written in python defeats its own purpose, since python is one of the slowest languages imaginable. So, one of our team members mapped the python algorithms associated with find_ordering to OCaml, a functional programming language that follows the exact same strategy as its python algorithm counterpart, but faster. The OCaml implementation is (its a crying shame) NOT integrated into the Wheeler Graph Application, because the python subproccess used to call the OCaml executable is slower than running the actual python algorithm. Instead, the python version is used. But, on its own, the OCaml version is faster, and we leave it in this folder so that we can demonstrate it during presentation, and in case its somehow integrated in the future.
+     - The /caml folder is a bit different. One of our goals with this project was to make a find_ordering algorithm that works in reasonable amounts of time for as many graphs as possible. We weren't able to think of any new strategies for identifying wheeler graphs in polynomial time, so our find_ordering algorithms goal was to cut back on the worst case as much as possible, so we could still concievably get results for graphs even if they have lots of nodes, depending on the graph structure. The code for find_ordering is in this folder, and by inspecting it you can determine the shortcuts we tried to take to find wheeler orderings fast. However, this algorithm being written in Python defeats its own purpose, since Python is one of the slowest languages imaginable. So, one of our team members mapped the Python algorithms associated with find_ordering to OCaml, a functional programming language. The OCaml implementation follows a similar strategy to its Python algorithm counterpart but is faster. The OCaml implementation is (its a crying shame) NOT integrated into the Wheeler Graph Application, because the Python subproccess used to call the OCaml executable is slower than running the actual Python algorithm. Instead, the Python version is used. But, on its own, the OCaml version is faster, and we leave it in this folder so that we can demonstrate it during presentation, and in case its somehow integrated in the future.
 
 How to test the algorithms in this folder:
 
