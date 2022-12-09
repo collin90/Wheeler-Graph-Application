@@ -60,12 +60,12 @@ const TutorialGraph = () => {
   }
 
   const nextStep = (dir) => {
-    if (dir = 1) {
-      if (step < 4) {
-        step++
-      } else if (step > 0) {
-        step--;
-      }
+    if (dir = 1 && step < 4) {
+        step++;
+    } 
+
+    if (dir = 0 && step > 0) {
+      step--;
     }
 
     switch(step) {
@@ -116,7 +116,7 @@ const TutorialGraph = () => {
           <Button onClick={resetGraph} variant='outlined'>Reset</Button>
         </Grid>
         <Grid item xs={3} >
-          <Button onClick={nextStep(1)} variant='outlined' >Previous</Button>
+          <Button onClick={nextStep(0)} variant='outlined' >Previous</Button>
         </Grid>
         <Grid item xs={3} >
           <Button onClick={nextStep(1)} variant='outlined' >Next</Button>
