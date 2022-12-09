@@ -24,8 +24,6 @@ let all_orders_message = "Graph is not Wheeler because all possible orderings we
 let cycle_message = "Graph is not Wheeler because there is a cycle using edges with one unique edge label."
 let too_large_message = "Too many possible orderings to try."
 
-(* See Graph_utils for some of the general graph functions *)
-
 (* CYCLES *)
 
 (* Looks for a cycle in the graph made only of edges with one label. Self-loops do not count *)

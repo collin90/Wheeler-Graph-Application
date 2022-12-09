@@ -40,6 +40,8 @@ type graph = {
   edges: edgelist;
 } [@@deriving yojson]
 
+let (||>) f g a = f a |> g (* also defined in Permutations *)
+
 let graph_from_file fname = Yojson.Safe.from_file fname |> graph_of_yojson |> Result.ok_or_failwith
 
 (* Assumes nodes in ns have distinct ids *)
@@ -100,9 +102,7 @@ let get_neighbors (g: graph) : string list String_map.t =
 let has_cycle (g: graph) =
   (* First step is to create the adjacency map *)
   let ns = get_neighbors g in
-  let neighbors (id: string) : string list =
-    match String_map.find ns id with None -> [] | Some ls -> ls
-  in
+  let neighbors = String_map.find ns ||> Option.value ~default:[] in
   (* This will check if there is a cycle that starts and ends with the given node id *)
   let node_makes_cycle (src_id: string) : bool =
     let rec aux (visited: String_set.t) (stack: string list) : bool =

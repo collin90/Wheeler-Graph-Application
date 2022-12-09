@@ -70,7 +70,6 @@ let rec combos' ?(filter: 'a list -> bool = Fn.const true) = function
   | [] -> []
   | [p] -> List.filter p ~f:filter (* We may prefer to use a filter option so that we don't pass over unnecessarily *)
   | a :: b :: [] -> List.cartesian_product a b |> List.map ~f:(list_of_tuple2 ||> List.join) |> List.filter ~f:filter
-  (* List.filter ~f:(list_of_tuple2 ||> List.join ||> filter) *)
   | l -> begin
     List.length l / 2
     |> List.split_n l (* Split into two approximately equal pieces *)
