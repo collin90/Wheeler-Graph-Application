@@ -23,6 +23,7 @@ let diff_labels_message = "Graph cannot be Wheeler because a node has incoming e
 let all_orders_message = "Graph is not Wheeler because all possible orderings were tried."
 let cycle_message = "Graph is not Wheeler because there is a cycle using edges with one unique edge label."
 let too_large_message = "Too many possible orderings to try."
+let unorderable_eq_message = "Graph is not Wheeler because some equivalence class cannot be ordered."
 
 (* CYCLES *)
 
@@ -103,7 +104,7 @@ let get_all_orderings (g: graph) (max_iterations: int) (perms: string list list 
   |> fun num_iters -> if num_iters > max_iterations then Error too_large_message else Ok perms
   >>| combos (* using combos' here and no join statement afterwards is just a little slower *)
   >>| List.map ~f:List.join
-  >>= fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error all_orders_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *)
+  >>= fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error unorderable_eq_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *)
   >>| List.map ~f:(get_ordered_graph >< g)
 
 (* We cache cartesian product of edges because they don't change *)
@@ -119,7 +120,7 @@ let filter_all_orderings (g: graph) (perms: string list list list) : (graph, str
   let n = List.length g.nodes in
   perms
   |> combos' ~filter:my_filter
-  |> fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error all_orders_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *) (* Is it better to assert that all are length n ?*)
+  |> fun l -> if List.exists l ~f:(fun q -> List.length q <> n) then Error unorderable_eq_message else Ok l (* Some eq class cannot be permuted <=> effectively tried all orders *) (* Is it better to assert that all are length n ?*)
   >>| List.find ~f:((get_ordered_graph >< g) ||> is_wheeler) (* Compose these to reduce the number of maps we do *)
   >>= Result.of_option ~error:all_orders_message
   >>| (get_ordered_graph >< g)

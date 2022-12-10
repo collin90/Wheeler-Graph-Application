@@ -1,0 +1,7 @@
+This project was largely spearheaded by Collin; he did most of the managing of the project and set up the server
+ and project structure. Joanna did the website front page as well as the structure of the tutorial page. Joanna
+ and Julia split the content for the tutorial page. For the graphs on the front page and the tutorial page, either
+ Collin provided the graphs, or Joanna and Julia based the graph on his work. Julia did the algorithm to convert the
+ OILC data to a graph.  Brandon handled the algorithms for verifying the Wheeler property, finding the ordering
+ (in both Python and OCaml), and wrote all unit tests. Other algorithms (e.g. Wheeler graphs from strings, OILC,
+ and pattern matching) were written by Collin. 
